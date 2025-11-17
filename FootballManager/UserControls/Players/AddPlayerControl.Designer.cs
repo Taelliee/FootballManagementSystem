@@ -44,7 +44,7 @@
             // 
             addButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 204);
             addButton.ForeColor = Color.DarkRed;
-            addButton.Location = new Point(330, 460);
+            addButton.Location = new Point(326, 471);
             addButton.Name = "addButton";
             addButton.Size = new Size(115, 40);
             addButton.TabIndex = 0;
@@ -54,14 +54,14 @@
             // 
             // fullNameTextBox
             // 
-            fullNameTextBox.Location = new Point(346, 181);
+            fullNameTextBox.Location = new Point(342, 192);
             fullNameTextBox.Name = "fullNameTextBox";
             fullNameTextBox.Size = new Size(314, 27);
             fullNameTextBox.TabIndex = 1;
             // 
             // shirtNumberTextBox
             // 
-            shirtNumberTextBox.Location = new Point(346, 372);
+            shirtNumberTextBox.Location = new Point(342, 383);
             shirtNumberTextBox.Name = "shirtNumberTextBox";
             shirtNumberTextBox.Size = new Size(125, 27);
             shirtNumberTextBox.TabIndex = 2;
@@ -70,7 +70,7 @@
             // 
             countryComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             countryComboBox.FormattingEnabled = true;
-            countryComboBox.Location = new Point(346, 307);
+            countryComboBox.Location = new Point(342, 318);
             countryComboBox.Name = "countryComboBox";
             countryComboBox.Size = new Size(200, 28);
             countryComboBox.TabIndex = 3;
@@ -79,7 +79,7 @@
             // 
             teamComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             teamComboBox.FormattingEnabled = true;
-            teamComboBox.Location = new Point(346, 242);
+            teamComboBox.Location = new Point(342, 253);
             teamComboBox.Name = "teamComboBox";
             teamComboBox.Size = new Size(200, 28);
             teamComboBox.TabIndex = 4;
@@ -89,7 +89,7 @@
             fullNameLabel.AutoSize = true;
             fullNameLabel.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
             fullNameLabel.ForeColor = Color.DarkRed;
-            fullNameLabel.Location = new Point(229, 184);
+            fullNameLabel.Location = new Point(225, 195);
             fullNameLabel.Name = "fullNameLabel";
             fullNameLabel.Size = new Size(79, 20);
             fullNameLabel.TabIndex = 5;
@@ -100,7 +100,7 @@
             teamLabel.AutoSize = true;
             teamLabel.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
             teamLabel.ForeColor = Color.DarkRed;
-            teamLabel.Location = new Point(260, 245);
+            teamLabel.Location = new Point(256, 256);
             teamLabel.Name = "teamLabel";
             teamLabel.Size = new Size(45, 20);
             teamLabel.TabIndex = 6;
@@ -111,7 +111,7 @@
             countryLabel.AutoSize = true;
             countryLabel.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
             countryLabel.ForeColor = Color.DarkRed;
-            countryLabel.Location = new Point(245, 310);
+            countryLabel.Location = new Point(241, 321);
             countryLabel.Name = "countryLabel";
             countryLabel.Size = new Size(65, 20);
             countryLabel.TabIndex = 7;
@@ -122,7 +122,7 @@
             shirtNumberLabel.AutoSize = true;
             shirtNumberLabel.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
             shirtNumberLabel.ForeColor = Color.DarkRed;
-            shirtNumberLabel.Location = new Point(245, 375);
+            shirtNumberLabel.Location = new Point(241, 386);
             shirtNumberLabel.Name = "shirtNumberLabel";
             shirtNumberLabel.Size = new Size(62, 20);
             shirtNumberLabel.TabIndex = 8;
@@ -133,7 +133,7 @@
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 36F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
             label1.ForeColor = Color.DarkRed;
-            label1.Location = new Point(245, 45);
+            label1.Location = new Point(241, 56);
             label1.Name = "label1";
             label1.Size = new Size(345, 81);
             label1.TabIndex = 9;

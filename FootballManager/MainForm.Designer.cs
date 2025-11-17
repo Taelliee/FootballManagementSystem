@@ -38,7 +38,6 @@
             teamsButton = new Button();
             competitionsButton = new Button();
             staffButton = new Button();
-            countriesButton = new Button();
             stadiumsButton = new Button();
             queriesButton = new Button();
             leftNavigationSplitContainer = new SplitContainer();
@@ -126,7 +125,7 @@
             playersButton.BackColor = Color.WhiteSmoke;
             playersButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             playersButton.ForeColor = Color.DarkRed;
-            playersButton.Location = new Point(15, 36);
+            playersButton.Location = new Point(15, 49);
             playersButton.Name = "playersButton";
             playersButton.Size = new Size(115, 40);
             playersButton.TabIndex = 0;
@@ -140,7 +139,7 @@
             teamsButton.BackColor = Color.WhiteSmoke;
             teamsButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             teamsButton.ForeColor = Color.DarkRed;
-            teamsButton.Location = new Point(15, 110);
+            teamsButton.Location = new Point(15, 138);
             teamsButton.Name = "teamsButton";
             teamsButton.Size = new Size(115, 40);
             teamsButton.TabIndex = 1;
@@ -154,7 +153,7 @@
             competitionsButton.BackColor = Color.WhiteSmoke;
             competitionsButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             competitionsButton.ForeColor = Color.DarkRed;
-            competitionsButton.Location = new Point(16, 257);
+            competitionsButton.Location = new Point(15, 302);
             competitionsButton.Name = "competitionsButton";
             competitionsButton.Size = new Size(115, 40);
             competitionsButton.TabIndex = 3;
@@ -168,7 +167,7 @@
             staffButton.BackColor = Color.WhiteSmoke;
             staffButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             staffButton.ForeColor = Color.DarkRed;
-            staffButton.Location = new Point(15, 184);
+            staffButton.Location = new Point(15, 220);
             staffButton.Name = "staffButton";
             staffButton.Size = new Size(115, 40);
             staffButton.TabIndex = 2;
@@ -176,27 +175,13 @@
             staffButton.UseVisualStyleBackColor = false;
             staffButton.Click += staffButton_Click;
             // 
-            // countriesButton
-            // 
-            countriesButton.Anchor = AnchorStyles.None;
-            countriesButton.BackColor = Color.WhiteSmoke;
-            countriesButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            countriesButton.ForeColor = Color.DarkRed;
-            countriesButton.Location = new Point(15, 401);
-            countriesButton.Name = "countriesButton";
-            countriesButton.Size = new Size(115, 40);
-            countriesButton.TabIndex = 5;
-            countriesButton.Text = "Countries";
-            countriesButton.UseVisualStyleBackColor = false;
-            countriesButton.Click += countriesButton_Click;
-            // 
             // stadiumsButton
             // 
             stadiumsButton.Anchor = AnchorStyles.None;
             stadiumsButton.BackColor = Color.WhiteSmoke;
             stadiumsButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             stadiumsButton.ForeColor = Color.DarkRed;
-            stadiumsButton.Location = new Point(15, 327);
+            stadiumsButton.Location = new Point(15, 386);
             stadiumsButton.Name = "stadiumsButton";
             stadiumsButton.Size = new Size(115, 40);
             stadiumsButton.TabIndex = 4;
@@ -227,7 +212,6 @@
             // 
             leftNavigationSplitContainer.Panel1.BackColor = Color.DarkRed;
             leftNavigationSplitContainer.Panel1.Controls.Add(stadiumsButton);
-            leftNavigationSplitContainer.Panel1.Controls.Add(countriesButton);
             leftNavigationSplitContainer.Panel1.Controls.Add(playersButton);
             leftNavigationSplitContainer.Panel1.Controls.Add(teamsButton);
             leftNavigationSplitContainer.Panel1.Controls.Add(competitionsButton);
@@ -266,7 +250,6 @@
         private Panel topNavigationPanel;
         private Button playersButton;
         private Button teamsButton;
-        private Button countriesButton;
         private Button stadiumsButton;
         private Button competitionsButton;
         private Button staffButton;
