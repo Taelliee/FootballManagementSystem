@@ -110,6 +110,24 @@ namespace FootballManager
             //disbale action buttons/panel?
         }
 
+        //private void mainLogo_Click(object sender, EventArgs e)
+        //{
+        //    gifPictureBox.BringToFront();
+        //    welcomeLabel.BringToFront();
+        //}
+
+        private void mainLogoPictureBox_Click(object sender, EventArgs e)
+        {
+            gifPictureBox.BringToFront();
+            welcomeLabel.BringToFront();
+        }
+
+        private void mainLogo_Click(object sender, EventArgs e)
+        {
+            gifPictureBox.BringToFront();
+            welcomeLabel.BringToFront();
+        }
+
         //private void CreateChart()
         //{
         //    var chart = new Chart
