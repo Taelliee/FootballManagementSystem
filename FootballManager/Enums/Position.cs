@@ -8,7 +8,7 @@ namespace FootballManager.Enums
 {
     public enum Position
     {
-        //Goalkeeper,
+        Goalkeeper,
         //Defender,
         //Midfielder,
         //Forward  add Fottballer position in the entity?
