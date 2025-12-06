@@ -6,13 +6,11 @@ using System.Threading.Tasks;
 
 namespace FootballManager.Enums
 {
-    public enum Position
+    public enum PlayerPosition
     {
-        HeadCoach,
-        AssistantCoach,
-        Rehabilitator,
-        Referee,
-        MedicalStaff,
-        Nutritionist
+        GoalKeeper,
+        Defender,
+        Midfielder,
+        Forward
     }
 }

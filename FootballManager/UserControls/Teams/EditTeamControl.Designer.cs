@@ -1,6 +1,6 @@
-﻿namespace FootballManager.UserControls.Players
+﻿namespace FootballManager.UserControls.Teams
 {
-    partial class EditPlayerControl
+    partial class EditTeamControl
     {
         /// <summary> 
         /// Required designer variable.
@@ -28,80 +28,74 @@
         /// </summary>
         private void InitializeComponent()
         {
+            label3 = new Label();
+            nameTextBox = new TextBox();
             label2 = new Label();
-            playerPositionComboBox = new ComboBox();
-            fullNameComboBox = new ComboBox();
+            coachTextBox = new TextBox();
             label1 = new Label();
-            shirtNumberLabel = new Label();
             countryLabel = new Label();
             teamLabel = new Label();
-            fullNameLabel = new Label();
             teamComboBox = new ComboBox();
             countryComboBox = new ComboBox();
-            shirtNumberTextBox = new TextBox();
             editButton = new Button();
             SuspendLayout();
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
+            label3.ForeColor = Color.DarkRed;
+            label3.Location = new Point(230, 433);
+            label3.Name = "label3";
+            label3.Size = new Size(82, 20);
+            label3.TabIndex = 43;
+            label3.Text = "New name";
+            // 
+            // nameTextBox
+            // 
+            nameTextBox.Location = new Point(353, 430);
+            nameTextBox.Name = "nameTextBox";
+            nameTextBox.Size = new Size(200, 27);
+            nameTextBox.TabIndex = 42;
             // 
             // label2
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
             label2.ForeColor = Color.DarkRed;
-            label2.Location = new Point(228, 426);
+            label2.Location = new Point(226, 348);
             label2.Name = "label2";
-            label2.Size = new Size(63, 20);
-            label2.TabIndex = 34;
-            label2.Text = "Position";
+            label2.Size = new Size(91, 20);
+            label2.TabIndex = 41;
+            label2.Text = "Head Coach";
             // 
-            // playerPositionComboBox
+            // coachTextBox
             // 
-            playerPositionComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-            playerPositionComboBox.FormattingEnabled = true;
-            playerPositionComboBox.Location = new Point(331, 423);
-            playerPositionComboBox.Name = "playerPositionComboBox";
-            playerPositionComboBox.Size = new Size(200, 28);
-            playerPositionComboBox.TabIndex = 33;
-            // 
-            // fullNameComboBox
-            // 
-            fullNameComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-            fullNameComboBox.FormattingEnabled = true;
-            fullNameComboBox.Location = new Point(331, 165);
-            fullNameComboBox.Name = "fullNameComboBox";
-            fullNameComboBox.Size = new Size(285, 28);
-            fullNameComboBox.TabIndex = 32;
+            coachTextBox.Location = new Point(353, 345);
+            coachTextBox.Name = "coachTextBox";
+            coachTextBox.Size = new Size(200, 27);
+            coachTextBox.TabIndex = 40;
             // 
             // label1
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 36F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
             label1.ForeColor = Color.DarkRed;
-            label1.Location = new Point(261, 36);
+            label1.Location = new Point(267, 35);
             label1.Name = "label1";
-            label1.Size = new Size(341, 81);
-            label1.TabIndex = 31;
-            label1.Text = "Edit Player";
-            // 
-            // shirtNumberLabel
-            // 
-            shirtNumberLabel.AutoSize = true;
-            shirtNumberLabel.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
-            shirtNumberLabel.ForeColor = Color.DarkRed;
-            shirtNumberLabel.Location = new Point(230, 359);
-            shirtNumberLabel.Name = "shirtNumberLabel";
-            shirtNumberLabel.Size = new Size(62, 20);
-            shirtNumberLabel.TabIndex = 30;
-            shirtNumberLabel.Text = "Shirt №";
+            label1.Size = new Size(318, 81);
+            label1.TabIndex = 39;
+            label1.Text = "Edit Team";
             // 
             // countryLabel
             // 
             countryLabel.AutoSize = true;
             countryLabel.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
             countryLabel.ForeColor = Color.DarkRed;
-            countryLabel.Location = new Point(230, 294);
+            countryLabel.Location = new Point(252, 182);
             countryLabel.Name = "countryLabel";
             countryLabel.Size = new Size(65, 20);
-            countryLabel.TabIndex = 29;
+            countryLabel.TabIndex = 38;
             countryLabel.Text = "Country";
             // 
             // teamLabel
@@ -109,95 +103,73 @@
             teamLabel.AutoSize = true;
             teamLabel.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
             teamLabel.ForeColor = Color.DarkRed;
-            teamLabel.Location = new Point(245, 229);
+            teamLabel.Location = new Point(267, 264);
             teamLabel.Name = "teamLabel";
             teamLabel.Size = new Size(45, 20);
-            teamLabel.TabIndex = 28;
+            teamLabel.TabIndex = 37;
             teamLabel.Text = "Team";
-            // 
-            // fullNameLabel
-            // 
-            fullNameLabel.AutoSize = true;
-            fullNameLabel.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
-            fullNameLabel.ForeColor = Color.DarkRed;
-            fullNameLabel.Location = new Point(214, 168);
-            fullNameLabel.Name = "fullNameLabel";
-            fullNameLabel.Size = new Size(79, 20);
-            fullNameLabel.TabIndex = 27;
-            fullNameLabel.Text = "Full Name";
             // 
             // teamComboBox
             // 
             teamComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             teamComboBox.FormattingEnabled = true;
-            teamComboBox.Location = new Point(331, 226);
+            teamComboBox.Location = new Point(353, 261);
             teamComboBox.Name = "teamComboBox";
             teamComboBox.Size = new Size(200, 28);
-            teamComboBox.TabIndex = 26;
+            teamComboBox.TabIndex = 36;
             // 
             // countryComboBox
             // 
             countryComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             countryComboBox.FormattingEnabled = true;
-            countryComboBox.Location = new Point(331, 291);
+            countryComboBox.Location = new Point(353, 179);
             countryComboBox.Name = "countryComboBox";
             countryComboBox.Size = new Size(200, 28);
-            countryComboBox.TabIndex = 25;
-            // 
-            // shirtNumberTextBox
-            // 
-            shirtNumberTextBox.Location = new Point(331, 356);
-            shirtNumberTextBox.Name = "shirtNumberTextBox";
-            shirtNumberTextBox.Size = new Size(125, 27);
-            shirtNumberTextBox.TabIndex = 24;
+            countryComboBox.TabIndex = 35;
             // 
             // editButton
             // 
             editButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 204);
             editButton.ForeColor = Color.DarkRed;
-            editButton.Location = new Point(331, 504);
+            editButton.Location = new Point(353, 514);
             editButton.Name = "editButton";
             editButton.Size = new Size(115, 40);
-            editButton.TabIndex = 23;
+            editButton.TabIndex = 34;
             editButton.Text = "Edit";
             editButton.UseVisualStyleBackColor = true;
             // 
-            // EditPlayerControl
+            // EditTeamControl
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Linen;
+            Controls.Add(label3);
+            Controls.Add(nameTextBox);
             Controls.Add(label2);
-            Controls.Add(playerPositionComboBox);
-            Controls.Add(fullNameComboBox);
+            Controls.Add(coachTextBox);
             Controls.Add(label1);
-            Controls.Add(shirtNumberLabel);
             Controls.Add(countryLabel);
             Controls.Add(teamLabel);
-            Controls.Add(fullNameLabel);
             Controls.Add(teamComboBox);
             Controls.Add(countryComboBox);
-            Controls.Add(shirtNumberTextBox);
             Controls.Add(editButton);
-            Name = "EditPlayerControl";
-            Size = new Size(830, 580);
+            Name = "EditTeamControl";
+            Size = new Size(845, 605);
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
 
+        private Label label3;
+        private TextBox nameTextBox;
         private Label label2;
-        private ComboBox playerPositionComboBox;
-        private ComboBox fullNameComboBox;
+        private TextBox coachTextBox;
         private Label label1;
-        private Label shirtNumberLabel;
         private Label countryLabel;
         private Label teamLabel;
-        private Label fullNameLabel;
         private ComboBox teamComboBox;
         private ComboBox countryComboBox;
-        private TextBox shirtNumberTextBox;
         private Button editButton;
     }
 }

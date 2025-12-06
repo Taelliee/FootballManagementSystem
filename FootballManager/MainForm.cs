@@ -1,46 +1,86 @@
+using System.Windows.Forms.DataVisualization.Charting;
 using FootballManager.Enums;
 using FootballManager.UserControls.Players;
-using System.Windows.Forms.DataVisualization.Charting;
+using FootballManager.UserControls.Teams;
 
 namespace FootballManager
 {
     public partial class MainForm : Form
     {
+        // by default - players controls
         private EntityType currentEntity = EntityType.Players;
         private ActionType currentAction = ActionType.Add;
         public MainForm()
         {
             InitializeComponent();
+            UpdateCenterPanel();
         }
 
         private void UpdateCenterPanel()
         {
             contentPanel.Controls.Clear();
-            UserControl control = new AddPlayerControl(); //default?
+            UserControl control = null;
 
-            if (currentEntity == EntityType.Players)
+            switch (currentEntity)
             {
-                switch (currentAction)
-                {
-                    case ActionType.Add:
-                        control = new AddPlayerControl();
-                        break;
-                    case ActionType.Edit:
-                        control = new EditPlayerControl();
-                        break;
-                    case ActionType.Delete:
-                        control = new DeletePlayerControl();
-                        break;
-                    case ActionType.List:
-                        control = new ListPlayersControl();
-                        break;
-                }
+                case EntityType.Players:
+                    switch (currentAction)
+                    {
+                        case ActionType.Add:
+                            control = new AddPlayerControl();
+                            break;
+                        case ActionType.Edit:
+                            control = new EditPlayerControl();
+                            break;
+                        case ActionType.Delete:
+                            control = new DeletePlayerControl();
+                            break;
+                        case ActionType.List:
+                            control = new ListPlayersControl();
+                            break;
+                    }
+                    break;
+
+                case EntityType.Teams:
+                    switch (currentAction)
+                    {
+                        case ActionType.Add:
+                            control = new AddTeamControl();
+                            break;
+                        case ActionType.Edit:
+                            control = new EditTeamControl();
+                            break;
+                        case ActionType.Delete:
+                            control = new DeleteTeamControl();
+                            break;
+                        case ActionType.List:
+                            control = new ListTeamsControl();
+                            break;
+                    }
+                    break;
+
+                case EntityType.Staff:
+                    // ... staff ...
+                    break;
+
+                    // ... the other entities ...
             }
 
-            // same for Teams, Staff, Competitions, Stadiums, Countries
-
-            control.Dock = DockStyle.Fill;
-            contentPanel.Controls.Add(control);
+            if (control != null)
+            {
+                control.Dock = DockStyle.Fill;
+                contentPanel.Controls.Add(control);
+            }
+            else
+            {
+                // message working on it
+                Label label = new Label();
+                label.Text = $"{currentEntity} - {currentAction} is coming soon...";
+                label.AutoSize = true;
+                label.Location = new System.Drawing.Point(20, 20);
+                label.Font = new System.Drawing.Font("Arial", 14);
+                contentPanel.Controls.Add(label);
+            }
         }
 
         //entity buttons
@@ -104,6 +144,10 @@ namespace FootballManager
             currentAction = ActionType.List;
             UpdateCenterPanel();
         }
+
+
+
+
 
         private void queriesButton_Click(object sender, EventArgs e)
         {

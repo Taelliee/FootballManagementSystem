@@ -12,5 +12,10 @@ namespace FootballManager.Models
         public int Id { get; set; }
         public string FullName { get; set; }
         public Country Country { get; set; }
+
+        public override string ToString()
+        {
+            return $"{Id} | {FullName} | {Country}";
+        }
     }
 }

@@ -1,6 +1,6 @@
-﻿namespace FootballManager.UserControls.Players
+﻿namespace FootballManager.UserControls.Teams
 {
-    partial class DeletePlayerControl
+    partial class DeleteTeamControl
     {
         /// <summary> 
         /// Required designer variable.
@@ -28,100 +28,100 @@
         /// </summary>
         private void InitializeComponent()
         {
+            countryComboBox = new ComboBox();
+            label2 = new Label();
+            nameComboBox = new ComboBox();
             label1 = new Label();
-            teamLabel = new Label();
             fullNameLabel = new Label();
-            teamComboBox = new ComboBox();
-            fullNameComboBox = new ComboBox();
             deleteButton = new Button();
             SuspendLayout();
+            // 
+            // countryComboBox
+            // 
+            countryComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            countryComboBox.FormattingEnabled = true;
+            countryComboBox.Location = new Point(340, 254);
+            countryComboBox.Name = "countryComboBox";
+            countryComboBox.Size = new Size(200, 28);
+            countryComboBox.TabIndex = 38;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
+            label2.ForeColor = Color.DarkRed;
+            label2.Location = new Point(254, 257);
+            label2.Name = "label2";
+            label2.Size = new Size(65, 20);
+            label2.TabIndex = 37;
+            label2.Text = "Country";
+            // 
+            // nameComboBox
+            // 
+            nameComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            nameComboBox.FormattingEnabled = true;
+            nameComboBox.Location = new Point(340, 346);
+            nameComboBox.Name = "nameComboBox";
+            nameComboBox.Size = new Size(200, 28);
+            nameComboBox.TabIndex = 36;
             // 
             // label1
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 36F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
             label1.ForeColor = Color.DarkRed;
-            label1.Location = new Point(210, 61);
+            label1.Location = new Point(218, 58);
             label1.Name = "label1";
-            label1.Size = new Size(411, 81);
-            label1.TabIndex = 25;
-            label1.Text = "Delete Player";
-            // 
-            // teamLabel
-            // 
-            teamLabel.AutoSize = true;
-            teamLabel.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
-            teamLabel.ForeColor = Color.DarkRed;
-            teamLabel.Location = new Point(264, 228);
-            teamLabel.Name = "teamLabel";
-            teamLabel.Size = new Size(45, 20);
-            teamLabel.TabIndex = 24;
-            teamLabel.Text = "Team";
+            label1.Size = new Size(388, 81);
+            label1.TabIndex = 35;
+            label1.Text = "Delete Team";
             // 
             // fullNameLabel
             // 
             fullNameLabel.AutoSize = true;
             fullNameLabel.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
             fullNameLabel.ForeColor = Color.DarkRed;
-            fullNameLabel.Location = new Point(230, 313);
+            fullNameLabel.Location = new Point(254, 349);
             fullNameLabel.Name = "fullNameLabel";
-            fullNameLabel.Size = new Size(79, 20);
-            fullNameLabel.TabIndex = 23;
-            fullNameLabel.Text = "Full Name";
-            // 
-            // teamComboBox
-            // 
-            teamComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-            teamComboBox.FormattingEnabled = true;
-            teamComboBox.Location = new Point(331, 225);
-            teamComboBox.Name = "teamComboBox";
-            teamComboBox.Size = new Size(200, 28);
-            teamComboBox.TabIndex = 22;
-            // 
-            // fullNameComboBox
-            // 
-            fullNameComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-            fullNameComboBox.FormattingEnabled = true;
-            fullNameComboBox.Location = new Point(331, 310);
-            fullNameComboBox.Name = "fullNameComboBox";
-            fullNameComboBox.Size = new Size(200, 28);
-            fullNameComboBox.TabIndex = 21;
+            fullNameLabel.Size = new Size(50, 20);
+            fullNameLabel.TabIndex = 34;
+            fullNameLabel.Text = "Name";
             // 
             // deleteButton
             // 
             deleteButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 204);
             deleteButton.ForeColor = Color.DarkRed;
-            deleteButton.Location = new Point(331, 438);
+            deleteButton.Location = new Point(340, 491);
             deleteButton.Name = "deleteButton";
             deleteButton.Size = new Size(115, 40);
-            deleteButton.TabIndex = 20;
+            deleteButton.TabIndex = 33;
             deleteButton.Text = "Delete";
             deleteButton.UseVisualStyleBackColor = true;
             // 
-            // DeletePlayerControl
+            // DeleteTeamControl
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Linen;
+            Controls.Add(countryComboBox);
+            Controls.Add(label2);
+            Controls.Add(nameComboBox);
             Controls.Add(label1);
-            Controls.Add(teamLabel);
             Controls.Add(fullNameLabel);
-            Controls.Add(teamComboBox);
-            Controls.Add(fullNameComboBox);
             Controls.Add(deleteButton);
-            Name = "DeletePlayerControl";
-            Size = new Size(830, 580);
+            Name = "DeleteTeamControl";
+            Size = new Size(824, 602);
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
 
+        private ComboBox countryComboBox;
+        private Label label2;
+        private ComboBox nameComboBox;
         private Label label1;
-        private Label teamLabel;
         private Label fullNameLabel;
-        private ComboBox teamComboBox;
-        private ComboBox fullNameComboBox;
         private Button deleteButton;
     }
 }

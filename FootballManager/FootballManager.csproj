@@ -14,9 +14,11 @@
 
   <ItemGroup>
     <Folder Include="UserControls\Competitions\" />
+    <Folder Include="UserControls\Competitions\" />
     <Folder Include="UserControls\Staff\" />
     <Folder Include="UserControls\Stadiums\" />
-    <Folder Include="UserControls\Teams\" />
+    <Folder Include="UserControls\Staff\" />
+    <Folder Include="UserControls\Stadiums\" />
   </ItemGroup>
 
   <ItemGroup>
