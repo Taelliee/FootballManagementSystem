@@ -1,6 +1,6 @@
-﻿namespace FootballManager.UserControls.Players
+﻿namespace FootballManager.UserControls.Staff
 {
-    partial class DeletePlayerControl
+    partial class DeleteStaffControl
     {
         /// <summary> 
         /// Required designer variable.
@@ -28,101 +28,75 @@
         /// </summary>
         private void InitializeComponent()
         {
+            nameComboBox = new ComboBox();
             label1 = new Label();
-            teamLabel = new Label();
             fullNameLabel = new Label();
-            teamComboBox = new ComboBox();
-            fullNameComboBox = new ComboBox();
             deleteButton = new Button();
             SuspendLayout();
+            // 
+            // nameComboBox
+            // 
+            nameComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            nameComboBox.FormattingEnabled = true;
+            nameComboBox.Location = new Point(364, 293);
+            nameComboBox.Name = "nameComboBox";
+            nameComboBox.Size = new Size(200, 28);
+            nameComboBox.TabIndex = 53;
             // 
             // label1
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 36F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
             label1.ForeColor = Color.DarkRed;
-            label1.Location = new Point(210, 61);
+            label1.Location = new Point(251, 92);
             label1.Name = "label1";
-            label1.Size = new Size(411, 81);
-            label1.TabIndex = 25;
-            label1.Text = "Delete Player";
-            // 
-            // teamLabel
-            // 
-            teamLabel.AutoSize = true;
-            teamLabel.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
-            teamLabel.ForeColor = Color.DarkRed;
-            teamLabel.Location = new Point(264, 228);
-            teamLabel.Name = "teamLabel";
-            teamLabel.Size = new Size(45, 20);
-            teamLabel.TabIndex = 24;
-            teamLabel.Text = "Team";
+            label1.Size = new Size(368, 81);
+            label1.TabIndex = 52;
+            label1.Text = "Delete Staff";
             // 
             // fullNameLabel
             // 
             fullNameLabel.AutoSize = true;
             fullNameLabel.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
             fullNameLabel.ForeColor = Color.DarkRed;
-            fullNameLabel.Location = new Point(230, 313);
+            fullNameLabel.Location = new Point(278, 296);
             fullNameLabel.Name = "fullNameLabel";
-            fullNameLabel.Size = new Size(79, 20);
-            fullNameLabel.TabIndex = 23;
-            fullNameLabel.Text = "Full Name";
-            // 
-            // teamComboBox
-            // 
-            teamComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-            teamComboBox.FormattingEnabled = true;
-            teamComboBox.Location = new Point(331, 225);
-            teamComboBox.Name = "teamComboBox";
-            teamComboBox.Size = new Size(200, 28);
-            teamComboBox.TabIndex = 22;
-            // 
-            // fullNameComboBox
-            // 
-            fullNameComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-            fullNameComboBox.FormattingEnabled = true;
-            fullNameComboBox.Location = new Point(331, 310);
-            fullNameComboBox.Name = "fullNameComboBox";
-            fullNameComboBox.Size = new Size(200, 28);
-            fullNameComboBox.TabIndex = 21;
+            fullNameLabel.Size = new Size(50, 20);
+            fullNameLabel.TabIndex = 51;
+            fullNameLabel.Text = "Name";
             // 
             // deleteButton
             // 
             deleteButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 204);
             deleteButton.ForeColor = Color.DarkRed;
-            deleteButton.Location = new Point(331, 438);
+            deleteButton.Location = new Point(364, 473);
             deleteButton.Name = "deleteButton";
             deleteButton.Size = new Size(115, 40);
-            deleteButton.TabIndex = 20;
+            deleteButton.TabIndex = 50;
             deleteButton.Text = "Delete";
             deleteButton.UseVisualStyleBackColor = true;
             deleteButton.Click += deleteButton_Click;
             // 
-            // DeletePlayerControl
+            // DeleteStaffControl
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Linen;
+            Controls.Add(nameComboBox);
             Controls.Add(label1);
-            Controls.Add(teamLabel);
             Controls.Add(fullNameLabel);
-            Controls.Add(teamComboBox);
-            Controls.Add(fullNameComboBox);
             Controls.Add(deleteButton);
-            Name = "DeletePlayerControl";
-            Size = new Size(830, 580);
+            Name = "DeleteStaffControl";
+            Size = new Size(870, 605);
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
 
+        private ComboBox nameComboBox;
         private Label label1;
-        private Label teamLabel;
         private Label fullNameLabel;
-        private ComboBox teamComboBox;
-        private ComboBox fullNameComboBox;
         private Button deleteButton;
     }
 }

@@ -97,6 +97,7 @@
             deleteButton.TabIndex = 33;
             deleteButton.Text = "Delete";
             deleteButton.UseVisualStyleBackColor = true;
+            deleteButton.Click += deleteButton_Click;
             // 
             // DeleteTeamControl
             // 

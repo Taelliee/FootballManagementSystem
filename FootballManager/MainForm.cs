@@ -2,6 +2,8 @@ using System.Windows.Forms.DataVisualization.Charting;
 using FootballManager.Enums;
 using FootballManager.UserControls.Players;
 using FootballManager.UserControls.Teams;
+using FootballManager.UserControls.Competitions;
+using FootballManager.UserControls.Staff;
 
 namespace FootballManager
 {
@@ -59,11 +61,41 @@ namespace FootballManager
                     }
                     break;
 
-                case EntityType.Staff:
-                    // ... staff ...
+                case EntityType.Competitions:
+                    switch (currentAction)
+                    {
+                        case ActionType.Add:
+                            control = new AddCompetitionControl();
+                            break;
+                        case ActionType.Edit:
+                            control = new EditCompetitionControl();
+                            break;
+                        case ActionType.Delete:
+                            control = new DeleteCompetitionControl();
+                            break;
+                        case ActionType.List:
+                            control = new ListCompetitionsControl();
+                            break;
+                    }
                     break;
 
-                    // ... the other entities ...
+                case EntityType.Staff:
+                    switch (currentAction)
+                    {
+                        case ActionType.Add:
+                            control = new AddStaffControl();
+                            break;
+                        case ActionType.Edit:
+                            control = new EditStaffControl();
+                            break;
+                        case ActionType.Delete:
+                            control = new DeleteStaffControl();
+                            break;
+                        case ActionType.List:
+                            control = new ListStaffControl();
+                            break;
+                    }
+                    break;
             }
 
             if (control != null)

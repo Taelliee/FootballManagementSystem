@@ -22,5 +22,10 @@ namespace FootballManager.Models
         public string Stadium { get; set; }
 
         public int GoalsScored { get; set; }
+
+        public override string ToString()
+        {
+            return $"Event #{EventId} @ {Stadium}";
+        }
     }
 }

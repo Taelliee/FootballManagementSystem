@@ -1,6 +1,6 @@
-﻿namespace FootballManager.UserControls.Teams
+﻿namespace FootballManager.UserControls.Staff
 {
-    partial class EditTeamControl
+    partial class EditStaffControl
     {
         /// <summary> 
         /// Required designer variable.
@@ -28,148 +28,125 @@
         /// </summary>
         private void InitializeComponent()
         {
-            label3 = new Label();
-            nameTextBox = new TextBox();
+            nameComboBox = new ComboBox();
+            positionComboBox = new ComboBox();
             label2 = new Label();
-            coachTextBox = new TextBox();
             label1 = new Label();
             countryLabel = new Label();
-            teamLabel = new Label();
-            teamComboBox = new ComboBox();
+            fullNameLabel = new Label();
             countryComboBox = new ComboBox();
             editButton = new Button();
             SuspendLayout();
             // 
-            // label3
+            // nameComboBox
             // 
-            label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
-            label3.ForeColor = Color.DarkRed;
-            label3.Location = new Point(230, 433);
-            label3.Name = "label3";
-            label3.Size = new Size(82, 20);
-            label3.TabIndex = 43;
-            label3.Text = "New name";
+            nameComboBox.FormattingEnabled = true;
+            nameComboBox.Location = new Point(356, 228);
+            nameComboBox.Name = "nameComboBox";
+            nameComboBox.Size = new Size(200, 28);
+            nameComboBox.TabIndex = 49;
             // 
-            // nameTextBox
+            // positionComboBox
             // 
-            nameTextBox.Location = new Point(353, 430);
-            nameTextBox.Name = "nameTextBox";
-            nameTextBox.Size = new Size(200, 27);
-            nameTextBox.TabIndex = 42;
+            positionComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            positionComboBox.FormattingEnabled = true;
+            positionComboBox.Location = new Point(356, 381);
+            positionComboBox.Name = "positionComboBox";
+            positionComboBox.Size = new Size(200, 28);
+            positionComboBox.TabIndex = 48;
             // 
             // label2
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
             label2.ForeColor = Color.DarkRed;
-            label2.Location = new Point(226, 348);
+            label2.Location = new Point(257, 384);
             label2.Name = "label2";
-            label2.Size = new Size(91, 20);
-            label2.TabIndex = 41;
-            label2.Text = "Head Coach";
-            // 
-            // coachTextBox
-            // 
-            coachTextBox.Location = new Point(353, 345);
-            coachTextBox.Name = "coachTextBox";
-            coachTextBox.Size = new Size(200, 27);
-            coachTextBox.TabIndex = 40;
+            label2.Size = new Size(63, 20);
+            label2.TabIndex = 47;
+            label2.Text = "Position";
             // 
             // label1
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 36F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
             label1.ForeColor = Color.DarkRed;
-            label1.Location = new Point(267, 35);
+            label1.Location = new Point(270, 63);
             label1.Name = "label1";
-            label1.Size = new Size(318, 81);
-            label1.TabIndex = 39;
-            label1.Text = "Edit Team";
+            label1.Size = new Size(298, 81);
+            label1.TabIndex = 46;
+            label1.Text = "Edit Staff";
             // 
             // countryLabel
             // 
             countryLabel.AutoSize = true;
             countryLabel.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
             countryLabel.ForeColor = Color.DarkRed;
-            countryLabel.Location = new Point(252, 182);
+            countryLabel.Location = new Point(255, 303);
             countryLabel.Name = "countryLabel";
             countryLabel.Size = new Size(65, 20);
-            countryLabel.TabIndex = 38;
+            countryLabel.TabIndex = 45;
             countryLabel.Text = "Country";
             // 
-            // teamLabel
+            // fullNameLabel
             // 
-            teamLabel.AutoSize = true;
-            teamLabel.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
-            teamLabel.ForeColor = Color.DarkRed;
-            teamLabel.Location = new Point(267, 264);
-            teamLabel.Name = "teamLabel";
-            teamLabel.Size = new Size(45, 20);
-            teamLabel.TabIndex = 37;
-            teamLabel.Text = "Team";
-            // 
-            // teamComboBox
-            // 
-            teamComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-            teamComboBox.FormattingEnabled = true;
-            teamComboBox.Location = new Point(353, 261);
-            teamComboBox.Name = "teamComboBox";
-            teamComboBox.Size = new Size(200, 28);
-            teamComboBox.TabIndex = 36;
+            fullNameLabel.AutoSize = true;
+            fullNameLabel.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
+            fullNameLabel.ForeColor = Color.DarkRed;
+            fullNameLabel.Location = new Point(270, 231);
+            fullNameLabel.Name = "fullNameLabel";
+            fullNameLabel.Size = new Size(50, 20);
+            fullNameLabel.TabIndex = 44;
+            fullNameLabel.Text = "Name";
             // 
             // countryComboBox
             // 
             countryComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             countryComboBox.FormattingEnabled = true;
-            countryComboBox.Location = new Point(353, 179);
+            countryComboBox.Location = new Point(356, 300);
             countryComboBox.Name = "countryComboBox";
             countryComboBox.Size = new Size(200, 28);
-            countryComboBox.TabIndex = 35;
+            countryComboBox.TabIndex = 43;
             // 
             // editButton
             // 
             editButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 204);
             editButton.ForeColor = Color.DarkRed;
-            editButton.Location = new Point(353, 514);
+            editButton.Location = new Point(356, 500);
             editButton.Name = "editButton";
             editButton.Size = new Size(115, 40);
-            editButton.TabIndex = 34;
+            editButton.TabIndex = 42;
             editButton.Text = "Edit";
             editButton.UseVisualStyleBackColor = true;
             editButton.Click += editButton_Click;
             // 
-            // EditTeamControl
+            // EditStaffControl
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Linen;
-            Controls.Add(label3);
-            Controls.Add(nameTextBox);
+            Controls.Add(nameComboBox);
+            Controls.Add(positionComboBox);
             Controls.Add(label2);
-            Controls.Add(coachTextBox);
             Controls.Add(label1);
             Controls.Add(countryLabel);
-            Controls.Add(teamLabel);
-            Controls.Add(teamComboBox);
+            Controls.Add(fullNameLabel);
             Controls.Add(countryComboBox);
             Controls.Add(editButton);
-            Name = "EditTeamControl";
-            Size = new Size(845, 605);
+            Name = "EditStaffControl";
+            Size = new Size(823, 602);
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
 
-        private Label label3;
-        private TextBox nameTextBox;
+        private ComboBox nameComboBox;
+        private ComboBox positionComboBox;
         private Label label2;
-        private TextBox coachTextBox;
         private Label label1;
         private Label countryLabel;
-        private Label teamLabel;
-        private ComboBox teamComboBox;
+        private Label fullNameLabel;
         private ComboBox countryComboBox;
         private Button editButton;
     }

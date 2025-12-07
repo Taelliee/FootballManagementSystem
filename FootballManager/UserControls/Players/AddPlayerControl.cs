@@ -9,14 +9,22 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using FootballManager.Models;
 using FootballManager.Enums;
+using System.IO;
+
 
 namespace FootballManager
 {
     public partial class AddPlayerControl : UserControl
     {
+        private string selectedImagePath = "";
+
         public AddPlayerControl()
         {
             InitializeComponent();
+
+            badgePictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+            uploadButton.Click += uploadButton_Click;
+
             LoadFormData();
         }
 
@@ -30,6 +38,24 @@ namespace FootballManager
             if (FootballData.Teams.Count > 0)
             {
                 teamComboBox.Items.AddRange(FootballData.Teams.Keys.ToArray());
+            }
+        }
+
+        // uploading image
+        private void uploadButton_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                // filter - only images
+                openFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp";
+                openFileDialog.Title = "Select Team Badge";
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    selectedImagePath = openFileDialog.FileName;
+
+                    badgePictureBox.Image = Image.FromFile(selectedImagePath);
+                }
             }
         }
 
@@ -65,6 +91,13 @@ namespace FootballManager
                 return;
             }
 
+            // validation for image
+            if (string.IsNullOrEmpty(selectedImagePath))
+            {
+                MessageBox.Show("Please upload a team badge!");
+                return;
+            }
+
             Country selectedCountry = (Country)countryComboBox.SelectedItem;
             PlayerPosition selectedPosition = (PlayerPosition)playerPositionComboBox.SelectedItem;
 
@@ -76,18 +109,32 @@ namespace FootballManager
                 selectedCountry,
                 shirtNumber,
                 teamName,
-                "", // image path
+                selectedImagePath,
                 selectedPosition
             );
 
-            // save
-            FootballData.AddPlayer(newPlayer);
-            FootballData.SaveData();
+            // asks to save
+            string debugMessage = $" PLEASE CONFIRM DATA:\n\n" +
+                                  $"ID: {newPlayer.Id}\n" +
+                                  $"Name: {newPlayer.FullName}\n" +
+                                  $"Team: {newPlayer.TeamName}\n" +
+                                  $"Country: {newPlayer.Country}\n" +
+                                  $"Position: {newPlayer.Position}\n" +
+                                  $"Shirt #: {newPlayer.ShirtNumber}\n" +
+                                  $"Image: {(string.IsNullOrEmpty(selectedImagePath) ? "No Image" : "Image Selected")}";
 
-            MessageBox.Show($"Player {fullName} added successfully to team {teamName}!");
-            ClearFields();
+            DialogResult result = MessageBox.Show(debugMessage, "Confirm Player", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
 
-            LoadFormData();
+            if (result == DialogResult.OK)
+            {
+                FootballData.AddPlayer(newPlayer);
+                FootballData.SaveData();
+
+                MessageBox.Show($"Player {fullName} added successfully to team {teamName}!");
+
+                ClearFields();
+                LoadFormData();
+            }
         }
 
         private void ClearFields()
@@ -95,9 +142,9 @@ namespace FootballManager
             fullNameTextBox.Clear();
             shirtNumberTextBox.Clear();
             teamComboBox.Text = "";
-            // display first item in combo box
-            if (countryComboBox.Items.Count > 0) countryComboBox.SelectedIndex = 0;
-            if (playerPositionComboBox.Items.Count > 0) playerPositionComboBox.SelectedIndex = 0;
+            badgePictureBox.Image = null;
+            selectedImagePath = "";
+
         }
 
         // only numbers

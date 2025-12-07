@@ -1,6 +1,6 @@
-﻿namespace FootballManager.UserControls.Teams
+﻿namespace FootballManager.UserControls.Staff
 {
-    partial class ListTeamsControl
+    partial class ListStaffControl
     {
         /// <summary> 
         /// Required designer variable.
@@ -32,7 +32,7 @@
             dataGridView1 = new DataGridView();
             FullName = new DataGridViewTextBoxColumn();
             Country = new DataGridViewTextBoxColumn();
-            HeadCoach = new DataGridViewTextBoxColumn();
+            Position = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
@@ -41,23 +41,23 @@
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 24F, FontStyle.Bold | FontStyle.Italic);
             label1.ForeColor = Color.DarkRed;
-            label1.Location = new Point(278, 17);
+            label1.Location = new Point(214, 18);
             label1.Name = "label1";
-            label1.Size = new Size(263, 54);
-            label1.TabIndex = 14;
-            label1.Text = "List of teams";
+            label1.Size = new Size(419, 54);
+            label1.TabIndex = 18;
+            label1.Text = "List of staff members";
             // 
             // dataGridView1
             // 
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView1.BackgroundColor = Color.BurlyWood;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { FullName, Country, HeadCoach });
-            dataGridView1.Location = new Point(50, 92);
+            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { FullName, Country, Position });
+            dataGridView1.Location = new Point(54, 92);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersWidth = 51;
-            dataGridView1.Size = new Size(708, 447);
-            dataGridView1.TabIndex = 13;
+            dataGridView1.Size = new Size(711, 429);
+            dataGridView1.TabIndex = 17;
             // 
             // FullName
             // 
@@ -71,21 +71,21 @@
             Country.MinimumWidth = 6;
             Country.Name = "Country";
             // 
-            // HeadCoach
+            // Position
             // 
-            HeadCoach.HeaderText = "Head Coach";
-            HeadCoach.MinimumWidth = 6;
-            HeadCoach.Name = "HeadCoach";
+            Position.HeaderText = "Position";
+            Position.MinimumWidth = 6;
+            Position.Name = "Position";
             // 
-            // ListTeamsControl
+            // ListStaffControl
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Linen;
             Controls.Add(label1);
             Controls.Add(dataGridView1);
-            Name = "ListTeamsControl";
-            Size = new Size(812, 570);
+            Name = "ListStaffControl";
+            Size = new Size(820, 563);
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -97,6 +97,6 @@
         private DataGridView dataGridView1;
         private DataGridViewTextBoxColumn FullName;
         private DataGridViewTextBoxColumn Country;
-        private DataGridViewTextBoxColumn HeadCoach;
+        private DataGridViewTextBoxColumn Position;
     }
 }

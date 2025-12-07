@@ -42,6 +42,8 @@ namespace FootballManager
         // --- SAVE / LOAD LOGIC ---
         private static string playersFile = "players.txt";
         private static string staffFile = "staff.txt";
+        private static string teamsFile = "teams.txt";
+        private static string competitionsFile = "competitions.txt";
 
         public static void SaveData()
         {
@@ -60,6 +62,24 @@ namespace FootballManager
                 {
                     // Format: ID|Name|Country|Role
                     sw.WriteLine($"{s.Id}|{s.FullName}|{s.Country}|{s.Role}");
+                }
+            }
+
+            using (StreamWriter sw = new StreamWriter(teamsFile))
+            {
+                foreach (var team in Teams.Values)
+                {
+                    // Format: Name|Coach|Country
+                    sw.WriteLine($"{team.Name}|{team.CoachName}|{team.Country}");
+                }
+            }
+
+            using (StreamWriter sw = new StreamWriter(competitionsFile))
+            {
+                foreach (var c in Competitions)
+                {
+                    // Format: EventId|StaffId|PlayerId|Date|Country|Stadium|Goals
+                    sw.WriteLine($"{c.EventId}|{c.StaffId}|{c.PlayerId}|{c.MatchDate}|{c.HostCountry}|{c.Stadium}|{c.GoalsScored}");
                 }
             }
         }
@@ -125,6 +145,15 @@ namespace FootballManager
             return Players.Any() ? Players.Max(p => p.Id) + 1 : 1;
         }
 
+        public static int GetNextEventId()
+        {
+            return Competitions.Any() ? Competitions.Max(c => c.EventId) + 1 : 1;
+        }
+
+        public static int GetNextStaffId()
+        {
+            return StaffMembers.Any() ? StaffMembers.Max(s => s.Id) + 1 : 1;
+        }
 
         public static void RemovePlayer(Player player)
         {
@@ -146,10 +175,17 @@ namespace FootballManager
                         player.TeamName = "No Team";
                     }
                 }
-
                 Teams.Remove(teamName);
-
                 ActionHistory.Push($"Deleted team: {teamName}. Players are now free agents.");
+            }
+        }
+
+        public static void RemoveStaff(Staff staff)
+        {
+            if (staff != null && StaffMembers.Contains(staff))
+            {
+                StaffMembers.Remove(staff);
+                ActionHistory.Push($"Deleted staff: {staff.FullName}");
             }
         }
     }

@@ -36,11 +36,11 @@
             countryRadioButton = new RadioButton();
             teamRadioButton = new RadioButton();
             dataGridView1 = new DataGridView();
-            Column1 = new DataGridViewTextBoxColumn();
-            Column2 = new DataGridViewTextBoxColumn();
-            Column3 = new DataGridViewTextBoxColumn();
-            Column4 = new DataGridViewTextBoxColumn();
-            Column5 = new DataGridViewTextBoxColumn();
+            FullName = new DataGridViewTextBoxColumn();
+            Team = new DataGridViewTextBoxColumn();
+            Country = new DataGridViewTextBoxColumn();
+            ShirtNumber = new DataGridViewTextBoxColumn();
+            Position = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)teamBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
@@ -112,43 +112,43 @@
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView1.BackgroundColor = Color.BurlyWood;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { Column1, Column2, Column3, Column4, Column5 });
+            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { FullName, Team, Country, ShirtNumber, Position });
             dataGridView1.DataSource = teamBindingSource;
-            dataGridView1.Location = new Point(49, 121);
+            dataGridView1.Location = new Point(47, 121);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersWidth = 51;
-            dataGridView1.Size = new Size(732, 440);
+            dataGridView1.Size = new Size(741, 417);
             dataGridView1.TabIndex = 8;
             // 
-            // Column1
+            // FullName
             // 
-            Column1.HeaderText = "Full Name";
-            Column1.MinimumWidth = 6;
-            Column1.Name = "Column1";
+            FullName.HeaderText = "Full Name";
+            FullName.MinimumWidth = 6;
+            FullName.Name = "FullName";
             // 
-            // Column2
+            // Team
             // 
-            Column2.HeaderText = "Team";
-            Column2.MinimumWidth = 6;
-            Column2.Name = "Column2";
+            Team.HeaderText = "Team";
+            Team.MinimumWidth = 6;
+            Team.Name = "Team";
             // 
-            // Column3
+            // Country
             // 
-            Column3.HeaderText = "Country";
-            Column3.MinimumWidth = 6;
-            Column3.Name = "Column3";
+            Country.HeaderText = "Country";
+            Country.MinimumWidth = 6;
+            Country.Name = "Country";
             // 
-            // Column4
+            // ShirtNumber
             // 
-            Column4.HeaderText = "Shirt number";
-            Column4.MinimumWidth = 6;
-            Column4.Name = "Column4";
+            ShirtNumber.HeaderText = "Shirt Number";
+            ShirtNumber.MinimumWidth = 6;
+            ShirtNumber.Name = "ShirtNumber";
             // 
-            // Column5
+            // Position
             // 
-            Column5.HeaderText = "Position";
-            Column5.MinimumWidth = 6;
-            Column5.Name = "Column5";
+            Position.HeaderText = "Position";
+            Position.MinimumWidth = 6;
+            Position.Name = "Position";
             // 
             // ListPlayersControl
             // 
@@ -177,10 +177,10 @@
         private RadioButton countryRadioButton;
         private RadioButton teamRadioButton;
         private DataGridView dataGridView1;
-        private DataGridViewTextBoxColumn Column1;
-        private DataGridViewTextBoxColumn Column2;
-        private DataGridViewTextBoxColumn Column3;
-        private DataGridViewTextBoxColumn Column4;
-        private DataGridViewTextBoxColumn Column5;
+        private DataGridViewTextBoxColumn FullName;
+        private DataGridViewTextBoxColumn Team;
+        private DataGridViewTextBoxColumn Country;
+        private DataGridViewTextBoxColumn ShirtNumber;
+        private DataGridViewTextBoxColumn Position;
     }
 }

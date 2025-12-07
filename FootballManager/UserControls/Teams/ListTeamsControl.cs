@@ -20,6 +20,8 @@ namespace FootballManager.UserControls.Teams
 
         public void LoadTeams()
         {
+            dataGridView1.AllowUserToAddRows = false;
+
             dataGridView1.Rows.Clear();
 
             // Dictionary -> .Values

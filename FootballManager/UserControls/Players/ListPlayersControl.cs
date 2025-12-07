@@ -59,6 +59,8 @@ namespace FootballManager.UserControls.Players
 
         private void PopulateGrid(List<Player> players)
         {
+            dataGridView1.AllowUserToAddRows = false;
+
             dataGridView1.DataSource = null;
             dataGridView1.Rows.Clear();
 

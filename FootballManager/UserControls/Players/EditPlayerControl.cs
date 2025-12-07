@@ -10,10 +10,15 @@ namespace FootballManager.UserControls.Players
     public partial class EditPlayerControl : UserControl
     {
         private Player selectedPlayer; // old info for player
+        private string currentImagePath = "";
 
         public EditPlayerControl()
         {
             InitializeComponent();
+
+            badgePictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+            uploadButton.Click += uploadButton_Click;
+
             LoadData();
 
             fullNameComboBox.SelectedIndexChanged += fullNameComboBox_SelectedIndexChanged;
@@ -52,6 +57,34 @@ namespace FootballManager.UserControls.Players
                 teamComboBox.Text = selectedPlayer.TeamName;
                 countryComboBox.SelectedItem = selectedPlayer.Country;
                 playerPositionComboBox.SelectedItem = selectedPlayer.Position;
+
+
+                // image
+                if (!string.IsNullOrEmpty(selectedPlayer.ImagePath) && File.Exists(selectedPlayer.ImagePath))
+                {
+                    badgePictureBox.Image = Image.FromFile(selectedPlayer.ImagePath);
+                    currentImagePath = selectedPlayer.ImagePath;
+                }
+                else
+                {
+                    badgePictureBox.Image = null;
+                    currentImagePath = "";
+                }
+            }
+        }
+        // new image upload
+        private void uploadButton_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp";
+                openFileDialog.Title = "Select New Badge";
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    currentImagePath = openFileDialog.FileName;
+                    badgePictureBox.Image = Image.FromFile(currentImagePath);
+                }
             }
         }
 
@@ -77,6 +110,7 @@ namespace FootballManager.UserControls.Players
             selectedPlayer.Country = (Country)countryComboBox.SelectedItem;
             selectedPlayer.Position = (PlayerPosition)playerPositionComboBox.SelectedItem;
             selectedPlayer.ShirtNumber = int.Parse(newShirtStr);
+            selectedPlayer.ImagePath = currentImagePath;
 
             if (!FootballData.Teams.ContainsKey(newTeam))
             {
@@ -84,10 +118,26 @@ namespace FootballManager.UserControls.Players
                 FootballData.Teams.Add(newTeam, t);
             }
 
-            FootballData.SaveData();
-            FootballData.ActionHistory.Push($"Edited player: {selectedPlayer.FullName}");
+            // save
+            if (MessageBox.Show("Save changes?", "Confirm Edit", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                FootballData.SaveData();
+                FootballData.ActionHistory.Push($"Edited player: {selectedPlayer.FullName}");
+                MessageBox.Show("Player updated successfully!");
 
-            MessageBox.Show("Player updated successfully!");
+                LoadData();
+
+                fullNameComboBox.Text = "";
+                badgePictureBox.Image = null;
+                ClearFields();
+            }
+        }
+        private void ClearFields()
+        {
+            shirtNumberTextBox.Clear();
+            teamComboBox.Text = "";
+            badgePictureBox.Image = null;
+            selectedPlayer = null;
         }
     }
 }
