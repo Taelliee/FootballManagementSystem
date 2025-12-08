@@ -69,6 +69,8 @@ namespace FootballManager.UserControls.Teams
             MessageBox.Show("Team added successfully!");
             nameTextBox.Clear();
             coachTextBox.Clear();
+            badgePictureBox.Image = null;
+            selectedImagePath = "";
         }
     }
 }

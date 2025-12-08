@@ -131,6 +131,7 @@
             uploadButton.TabIndex = 34;
             uploadButton.Text = "Upload";
             uploadButton.UseVisualStyleBackColor = true;
+            uploadButton.Click += uploadButton_Click;
             // 
             // badgePictureBox
             // 

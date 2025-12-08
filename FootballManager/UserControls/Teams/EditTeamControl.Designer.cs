@@ -49,7 +49,7 @@
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
             label2.ForeColor = Color.DarkRed;
-            label2.Location = new Point(103, 340);
+            label2.Location = new Point(236, 257);
             label2.Name = "label2";
             label2.Size = new Size(91, 20);
             label2.TabIndex = 41;
@@ -57,7 +57,7 @@
             // 
             // coachTextBox
             // 
-            coachTextBox.Location = new Point(230, 337);
+            coachTextBox.Location = new Point(363, 254);
             coachTextBox.Name = "coachTextBox";
             coachTextBox.Size = new Size(200, 27);
             coachTextBox.TabIndex = 40;
@@ -67,7 +67,7 @@
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 36F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
             label1.ForeColor = Color.DarkRed;
-            label1.Location = new Point(267, 35);
+            label1.Location = new Point(271, 25);
             label1.Name = "label1";
             label1.Size = new Size(318, 81);
             label1.TabIndex = 39;
@@ -78,7 +78,7 @@
             countryLabel.AutoSize = true;
             countryLabel.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
             countryLabel.ForeColor = Color.DarkRed;
-            countryLabel.Location = new Point(129, 174);
+            countryLabel.Location = new Point(262, 140);
             countryLabel.Name = "countryLabel";
             countryLabel.Size = new Size(65, 20);
             countryLabel.TabIndex = 38;
@@ -89,7 +89,7 @@
             teamLabel.AutoSize = true;
             teamLabel.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
             teamLabel.ForeColor = Color.DarkRed;
-            teamLabel.Location = new Point(144, 256);
+            teamLabel.Location = new Point(277, 200);
             teamLabel.Name = "teamLabel";
             teamLabel.Size = new Size(45, 20);
             teamLabel.TabIndex = 37;
@@ -99,7 +99,7 @@
             // 
             teamComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             teamComboBox.FormattingEnabled = true;
-            teamComboBox.Location = new Point(230, 253);
+            teamComboBox.Location = new Point(363, 197);
             teamComboBox.Name = "teamComboBox";
             teamComboBox.Size = new Size(200, 28);
             teamComboBox.TabIndex = 36;
@@ -108,7 +108,7 @@
             // 
             countryComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             countryComboBox.FormattingEnabled = true;
-            countryComboBox.Location = new Point(230, 171);
+            countryComboBox.Location = new Point(363, 137);
             countryComboBox.Name = "countryComboBox";
             countryComboBox.Size = new Size(200, 28);
             countryComboBox.TabIndex = 35;
@@ -117,7 +117,7 @@
             // 
             editButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 204);
             editButton.ForeColor = Color.DarkRed;
-            editButton.Location = new Point(353, 514);
+            editButton.Location = new Point(353, 491);
             editButton.Name = "editButton";
             editButton.Size = new Size(115, 40);
             editButton.TabIndex = 34;
@@ -129,17 +129,18 @@
             // 
             uploadButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 204);
             uploadButton.ForeColor = Color.DarkRed;
-            uploadButton.Location = new Point(731, 368);
+            uploadButton.Location = new Point(507, 388);
             uploadButton.Name = "uploadButton";
             uploadButton.Size = new Size(84, 40);
             uploadButton.TabIndex = 54;
             uploadButton.Text = "Upload";
             uploadButton.UseVisualStyleBackColor = true;
+            uploadButton.Click += uploadButton_Click;
             // 
             // badgePictureBox
             // 
             badgePictureBox.BorderStyle = BorderStyle.FixedSingle;
-            badgePictureBox.Location = new Point(583, 355);
+            badgePictureBox.Location = new Point(359, 375);
             badgePictureBox.Name = "badgePictureBox";
             badgePictureBox.Size = new Size(115, 64);
             badgePictureBox.SizeMode = PictureBoxSizeMode.Zoom;
@@ -151,7 +152,7 @@
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
             label4.ForeColor = Color.DarkRed;
-            label4.Location = new Point(453, 378);
+            label4.Location = new Point(229, 398);
             label4.Name = "label4";
             label4.Size = new Size(92, 20);
             label4.TabIndex = 52;
@@ -162,7 +163,7 @@
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
             label3.ForeColor = Color.DarkRed;
-            label3.Location = new Point(67, 425);
+            label3.Location = new Point(200, 324);
             label3.Name = "label3";
             label3.Size = new Size(122, 20);
             label3.TabIndex = 43;
@@ -170,11 +171,10 @@
             // 
             // nameTextBox
             // 
-            nameTextBox.Location = new Point(230, 422);
+            nameTextBox.Location = new Point(363, 321);
             nameTextBox.Name = "nameTextBox";
             nameTextBox.Size = new Size(200, 27);
             nameTextBox.TabIndex = 42;
-            nameTextBox.TextChanged += nameTextBox_TextChanged;
             // 
             // EditTeamControl
             // 

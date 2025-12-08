@@ -11,12 +11,14 @@ namespace FootballManager.UserControls.Teams
     {
         private Team selectedTeam;
         private string originalTeamName;
+        private string currentImagePath = "";
 
         public EditTeamControl()
         {
             InitializeComponent();
             LoadData();
             teamComboBox.SelectedIndexChanged += teamComboBox_SelectedIndexChanged;
+            badgePictureBox.SizeMode = PictureBoxSizeMode.Zoom;
         }
 
         private void LoadData()
@@ -43,6 +45,17 @@ namespace FootballManager.UserControls.Teams
 
                 coachTextBox.Text = selectedTeam.CoachName;
                 countryComboBox.SelectedItem = selectedTeam.Country;
+
+                if (!string.IsNullOrEmpty(selectedTeam.ImagePath) && System.IO.File.Exists(selectedTeam.ImagePath))
+                {
+                    badgePictureBox.Image = Image.FromFile(selectedTeam.ImagePath);
+                    currentImagePath = selectedTeam.ImagePath;
+                }
+                else
+                {
+                    badgePictureBox.Image = null;
+                    currentImagePath = "";
+                }
             }
         }
 
@@ -96,6 +109,8 @@ namespace FootballManager.UserControls.Teams
                 selectedTeam.Country = newCountry;
             }
 
+            selectedTeam.ImagePath = currentImagePath;
+
             FootballData.SaveData();
             FootballData.ActionHistory.Push($"Edited team: {newName}");
 
@@ -104,9 +119,22 @@ namespace FootballManager.UserControls.Teams
             LoadData();
         }
 
-        private void nameTextBox_TextChanged(object sender, EventArgs e)
+        // uploading image
+        private void uploadButton_Click(object sender, EventArgs e)
         {
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                // filter - only images
+                openFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp";
+                openFileDialog.Title = "Select Team Badge";
 
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    currentImagePath = openFileDialog.FileName;
+
+                    badgePictureBox.Image = Image.FromFile(currentImagePath);
+                }
+            }
         }
     }
 }
