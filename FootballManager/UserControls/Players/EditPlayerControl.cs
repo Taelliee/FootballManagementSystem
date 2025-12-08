@@ -2,6 +2,8 @@
 using System.Data;
 using System.Linq;
 using System.Windows.Forms;
+using System.Drawing;
+using System.IO;
 using FootballManager.Models;
 using FootballManager.Enums;
 
@@ -9,7 +11,7 @@ namespace FootballManager.UserControls.Players
 {
     public partial class EditPlayerControl : UserControl
     {
-        private Player selectedPlayer; // old info for player
+        private Player selectedPlayer;
         private string currentImagePath = "";
 
         public EditPlayerControl()
@@ -17,7 +19,6 @@ namespace FootballManager.UserControls.Players
             InitializeComponent();
 
             badgePictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-            uploadButton.Click += uploadButton_Click;
 
             LoadData();
 
@@ -38,8 +39,10 @@ namespace FootballManager.UserControls.Players
             fullNameComboBox.Items.Clear();
             foreach (var p in FootballData.Players)
             {
-                fullNameComboBox.Items.Add(p.FullName); // add id?
+                fullNameComboBox.Items.Add(p.FullName);
             }
+
+            newNameTextBox.Clear();
         }
 
         private void fullNameComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -52,12 +55,13 @@ namespace FootballManager.UserControls.Players
 
             if (selectedPlayer != null)
             {
-                // filling old info
+                // old info
+                newNameTextBox.Text = selectedPlayer.FullName;
+
                 shirtNumberTextBox.Text = selectedPlayer.ShirtNumber.ToString();
                 teamComboBox.Text = selectedPlayer.TeamName;
                 countryComboBox.SelectedItem = selectedPlayer.Country;
                 playerPositionComboBox.SelectedItem = selectedPlayer.Position;
-
 
                 // image
                 if (!string.IsNullOrEmpty(selectedPlayer.ImagePath) && File.Exists(selectedPlayer.ImagePath))
@@ -72,6 +76,7 @@ namespace FootballManager.UserControls.Players
                 }
             }
         }
+
         // new image upload
         private void uploadButton_Click(object sender, EventArgs e)
         {
@@ -96,16 +101,23 @@ namespace FootballManager.UserControls.Players
                 return;
             }
 
+            string newName = newNameTextBox.Text.Trim();
             string newTeam = teamComboBox.Text.Trim();
             string newShirtStr = shirtNumberTextBox.Text.Trim();
 
-            if (string.IsNullOrWhiteSpace(newTeam) || string.IsNullOrWhiteSpace(newShirtStr))
+            if (string.IsNullOrWhiteSpace(newName) || string.IsNullOrWhiteSpace(newTeam) || string.IsNullOrWhiteSpace(newShirtStr))
             {
-                MessageBox.Show("All fields are required!");
+                MessageBox.Show("All fields (Name, Team, Shirt) are required!");
                 return;
             }
 
-            // updating object - directly in memory
+            if (newName.Any(char.IsDigit))
+            {
+                MessageBox.Show("Name must contain only letters!");
+                return;
+            }
+
+            selectedPlayer.FullName = newName;
             selectedPlayer.TeamName = newTeam;
             selectedPlayer.Country = (Country)countryComboBox.SelectedItem;
             selectedPlayer.Position = (PlayerPosition)playerPositionComboBox.SelectedItem;
@@ -119,7 +131,7 @@ namespace FootballManager.UserControls.Players
             }
 
             // save
-            if (MessageBox.Show("Save changes?", "Confirm Edit", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            if (MessageBox.Show("Save changes?", "Confirm Edit", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 FootballData.SaveData();
                 FootballData.ActionHistory.Push($"Edited player: {selectedPlayer.FullName}");
@@ -127,17 +139,19 @@ namespace FootballManager.UserControls.Players
 
                 LoadData();
 
-                fullNameComboBox.Text = "";
-                badgePictureBox.Image = null;
                 ClearFields();
             }
         }
+
         private void ClearFields()
         {
+            fullNameComboBox.Text = "";
+            newNameTextBox.Clear();
             shirtNumberTextBox.Clear();
             teamComboBox.Text = "";
             badgePictureBox.Image = null;
             selectedPlayer = null;
+            currentImagePath = "";
         }
     }
 }

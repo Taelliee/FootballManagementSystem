@@ -50,7 +50,7 @@ namespace FootballManager.UserControls.Competitions
 
                 if (MessageBox.Show(msg, "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
                 {
-                    FootballData.Competitions.Remove(matchToDelete);
+                    FootballData.RemoveCompetition(matchToDelete);
 
                     FootballData.SaveData();
                     FootballData.ActionHistory.Push($"Deleted competition ID: {matchId}");

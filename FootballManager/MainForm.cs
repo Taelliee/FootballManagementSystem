@@ -1,9 +1,11 @@
 using System.Windows.Forms.DataVisualization.Charting;
 using FootballManager.Enums;
-using FootballManager.UserControls.Players;
-using FootballManager.UserControls.Teams;
 using FootballManager.UserControls.Competitions;
+using FootballManager.UserControls.Players;
+using FootballManager.UserControls.Queries;
+using FootballManager.UserControls.Stadiums;
 using FootballManager.UserControls.Staff;
+using FootballManager.UserControls.Teams;
 
 namespace FootballManager
 {
@@ -15,6 +17,7 @@ namespace FootballManager
         public MainForm()
         {
             InitializeComponent();
+            FootballData.LoadData();
             UpdateCenterPanel();
         }
 
@@ -96,6 +99,26 @@ namespace FootballManager
                             break;
                     }
                     break;
+
+                case EntityType.Stadiums:
+                    switch (currentAction)
+                    {
+                        case ActionType.Add:
+                            control = new AddStadiumControl();
+                            break;
+                        case ActionType.Edit:
+                            control = new EditStadiumControl();
+                            break;
+                        case ActionType.Delete:
+                            control = new DeleteStadiumControl();
+                            break;
+                        case ActionType.List:
+                            control = new ListStadiumsControl();
+                            break;
+                    }
+                    break;
+
+
             }
 
             if (control != null)
@@ -103,16 +126,7 @@ namespace FootballManager
                 control.Dock = DockStyle.Fill;
                 contentPanel.Controls.Add(control);
             }
-            else
-            {
-                // message working on it
-                Label label = new Label();
-                label.Text = $"{currentEntity} - {currentAction} is coming soon...";
-                label.AutoSize = true;
-                label.Location = new System.Drawing.Point(20, 20);
-                label.Font = new System.Drawing.Font("Arial", 14);
-                contentPanel.Controls.Add(label);
-            }
+            
         }
 
         //entity buttons
@@ -146,12 +160,6 @@ namespace FootballManager
             UpdateCenterPanel();
         }
 
-        private void countriesButton_Click(object sender, EventArgs e)
-        {
-            currentEntity = EntityType.Countries;
-            UpdateCenterPanel();
-        }
-
         //action buttons
         private void addButton_Click(object sender, EventArgs e)
         {
@@ -179,11 +187,12 @@ namespace FootballManager
 
 
 
-
-
         private void queriesButton_Click(object sender, EventArgs e)
         {
-            //disbale action buttons/panel?
+            contentPanel.Controls.Clear();
+            UserControl control = new QueriesControl();
+            control.Dock = DockStyle.Fill;
+            contentPanel.Controls.Add(control);
         }
 
         //private void mainLogo_Click(object sender, EventArgs e)
@@ -204,32 +213,9 @@ namespace FootballManager
             welcomeLabel.BringToFront();
         }
 
-        //private void CreateChart()
-        //{
-        //    var chart = new Chart
-        //    {
-        //        Dock = DockStyle.Fill
-        //    };
-        //    this.Controls.Add(chart);
-
-        //    var chartArea = new ChartArea("MainArea");
-        //    chart.ChartAreas.Add(chartArea);
-
-        //    var series = new Series("Goals")
-        //    {
-        //        ChartType = SeriesChartType.Column
-        //    };
-
-        //    // Example data
-        //    series.Points.AddXY("Messi", 35);
-        //    series.Points.AddXY("Ronaldo", 30);
-        //    series.Points.AddXY("Mbappe", 28);
-        //    series.Points.AddXY("Haaland", 26);
-        //    series.Points.AddXY("Lewandowski", 22);
-
-        //    chart.Series.Add(series);
-
-        //    chart.Titles.Add("Top Scorers");
-        //}
+        /*private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            FootballData.SaveData();
+        }*/
     }
 }

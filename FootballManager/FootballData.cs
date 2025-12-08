@@ -12,31 +12,11 @@ namespace FootballManager
         public static List<Player> Players { get; set; } = new List<Player>();
         public static List<Staff> StaffMembers { get; set; } = new List<Staff>();
         public static List<Competition> Competitions { get; set; } = new List<Competition>();
+        public static List<Stadium> Stadiums { get; set; } = new List<Stadium>();
 
         public static Dictionary<string, Team> Teams { get; set; } = new Dictionary<string, Team>();
 
         public static Stack<string> ActionHistory { get; set; } = new Stack<string>();
-
-        public static Queue<string> PendingNotifications { get; set; } = new Queue<string>();
-
-
-
-        public static void AddPlayer(Player p)
-        {
-            Players.Add(p);
-            ActionHistory.Push($"Added player: {p.FullName} at {DateTime.Now}");
-
-            if (!Teams.ContainsKey(p.TeamName))
-            {
-                Teams.Add(p.TeamName, new Team { Name = p.TeamName, Country = p.Country });
-            }
-        }
-
-        public static void AddStaff(Staff s)
-        {
-            StaffMembers.Add(s);
-            ActionHistory.Push($"Added staff: {s.FullName} ({s.Role})");
-        }
 
 
         // --- SAVE / LOAD LOGIC ---
@@ -44,6 +24,7 @@ namespace FootballManager
         private static string staffFile = "staff.txt";
         private static string teamsFile = "teams.txt";
         private static string competitionsFile = "competitions.txt";
+        private static string stadiumsFile = "stadiums.txt";
 
         public static void SaveData()
         {
@@ -80,6 +61,15 @@ namespace FootballManager
                 {
                     // Format: EventId|StaffId|PlayerId|Date|Country|Stadium|Goals
                     sw.WriteLine($"{c.EventId}|{c.StaffId}|{c.PlayerId}|{c.MatchDate}|{c.HostCountry}|{c.Stadium}|{c.GoalsScored}");
+                }
+            }
+
+            using (StreamWriter sw = new StreamWriter(stadiumsFile))
+            {
+                foreach (var s in Stadiums)
+                {
+                    // Format: Id|Name|TeamName|Country|Capacity
+                    sw.WriteLine($"{s.Id}|{s.Name}|{s.TeamName}|{s.Country}|{s.Capacity}");
                 }
             }
         }
@@ -137,17 +127,112 @@ namespace FootballManager
                     }
                 }
             }
+
+            if (File.Exists(teamsFile))
+            {
+                Teams.Clear();
+                var lines = File.ReadAllLines(teamsFile);
+                foreach (var line in lines)
+                {
+                    var parts = line.Split('|');
+                    if (parts.Length >= 3)
+                    {
+                        Team t = new Team();
+                        t.Name = parts[0];
+                        t.CoachName = parts[1];
+                        Enum.TryParse(parts[2], out Country c);
+                        t.Country = c;
+
+                        if (!Teams.ContainsKey(t.Name))
+                        {
+                            Teams.Add(t.Name, t);
+                        }
+                    }
+                }
+            }
+
+            if (File.Exists(competitionsFile))
+            {
+                Competitions.Clear();
+                var lines = File.ReadAllLines(competitionsFile);
+                foreach (var line in lines)
+                {
+                    var parts = line.Split('|');
+                    if (parts.Length >= 7)
+                    {
+                        Competition c = new Competition();
+                        c.EventId = int.Parse(parts[0]);
+                        c.StaffId = int.Parse(parts[1]);
+                        c.PlayerId = int.Parse(parts[2]);
+                        c.MatchDate = DateTime.Parse(parts[3]);
+                        Enum.TryParse(parts[4], out Country country);
+                        c.HostCountry = country;
+                        c.Stadium = parts[5];
+                        c.GoalsScored = int.Parse(parts[6]);
+
+                        Competitions.Add(c);
+                    }
+                }
+            }
+
+            if (File.Exists(stadiumsFile))
+            {
+                Stadiums.Clear();
+                var lines = File.ReadAllLines(stadiumsFile);
+                foreach (var line in lines)
+                {
+                    var parts = line.Split('|');
+                    if (parts.Length >= 5)
+                    {
+                        Stadium s = new Stadium();
+                        s.Id = int.Parse(parts[0]);
+                        s.Name = parts[1];
+                        s.TeamName = parts[2];
+                        Enum.TryParse(parts[3], out Country c);
+                        s.Country = c;
+                        s.Capacity = int.Parse(parts[4]);
+
+                        Stadiums.Add(s);
+                    }
+                }
+            }
+
         }
 
-        // next id (automatic)
+        // --- Helpers ---
+        // add
+        public static void AddPlayer(Player p)
+        {
+            Players.Add(p);
+            ActionHistory.Push($"Added player: {p.FullName} at {DateTime.Now}");
+
+            if (!Teams.ContainsKey(p.TeamName))
+            {
+                Teams.Add(p.TeamName, new Team { Name = p.TeamName, Country = p.Country });
+            }
+        }
+
+        public static void AddStaff(Staff s)
+        {
+            StaffMembers.Add(s);
+            ActionHistory.Push($"Added staff: {s.FullName} ({s.Role})");
+        }
+
+        public static void AddCompetition(Competition comp)
+        {
+            Competitions.Add(comp);
+            ActionHistory.Push($"Added competition ID: {comp.EventId}");
+        }
+
+        public static void AddStadium(Stadium s)
+        {
+            Stadiums.Add(s);
+            ActionHistory.Push($"Added stadium: {s.Name}");
+        }
+        // get id
         public static int GetNextPlayerId()
         {
             return Players.Any() ? Players.Max(p => p.Id) + 1 : 1;
-        }
-
-        public static int GetNextEventId()
-        {
-            return Competitions.Any() ? Competitions.Max(c => c.EventId) + 1 : 1;
         }
 
         public static int GetNextStaffId()
@@ -155,6 +240,17 @@ namespace FootballManager
             return StaffMembers.Any() ? StaffMembers.Max(s => s.Id) + 1 : 1;
         }
 
+        public static int GetNextEventId()
+        {
+            return Competitions.Any() ? Competitions.Max(c => c.EventId) + 1 : 1;
+        }
+
+        public static int GetNextStadiumId()
+        {
+            return Stadiums.Any() ? Stadiums.Max(s => s.Id) + 1 : 1;
+        }
+
+        // remove
         public static void RemovePlayer(Player player)
         {
             if (player != null && Players.Contains(player))
@@ -175,7 +271,9 @@ namespace FootballManager
                         player.TeamName = "No Team";
                     }
                 }
+
                 Teams.Remove(teamName);
+
                 ActionHistory.Push($"Deleted team: {teamName}. Players are now free agents.");
             }
         }
@@ -186,6 +284,24 @@ namespace FootballManager
             {
                 StaffMembers.Remove(staff);
                 ActionHistory.Push($"Deleted staff: {staff.FullName}");
+            }
+        }
+
+        public static void RemoveCompetition(Competition comp)
+        {
+            if (comp != null && Competitions.Contains(comp))
+            {
+                Competitions.Remove(comp);
+                ActionHistory.Push($"Deleted competition ID: {comp.EventId}");
+            }
+        }
+
+        public static void RemoveStadium(Stadium stadium)
+        {
+            if (stadium != null && Stadiums.Contains(stadium))
+            {
+                Stadiums.Remove(stadium);
+                ActionHistory.Push($"Deleted stadium: {stadium.Name}");
             }
         }
     }

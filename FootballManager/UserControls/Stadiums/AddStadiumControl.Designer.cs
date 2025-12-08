@@ -1,6 +1,6 @@
-﻿namespace FootballManager.UserControls.Teams
+﻿namespace FootballManager.UserControls.Stadiums
 {
-    partial class AddTeamControl
+    partial class AddStadiumControl
     {
         /// <summary> 
         /// Required designer variable.
@@ -28,8 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
+            capacityTextBox = new TextBox();
+            label3 = new Label();
+            teamComboBox = new ComboBox();
             label2 = new Label();
-            coachTextBox = new TextBox();
             label1 = new Label();
             countryLabel = new Label();
             fullNameLabel = new Label();
@@ -38,44 +40,64 @@
             addButton = new Button();
             SuspendLayout();
             // 
+            // capacityTextBox
+            // 
+            capacityTextBox.Location = new Point(338, 416);
+            capacityTextBox.Name = "capacityTextBox";
+            capacityTextBox.Size = new Size(200, 27);
+            capacityTextBox.TabIndex = 53;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
+            label3.ForeColor = Color.DarkRed;
+            label3.Location = new Point(257, 264);
+            label3.Name = "label3";
+            label3.Size = new Size(45, 20);
+            label3.TabIndex = 52;
+            label3.Text = "Team";
+            // 
+            // teamComboBox
+            // 
+            teamComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            teamComboBox.FormattingEnabled = true;
+            teamComboBox.Location = new Point(338, 261);
+            teamComboBox.Name = "teamComboBox";
+            teamComboBox.Size = new Size(200, 28);
+            teamComboBox.TabIndex = 51;
+            // 
             // label2
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
             label2.ForeColor = Color.DarkRed;
-            label2.Location = new Point(216, 373);
+            label2.Location = new Point(237, 419);
             label2.Name = "label2";
-            label2.Size = new Size(91, 20);
-            label2.TabIndex = 31;
-            label2.Text = "Head Coach";
-            // 
-            // coachTextBox
-            // 
-            coachTextBox.Location = new Point(343, 370);
-            coachTextBox.Name = "coachTextBox";
-            coachTextBox.Size = new Size(200, 27);
-            coachTextBox.TabIndex = 30;
+            label2.Size = new Size(67, 20);
+            label2.TabIndex = 50;
+            label2.Text = "Capacity";
             // 
             // label1
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 36F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
             label1.ForeColor = Color.DarkRed;
-            label1.Location = new Point(257, 55);
+            label1.Location = new Point(213, 43);
             label1.Name = "label1";
-            label1.Size = new Size(322, 81);
-            label1.TabIndex = 29;
-            label1.Text = "Add Team";
+            label1.Size = new Size(402, 81);
+            label1.TabIndex = 49;
+            label1.Text = "Add Stadium";
             // 
             // countryLabel
             // 
             countryLabel.AutoSize = true;
             countryLabel.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
             countryLabel.ForeColor = Color.DarkRed;
-            countryLabel.Location = new Point(242, 295);
+            countryLabel.Location = new Point(237, 340);
             countryLabel.Name = "countryLabel";
             countryLabel.Size = new Size(65, 20);
-            countryLabel.TabIndex = 28;
+            countryLabel.TabIndex = 48;
             countryLabel.Text = "Country";
             // 
             // fullNameLabel
@@ -83,63 +105,67 @@
             fullNameLabel.AutoSize = true;
             fullNameLabel.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
             fullNameLabel.ForeColor = Color.DarkRed;
-            fullNameLabel.Location = new Point(257, 223);
+            fullNameLabel.Location = new Point(252, 189);
             fullNameLabel.Name = "fullNameLabel";
             fullNameLabel.Size = new Size(50, 20);
-            fullNameLabel.TabIndex = 27;
+            fullNameLabel.TabIndex = 47;
             fullNameLabel.Text = "Name";
             // 
             // countryComboBox
             // 
             countryComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             countryComboBox.FormattingEnabled = true;
-            countryComboBox.Location = new Point(343, 292);
+            countryComboBox.Location = new Point(338, 340);
             countryComboBox.Name = "countryComboBox";
             countryComboBox.Size = new Size(200, 28);
-            countryComboBox.TabIndex = 26;
+            countryComboBox.TabIndex = 46;
             // 
             // nameTextBox
             // 
-            nameTextBox.Location = new Point(343, 220);
+            nameTextBox.Location = new Point(338, 186);
             nameTextBox.Name = "nameTextBox";
             nameTextBox.Size = new Size(200, 27);
-            nameTextBox.TabIndex = 25;
+            nameTextBox.TabIndex = 45;
             // 
             // addButton
             // 
             addButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 204);
             addButton.ForeColor = Color.DarkRed;
-            addButton.Location = new Point(343, 492);
+            addButton.Location = new Point(338, 498);
             addButton.Name = "addButton";
             addButton.Size = new Size(115, 40);
-            addButton.TabIndex = 24;
+            addButton.TabIndex = 44;
             addButton.Text = "Add";
             addButton.UseVisualStyleBackColor = true;
             addButton.Click += addButton_Click;
             // 
-            // AddTeamControl
+            // AddStadiumControl
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Linen;
+            Controls.Add(capacityTextBox);
+            Controls.Add(label3);
+            Controls.Add(teamComboBox);
             Controls.Add(label2);
-            Controls.Add(coachTextBox);
             Controls.Add(label1);
             Controls.Add(countryLabel);
             Controls.Add(fullNameLabel);
             Controls.Add(countryComboBox);
             Controls.Add(nameTextBox);
             Controls.Add(addButton);
-            Name = "AddTeamControl";
-            Size = new Size(825, 626);
+            Name = "AddStadiumControl";
+            Size = new Size(820, 585);
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
 
+        private TextBox capacityTextBox;
+        private Label label3;
+        private ComboBox teamComboBox;
         private Label label2;
-        private TextBox coachTextBox;
         private Label label1;
         private Label countryLabel;
         private Label fullNameLabel;

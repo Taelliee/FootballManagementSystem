@@ -35,11 +35,14 @@ namespace FootballManager.UserControls.Competitions
             playerComboBox.ValueMember = "Id";
 
             stadiumComboBox.Items.Clear();
-            var existingStadiums = FootballData.Competitions
-                                    .Select(c => c.Stadium)
-                                    .Distinct()
+            if (FootballData.Stadiums.Count > 0)
+            {
+                var stadiumNames = FootballData.Stadiums
+                                    .Select(s => s.Name)
                                     .ToArray();
-            stadiumComboBox.Items.AddRange(existingStadiums);
+
+                stadiumComboBox.Items.AddRange(stadiumNames);
+            }
         }
 
         private void addButton_Click(object sender, EventArgs e)
@@ -87,7 +90,7 @@ namespace FootballManager.UserControls.Competitions
 
             if (MessageBox.Show(msg, "Confirm", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
             {
-                FootballData.Competitions.Add(comp);
+                FootballData.AddCompetition(comp);
                 FootballData.SaveData();
 
                 MessageBox.Show("Competition added successfully!");

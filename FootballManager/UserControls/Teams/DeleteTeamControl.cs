@@ -49,7 +49,7 @@ namespace FootballManager.UserControls.Teams
 
             string teamName = nameComboBox.Text;
 
-            // protection
+            // save
             var result = MessageBox.Show(
                 $"Are you sure you want to delete team '{teamName}'?\nThis cannot be undone.",
                 "Confirm Team Delete",

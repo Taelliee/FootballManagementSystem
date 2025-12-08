@@ -23,7 +23,6 @@ namespace FootballManager
             InitializeComponent();
 
             badgePictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-            uploadButton.Click += uploadButton_Click;
 
             LoadFormData();
         }
@@ -91,12 +90,12 @@ namespace FootballManager
                 return;
             }
 
-            // validation for image
+            /*// validation for image
             if (string.IsNullOrEmpty(selectedImagePath))
             {
                 MessageBox.Show("Please upload a team badge!");
                 return;
-            }
+            }*/
 
             Country selectedCountry = (Country)countryComboBox.SelectedItem;
             PlayerPosition selectedPosition = (PlayerPosition)playerPositionComboBox.SelectedItem;

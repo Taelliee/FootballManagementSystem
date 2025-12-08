@@ -98,13 +98,14 @@
             playerPositionComboBox.Name = "playerPositionComboBox";
             playerPositionComboBox.Size = new Size(150, 28);
             playerPositionComboBox.TabIndex = 25;
+            playerPositionComboBox.KeyPress += shirtNumberTextBox_KeyPress;
             // 
             // label1
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 36F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 204);
             label1.ForeColor = Color.DarkRed;
-            label1.Location = new Point(245, 17);
+            label1.Location = new Point(253, 19);
             label1.Name = "label1";
             label1.Size = new Size(345, 81);
             label1.TabIndex = 24;

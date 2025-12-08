@@ -29,6 +29,8 @@ namespace FootballManager.UserControls.Staff
             {
                 nameComboBox.Items.Add(s.FullName);
             }
+
+            newNameTextBox.Clear();
         }
 
         private void nameComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -43,6 +45,8 @@ namespace FootballManager.UserControls.Staff
             {
                 countryComboBox.SelectedItem = selectedStaff.Country;
                 positionComboBox.SelectedItem = selectedStaff.Role;
+
+                newNameTextBox.Text = selectedStaff.FullName;
             }
         }
 
@@ -54,7 +58,7 @@ namespace FootballManager.UserControls.Staff
                 return;
             }
 
-            string newName = nameComboBox.Text.Trim();
+            string newName = newNameTextBox.Text.Trim();
 
             if (string.IsNullOrWhiteSpace(newName))
             {
@@ -79,9 +83,15 @@ namespace FootballManager.UserControls.Staff
 
                 LoadData();
 
-                nameComboBox.Text = "";
-                selectedStaff = null;
+                ClearFields();
             }
+        }
+
+        private void ClearFields()
+        {
+            nameComboBox.Text = "";
+            newNameTextBox.Clear();
+            selectedStaff = null;
         }
     }
 }
