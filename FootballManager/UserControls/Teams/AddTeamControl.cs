@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Data;
+using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using FootballManager.Models;
 using FootballManager.Enums;
@@ -14,6 +17,23 @@ namespace FootballManager.UserControls.Teams
             InitializeComponent();
             badgePictureBox.SizeMode = PictureBoxSizeMode.Zoom;
             countryComboBox.DataSource = Enum.GetValues(typeof(Country));
+
+            LoadCoaches();
+        }
+
+        public void LoadCoaches()
+        {
+            coachComboBox.Items.Clear();
+
+            if (FootballData.StaffMembers != null)
+            {
+                var headCoaches = FootballData.StaffMembers
+                                    .Where(s => s.Role == StaffPosition.HeadCoach)
+                                    .Select(s => s.FullName)
+                                    .ToArray();
+
+                coachComboBox.Items.AddRange(headCoaches);
+            }
         }
 
         // uploading image
@@ -37,14 +57,14 @@ namespace FootballManager.UserControls.Teams
         private void addButton_Click(object sender, EventArgs e)
         {
             string name = nameTextBox.Text.Trim();
-            string coach = coachTextBox.Text.Trim();
+            string coach = coachComboBox.Text.Trim();
 
             if (string.IsNullOrWhiteSpace(name))
             {
                 MessageBox.Show("Team name is required!");
                 return;
             }
-
+            
             // checking in Dictionary if team exists
             if (FootballData.Teams.ContainsKey(name))
             {
@@ -68,7 +88,8 @@ namespace FootballManager.UserControls.Teams
 
             MessageBox.Show("Team added successfully!");
             nameTextBox.Clear();
-            coachTextBox.Clear();
+            coachComboBox.SelectedIndex = -1;
+            coachComboBox.Text = "";
             badgePictureBox.Image = null;
             selectedImagePath = "";
         }

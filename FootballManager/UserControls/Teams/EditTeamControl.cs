@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using FootballManager.Models;
 using FootballManager.Enums;
+using System.IO;
 
 namespace FootballManager.UserControls.Teams
 {
@@ -16,9 +18,9 @@ namespace FootballManager.UserControls.Teams
         public EditTeamControl()
         {
             InitializeComponent();
+            badgePictureBox.SizeMode = PictureBoxSizeMode.Zoom;
             LoadData();
             teamComboBox.SelectedIndexChanged += teamComboBox_SelectedIndexChanged;
-            badgePictureBox.SizeMode = PictureBoxSizeMode.Zoom;
         }
 
         private void LoadData()
@@ -28,6 +30,23 @@ namespace FootballManager.UserControls.Teams
             teamComboBox.Items.Clear();
             if (FootballData.Teams.Count > 0)
                 teamComboBox.Items.AddRange(FootballData.Teams.Keys.ToArray());
+
+            LoadCoaches();
+        }
+
+        private void LoadCoaches()
+        {
+            coachComboBox.Items.Clear();
+
+            if (FootballData.StaffMembers != null)
+            {
+                var headCoaches = FootballData.StaffMembers
+                                    .Where(s => s.Role == StaffPosition.HeadCoach)
+                                    .Select(s => s.FullName)
+                                    .ToArray();
+
+                coachComboBox.Items.AddRange(headCoaches);
+            }
         }
 
         private void teamComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -43,10 +62,10 @@ namespace FootballManager.UserControls.Teams
                 if (this.Controls.ContainsKey("nameTextBox"))
                     this.Controls["nameTextBox"].Text = selectedTeam.Name;
 
-                coachTextBox.Text = selectedTeam.CoachName;
+                coachComboBox.Text = selectedTeam.CoachName;
                 countryComboBox.SelectedItem = selectedTeam.Country;
 
-                if (!string.IsNullOrEmpty(selectedTeam.ImagePath) && System.IO.File.Exists(selectedTeam.ImagePath))
+                if (!string.IsNullOrEmpty(selectedTeam.ImagePath) && File.Exists(selectedTeam.ImagePath))
                 {
                     badgePictureBox.Image = Image.FromFile(selectedTeam.ImagePath);
                     currentImagePath = selectedTeam.ImagePath;
@@ -73,7 +92,7 @@ namespace FootballManager.UserControls.Teams
             else
                 newName = originalTeamName;
 
-            string newCoach = coachTextBox.Text.Trim();
+            string newCoach = coachComboBox.Text.Trim();
             Country newCountry = (Country)countryComboBox.SelectedItem;
 
             if (string.IsNullOrWhiteSpace(newName)) { MessageBox.Show("Team name required!"); return; }

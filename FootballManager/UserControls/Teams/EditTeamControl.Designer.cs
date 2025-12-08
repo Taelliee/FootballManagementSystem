@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             label2 = new Label();
-            coachTextBox = new TextBox();
             label1 = new Label();
             countryLabel = new Label();
             teamLabel = new Label();
@@ -41,6 +40,7 @@
             label4 = new Label();
             label3 = new Label();
             nameTextBox = new TextBox();
+            coachComboBox = new ComboBox();
             ((System.ComponentModel.ISupportInitialize)badgePictureBox).BeginInit();
             SuspendLayout();
             // 
@@ -54,13 +54,6 @@
             label2.Size = new Size(91, 20);
             label2.TabIndex = 41;
             label2.Text = "Head Coach";
-            // 
-            // coachTextBox
-            // 
-            coachTextBox.Location = new Point(363, 254);
-            coachTextBox.Name = "coachTextBox";
-            coachTextBox.Size = new Size(200, 27);
-            coachTextBox.TabIndex = 40;
             // 
             // label1
             // 
@@ -129,7 +122,7 @@
             // 
             uploadButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 204);
             uploadButton.ForeColor = Color.DarkRed;
-            uploadButton.Location = new Point(507, 388);
+            uploadButton.Location = new Point(511, 395);
             uploadButton.Name = "uploadButton";
             uploadButton.Size = new Size(84, 40);
             uploadButton.TabIndex = 54;
@@ -140,7 +133,7 @@
             // badgePictureBox
             // 
             badgePictureBox.BorderStyle = BorderStyle.FixedSingle;
-            badgePictureBox.Location = new Point(359, 375);
+            badgePictureBox.Location = new Point(363, 382);
             badgePictureBox.Name = "badgePictureBox";
             badgePictureBox.Size = new Size(115, 64);
             badgePictureBox.SizeMode = PictureBoxSizeMode.Zoom;
@@ -152,7 +145,7 @@
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
             label4.ForeColor = Color.DarkRed;
-            label4.Location = new Point(229, 398);
+            label4.Location = new Point(233, 405);
             label4.Name = "label4";
             label4.Size = new Size(92, 20);
             label4.TabIndex = 52;
@@ -176,18 +169,27 @@
             nameTextBox.Size = new Size(200, 27);
             nameTextBox.TabIndex = 42;
             // 
+            // coachComboBox
+            // 
+            coachComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            coachComboBox.FormattingEnabled = true;
+            coachComboBox.Location = new Point(363, 257);
+            coachComboBox.Name = "coachComboBox";
+            coachComboBox.Size = new Size(200, 28);
+            coachComboBox.TabIndex = 55;
+            // 
             // EditTeamControl
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Linen;
+            Controls.Add(coachComboBox);
             Controls.Add(uploadButton);
             Controls.Add(badgePictureBox);
             Controls.Add(label4);
             Controls.Add(label3);
             Controls.Add(nameTextBox);
             Controls.Add(label2);
-            Controls.Add(coachTextBox);
             Controls.Add(label1);
             Controls.Add(countryLabel);
             Controls.Add(teamLabel);
@@ -203,7 +205,6 @@
 
         #endregion
         private Label label2;
-        private TextBox coachTextBox;
         private Label label1;
         private Label countryLabel;
         private Label teamLabel;
@@ -215,5 +216,6 @@
         private Label label4;
         private Label label3;
         private TextBox nameTextBox;
+        private ComboBox coachComboBox;
     }
 }

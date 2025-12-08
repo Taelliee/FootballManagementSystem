@@ -15,6 +15,14 @@ namespace FootballManager.UserControls.Teams
         public ListTeamsControl()
         {
             InitializeComponent();
+
+            if (dataGridView1.Columns["Image"] is DataGridViewImageColumn imgCol)
+            {
+                imgCol.ImageLayout = DataGridViewImageCellLayout.Zoom;
+            }
+
+            dataGridView1.RowTemplate.Height = 45;
+
             LoadTeams();
         }
 
@@ -36,6 +44,7 @@ namespace FootballManager.UserControls.Teams
                     team.CoachName,
                     badge
                 );
+
             }
         }
     }
