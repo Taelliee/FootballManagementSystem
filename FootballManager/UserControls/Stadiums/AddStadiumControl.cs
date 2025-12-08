@@ -40,13 +40,13 @@ namespace FootballManager.UserControls.Stadiums
             }
 
             Stadium newStadium = new Stadium
-            {
-                Id = FootballData.GetNextStadiumId(),
-                Name = name,
-                TeamName = team,
-                Country = (Country)countryComboBox.SelectedItem,
-                Capacity = int.Parse(capacityStr)
-            };
+            (
+                FootballData.GetNextStadiumId(),
+                name,
+                team,
+                (Country)countryComboBox.SelectedItem,
+                int.Parse(capacityStr)
+            );
 
             string msg = $"Confirm Stadium:\nName: {name}\nTeam: {team}\nCapacity: {capacityStr}";
             if (MessageBox.Show(msg, "Confirm", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)

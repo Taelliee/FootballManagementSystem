@@ -39,18 +39,33 @@ namespace FootballManager.UserControls.Competitions
             playerComboBox.ValueMember = "Id";
 
             stadiumComboBox.Items.Clear();
-            var existingStadiums = FootballData.Competitions.Select(c => c.Stadium).Distinct().ToArray();
-            stadiumComboBox.Items.AddRange(existingStadiums);
+            var usedStadiumIds = FootballData.Competitions.Select(c => c.StadiumId).Distinct();
+            var stadiumObjects = FootballData.Stadiums
+                                             .Where(s => usedStadiumIds.Contains(s.Id))
+                                             .ToList();
+
+            stadiumComboBox.DataSource = null; //reset first
+            stadiumComboBox.DataSource = stadiumObjects;
+
+            stadiumComboBox.DisplayMember = "Name";
+            stadiumComboBox.ValueMember = "Id";
 
             RefreshMatchSelector();
         }
 
         private void RefreshMatchSelector()
         {
-            var matchList = FootballData.Competitions.Select(c => new
+            var matchList = FootballData.Competitions.Select(c =>
             {
-                Id = c.EventId,
-                Description = $"{c.MatchDate.ToShortDateString()} - {c.Stadium} (Goals: {c.GoalsScored})"
+                var stadium = FootballData.Stadiums.FirstOrDefault(s => s.Id == c.StadiumId);
+
+                string stadiumName = stadium != null ? stadium.Name : "Unknown ID";
+
+                return new
+                {
+                    Id = c.Id,
+                    Description = $"{c.MatchDate.ToShortDateString()} - {stadiumName} (Goals: {c.GoalsScored})"
+                };
             }).ToList();
 
             matchSelectorComboBox.DataSource = null;
@@ -68,18 +83,18 @@ namespace FootballManager.UserControls.Competitions
 
             if (matchSelectorComboBox.SelectedValue is int matchId)
             {
-                selectedMatch = FootballData.Competitions.FirstOrDefault(c => c.EventId == matchId);
+                selectedMatch = FootballData.Competitions.FirstOrDefault(c => c.Id == matchId);
 
                 if (selectedMatch != null)
                 {
                     // old info
-                    stadiumComboBox.Text = selectedMatch.Stadium;
                     goalsScoredTextBox.Text = selectedMatch.GoalsScored.ToString();
                     matchDateTimePicker.Value = selectedMatch.MatchDate;
                     countryComboBox.SelectedItem = selectedMatch.HostCountry;
 
                     staffComboBox.SelectedValue = selectedMatch.StaffId;
                     playerComboBox.SelectedValue = selectedMatch.PlayerId;
+                    stadiumComboBox.SelectedValue = selectedMatch.StadiumId;
                 }
             }
         }
@@ -92,27 +107,27 @@ namespace FootballManager.UserControls.Competitions
                 return;
             }
 
-            string newStadium = stadiumComboBox.Text.Trim();
             string newGoalsStr = goalsScoredTextBox.Text.Trim();
 
-            if (string.IsNullOrWhiteSpace(newStadium) || string.IsNullOrWhiteSpace(newGoalsStr))
+            if (stadiumComboBox.SelectedItem == null || string.IsNullOrWhiteSpace(newGoalsStr))
             {
                 MessageBox.Show("Fields cannot be empty!");
                 return;
             }
 
-            selectedMatch.Stadium = newStadium;
             selectedMatch.GoalsScored = int.Parse(newGoalsStr);
             selectedMatch.MatchDate = matchDateTimePicker.Value;
             selectedMatch.HostCountry = (Country)countryComboBox.SelectedItem;
 
             selectedMatch.StaffId = (int)staffComboBox.SelectedValue;
             selectedMatch.PlayerId = (int)playerComboBox.SelectedValue;
+            selectedMatch.StadiumId = (int)stadiumComboBox.SelectedValue;
+
 
             if (MessageBox.Show("Save changes to this match?", "Confirm Edit", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 FootballData.SaveData();
-                FootballData.ActionHistory.Push($"Edited match ID: {selectedMatch.EventId}");
+                FootballData.ActionHistory.Push($"Edited match ID: {selectedMatch.Id}");
 
                 MessageBox.Show("Match updated successfully!");
 
@@ -122,7 +137,7 @@ namespace FootballManager.UserControls.Competitions
 
         private void ClearFields()
         {
-            stadiumComboBox.Text = "";
+            stadiumComboBox.SelectedIndex = -1;
             goalsScoredTextBox.Clear();
             staffComboBox.SelectedIndex = -1;
             playerComboBox.SelectedIndex = -1;

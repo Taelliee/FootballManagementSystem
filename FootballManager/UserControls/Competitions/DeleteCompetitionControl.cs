@@ -16,11 +16,18 @@ namespace FootballManager.UserControls.Competitions
 
         private void LoadCompetitions()
         {
-            var matchList = FootballData.Competitions.Select(c => new
+            // date - stadium (goals)
+            var matchList = FootballData.Competitions.Select(c =>
             {
-                Id = c.EventId,
-                // date - stadium (goals)
-                Description = $"{c.MatchDate.ToShortDateString()} - {c.Stadium} (Goals: {c.GoalsScored})"
+                var stadium = FootballData.Stadiums.FirstOrDefault(s => s.Id == c.StadiumId);
+
+                string stadiumName = stadium != null ? stadium.Name : "Unknown ID";
+
+                return new
+                {
+                    Id = c.Id,
+                    Description = $"{c.MatchDate.ToShortDateString()} - {stadiumName} (Goals: {c.GoalsScored})"
+                };
             }).ToList();
 
             matchSelectorComboBox.DataSource = null;
@@ -41,12 +48,12 @@ namespace FootballManager.UserControls.Competitions
 
             int matchId = (int)matchSelectorComboBox.SelectedValue;
 
-            var matchToDelete = FootballData.Competitions.FirstOrDefault(c => c.EventId == matchId);
+            var matchToDelete = FootballData.Competitions.FirstOrDefault(c => c.Id == matchId);
 
             if (matchToDelete != null)
             {
                 string msg = $"Are you sure you want to delete this match?\n\n" +
-                             $"{matchToDelete.MatchDate.ToShortDateString()} @ {matchToDelete.Stadium}";
+                             $"{matchToDelete.MatchDate.ToShortDateString()} @ {matchToDelete.StadiumId}";
 
                 if (MessageBox.Show(msg, "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
                 {

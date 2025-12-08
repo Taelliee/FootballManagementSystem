@@ -51,7 +51,7 @@
             matchSelectorComboBox.FormattingEnabled = true;
             matchSelectorComboBox.Location = new Point(357, 292);
             matchSelectorComboBox.Name = "matchSelectorComboBox";
-            matchSelectorComboBox.Size = new Size(310, 28);
+            matchSelectorComboBox.Size = new Size(368, 28);
             matchSelectorComboBox.TabIndex = 57;
             // 
             // label1

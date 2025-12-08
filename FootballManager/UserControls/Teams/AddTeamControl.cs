@@ -34,11 +34,12 @@ namespace FootballManager.UserControls.Teams
             Country country = (Country)countryComboBox.SelectedItem;
 
             Team newTeam = new Team
-            {
-                Name = name,
-                CoachName = coach,
-                Country = country
-            };
+            (
+                FootballData.GetNextTeamId(),
+                name,
+                coach,
+                country
+            );
 
             // saving to Dictionary
             FootballData.Teams.Add(name, newTeam);

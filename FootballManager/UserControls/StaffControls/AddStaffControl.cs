@@ -17,7 +17,7 @@ namespace FootballManager.UserControls.Staff
         {
             countryComboBox.DataSource = Enum.GetValues(typeof(Country));
 
-            positionComboBox.DataSource = Enum.GetValues(typeof(Position));
+            positionComboBox.DataSource = Enum.GetValues(typeof(StaffPosition));
         }
 
         private void addButton_Click(object sender, EventArgs e)
@@ -31,12 +31,12 @@ namespace FootballManager.UserControls.Staff
             }
 
             Models.Staff newStaff = new Models.Staff
-            {
-                Id = FootballData.GetNextStaffId(),
-                FullName = name,
-                Country = (Country)countryComboBox.SelectedItem,
-                Role = (Position)positionComboBox.SelectedItem
-            };
+            (
+                FootballData.GetNextStaffId(),
+                name,
+                (Country)countryComboBox.SelectedItem,
+                (StaffPosition)positionComboBox.SelectedItem
+            );
 
             string msg = $"Confirm Staff:\nName: {newStaff.FullName}\nRole: {newStaff.Role}\nCountry: {newStaff.Country}";
 

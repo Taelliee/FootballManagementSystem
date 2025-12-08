@@ -9,13 +9,11 @@ namespace FootballManager.Models
 {
     public class Staff : Person
     {
-        public Position Role { get; set; }
+        public StaffPosition Role { get; set; }
 
-        public Staff(int id, string name, Country country, Position role)
+        public Staff(int id, string name, Country country, StaffPosition role)
+            :base(id, name, country)
         {
-            Id = id;
-            FullName = name;
-            Country = country;
             Role = role;
         }
 

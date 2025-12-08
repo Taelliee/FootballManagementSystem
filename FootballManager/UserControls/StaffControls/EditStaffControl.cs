@@ -22,7 +22,7 @@ namespace FootballManager.UserControls.Staff
         private void LoadData()
         {
             countryComboBox.DataSource = Enum.GetValues(typeof(Country));
-            positionComboBox.DataSource = Enum.GetValues(typeof(Position));
+            positionComboBox.DataSource = Enum.GetValues(typeof(StaffPosition));
 
             nameComboBox.Items.Clear();
             foreach (var s in FootballData.StaffMembers)
@@ -67,7 +67,7 @@ namespace FootballManager.UserControls.Staff
             }
 
             Country newCountry = (Country)countryComboBox.SelectedItem;
-            Position newRole = (Position)positionComboBox.SelectedItem;
+            StaffPosition newRole = (StaffPosition)positionComboBox.SelectedItem;
 
             selectedStaff.FullName = newName;
             selectedStaff.Country = newCountry;

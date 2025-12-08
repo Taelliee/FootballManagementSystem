@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FootballManager.Enums
 {
-    public enum Position
+    public enum StaffPosition
     {
         HeadCoach,
         AssistantCoach,

@@ -1,9 +1,10 @@
-﻿using System;
+﻿using FootballManager.Enums;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using FootballManager.Enums;
 
 namespace FootballManager.Models
 {
@@ -17,10 +18,8 @@ namespace FootballManager.Models
         public PlayerPosition Position { get; set; }
 
         public Player(int id, string name, Country country, int shirtNum, string team, string imgPath, PlayerPosition position)
+        : base(id, name, country)
         {
-            Id = id;
-            FullName = name;
-            Country = country;
             ShirtNumber = shirtNum;
             TeamName = team;
             ImagePath = imgPath;

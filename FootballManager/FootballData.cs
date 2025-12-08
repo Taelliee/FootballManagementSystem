@@ -13,9 +13,7 @@ namespace FootballManager
         public static List<Staff> StaffMembers { get; set; } = new List<Staff>();
         public static List<Competition> Competitions { get; set; } = new List<Competition>();
         public static List<Stadium> Stadiums { get; set; } = new List<Stadium>();
-
         public static Dictionary<string, Team> Teams { get; set; } = new Dictionary<string, Team>();
-
         public static Stack<string> ActionHistory { get; set; } = new Stack<string>();
 
 
@@ -60,7 +58,7 @@ namespace FootballManager
                 foreach (var c in Competitions)
                 {
                     // Format: EventId|StaffId|PlayerId|Date|Country|Stadium|Goals
-                    sw.WriteLine($"{c.EventId}|{c.StaffId}|{c.PlayerId}|{c.MatchDate}|{c.HostCountry}|{c.Stadium}|{c.GoalsScored}");
+                    sw.WriteLine($"{c.Id}|{c.StaffId}|{c.PlayerId}|{c.MatchDate}|{c.HostCountry}|{c.StadiumId}|{c.GoalsScored}");
                 }
             }
 
@@ -120,7 +118,7 @@ namespace FootballManager
                         s.FullName = parts[1];
                         Enum.TryParse(parts[2], out Country c);
                         s.Country = c;
-                        Enum.TryParse(parts[3], out Position r);
+                        Enum.TryParse(parts[3], out StaffPosition r);
                         s.Role = r;
 
                         StaffMembers.Add(s);
@@ -161,13 +159,13 @@ namespace FootballManager
                     if (parts.Length >= 7)
                     {
                         Competition c = new Competition();
-                        c.EventId = int.Parse(parts[0]);
+                        c.Id = int.Parse(parts[0]);
                         c.StaffId = int.Parse(parts[1]);
                         c.PlayerId = int.Parse(parts[2]);
                         c.MatchDate = DateTime.Parse(parts[3]);
                         Enum.TryParse(parts[4], out Country country);
                         c.HostCountry = country;
-                        c.Stadium = parts[5];
+                        c.StadiumId = int.Parse(parts[5]);
                         c.GoalsScored = int.Parse(parts[6]);
 
                         Competitions.Add(c);
@@ -221,7 +219,7 @@ namespace FootballManager
         public static void AddCompetition(Competition comp)
         {
             Competitions.Add(comp);
-            ActionHistory.Push($"Added competition ID: {comp.EventId}");
+            ActionHistory.Push($"Added competition ID: {comp.Id}");
         }
 
         public static void AddStadium(Stadium s)
@@ -240,14 +238,19 @@ namespace FootballManager
             return StaffMembers.Any() ? StaffMembers.Max(s => s.Id) + 1 : 1;
         }
 
-        public static int GetNextEventId()
+        public static int GetNextCompetitionId()
         {
-            return Competitions.Any() ? Competitions.Max(c => c.EventId) + 1 : 1;
+            return Competitions.Any() ? Competitions.Max(c => c.Id) + 1 : 1;
         }
 
         public static int GetNextStadiumId()
         {
             return Stadiums.Any() ? Stadiums.Max(s => s.Id) + 1 : 1;
+        }
+
+        public static int GetNextTeamId()
+        {
+            return Stadiums.Any() ? Teams.Max(s => s.Value.Id) + 1 : 1;
         }
 
         // remove
@@ -292,7 +295,7 @@ namespace FootballManager
             if (comp != null && Competitions.Contains(comp))
             {
                 Competitions.Remove(comp);
-                ActionHistory.Push($"Deleted competition ID: {comp.EventId}");
+                ActionHistory.Push($"Deleted competition ID: {comp.Id}");
             }
         }
 

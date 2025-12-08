@@ -29,12 +29,15 @@ namespace FootballManager.UserControls.Competitions
                 var staff = FootballData.StaffMembers.FirstOrDefault(s => s.Id == c.StaffId);
                 string staffName = staff != null ? staff.FullName : "Unknown";
 
+                var stadium = FootballData.Stadiums.FirstOrDefault(s => s.Id == c.StadiumId);
+                string stadiumName = stadium != null ? stadium.Name : "Unknown";
+
                 dataGridView1.Rows.Add(
                     playerName,
                     staffName,
                     c.MatchDate.ToString("dd.MM.yyyy HH:mm"),
                     c.HostCountry,
-                    c.Stadium,
+                    stadiumName,
                     c.GoalsScored
                 );
             }

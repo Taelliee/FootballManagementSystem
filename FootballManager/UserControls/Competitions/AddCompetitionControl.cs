@@ -47,43 +47,44 @@ namespace FootballManager.UserControls.Competitions
 
         private void addButton_Click(object sender, EventArgs e)
         {
-            string stadium = stadiumComboBox.Text.Trim();
             string goalsStr = goalsScoredTextBox.Text.Trim();
 
-            if (string.IsNullOrWhiteSpace(stadium) || string.IsNullOrWhiteSpace(goalsStr))
+            if (string.IsNullOrWhiteSpace(goalsStr))
             {
                 MessageBox.Show("Please fill all fields!");
                 return;
             }
 
-            if (staffComboBox.SelectedItem == null || playerComboBox.SelectedItem == null)
+            if (stadiumComboBox.SelectedItem == null || staffComboBox.SelectedItem == null || playerComboBox.SelectedItem == null)
             {
-                MessageBox.Show("Please select Staff and Player!");
+                MessageBox.Show("Please select Stadium, Staff and Player!");
                 return;
             }
 
             int selectedStaffId = (int)staffComboBox.SelectedValue;
             int selectedPlayerId = (int)playerComboBox.SelectedValue;
+            int selectedStadiumId = (int)stadiumComboBox.SelectedValue;
 
-            string staffName = ((FootballManager.Models.Staff)staffComboBox.SelectedItem).FullName;
+            string staffName = ((Models.Staff)staffComboBox.SelectedItem).FullName;
             string playerName = ((Player)playerComboBox.SelectedItem).FullName;
+            string stadiumName = ((Stadium)stadiumComboBox.SelectedItem).Name;
 
             Country selectedCountry = (Country)countryComboBox.SelectedItem;
             DateTime date = matchDateTimePicker.Value;
 
             Competition comp = new Competition
-            {
-                EventId = FootballData.GetNextEventId(),
-                StaffId = selectedStaffId,
-                PlayerId = selectedPlayerId,
-                MatchDate = date,
-                HostCountry = selectedCountry,
-                Stadium = stadium,
-                GoalsScored = int.Parse(goalsStr)
-            };
+            (
+                FootballData.GetNextCompetitionId(),
+                selectedStaffId,
+                selectedPlayerId,
+                date,
+                selectedCountry,
+                selectedStadiumId,
+                int.Parse(goalsStr)
+            );
 
             string msg = $"Confirm Match:\n\n" +
-                         $"Stadium: {stadium}\n" +
+                         $"Stadium: {stadiumName}\n" +
                          $"Goals: {goalsStr}\n" +
                          $"Referee: {staffName}\n" +
                          $"Player: {playerName}";

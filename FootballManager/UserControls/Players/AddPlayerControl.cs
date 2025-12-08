@@ -143,7 +143,6 @@ namespace FootballManager
             teamComboBox.Text = "";
             badgePictureBox.Image = null;
             selectedImagePath = "";
-
         }
 
         // only numbers

@@ -49,8 +49,15 @@ namespace FootballManager.UserControls.Queries
             if (cmbCompStadium != null)
             {
                 cmbCompStadium.Items.Clear();
-                var stadiums = FootballData.Competitions.Select(c => c.Stadium).Distinct().ToArray();
-                cmbCompStadium.Items.AddRange(stadiums);
+                var usedStadiumIds = FootballData.Competitions
+                                 .Select(c => c.StadiumId)
+                                 .Distinct()
+                                 .ToList();
+
+                var stadiumObjects = FootballData.Stadiums
+                                                 .Where(s => usedStadiumIds.Contains(s.Id))
+                                                 .ToArray();
+                cmbCompStadium.Items.AddRange(stadiumObjects);
             }
 
             if (cmbCompCountry != null)
@@ -114,8 +121,7 @@ namespace FootballManager.UserControls.Queries
         {
             DateTime start = dtpStart.Value.Date;
             DateTime end = dtpEnd.Value.Date;
-            string stadium = cmbCompStadium.Text.Trim();
-
+            Stadium stadium = (Stadium)cmbCompStadium.SelectedItem;
 
             bool filterByCountry = cmbCompCountry.SelectedIndex > 0;
 
@@ -130,7 +136,7 @@ namespace FootballManager.UserControls.Queries
                 c.MatchDate.Date >= start &&
                 c.MatchDate.Date <= end &&
                 (!filterByCountry || c.HostCountry == selectedCountry) &&
-                (string.IsNullOrEmpty(stadium) || c.Stadium == stadium)
+                (stadium == null|| c.StadiumId == stadium.Id)
             );
 
             lblCompResult.Text = $"Result: {count} competitions found";

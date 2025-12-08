@@ -62,7 +62,7 @@
             matchSelectorComboBox.FormattingEnabled = true;
             matchSelectorComboBox.Location = new Point(404, 188);
             matchSelectorComboBox.Name = "matchSelectorComboBox";
-            matchSelectorComboBox.Size = new Size(277, 28);
+            matchSelectorComboBox.Size = new Size(359, 28);
             matchSelectorComboBox.TabIndex = 67;
             // 
             // stadiumComboBox

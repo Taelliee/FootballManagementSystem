@@ -9,7 +9,23 @@ namespace FootballManager.Models
 {
     public class Competition
     {
-        public int EventId { get; set; }
+        public Competition()
+        {
+            
+        }
+
+        public Competition(int id, int staffId, int playerId, DateTime matchDate, Country hostCountry, int stadiumId, int goalsScored)
+        {
+            Id = id;
+            StaffId = staffId;
+            PlayerId = playerId;
+            MatchDate = matchDate;
+            HostCountry = hostCountry;
+            StadiumId = stadiumId;
+            GoalsScored = goalsScored;
+        }
+
+        public int Id { get; set; }
 
         public int StaffId { get; set; }
 
@@ -19,13 +35,13 @@ namespace FootballManager.Models
 
         public Country HostCountry { get; set; }
 
-        public string Stadium { get; set; }
+        public int StadiumId { get; set; }
 
         public int GoalsScored { get; set; }
 
         public override string ToString()
         {
-            return $"Event #{EventId} @ {Stadium}";
+            return $"Event #{Id} @ {StadiumId}";
         }
     }
 }
