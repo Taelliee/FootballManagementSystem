@@ -7,10 +7,31 @@ namespace FootballManager.UserControls.Teams
 {
     public partial class AddTeamControl : UserControl
     {
+        private string selectedImagePath = "";
+
         public AddTeamControl()
         {
             InitializeComponent();
+            badgePictureBox.SizeMode = PictureBoxSizeMode.Zoom;
             countryComboBox.DataSource = Enum.GetValues(typeof(Country));
+        }
+
+        // uploading image
+        private void uploadButton_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                // filter - only images
+                openFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp";
+                openFileDialog.Title = "Select Team Badge";
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    selectedImagePath = openFileDialog.FileName;
+
+                    badgePictureBox.Image = Image.FromFile(selectedImagePath);
+                }
+            }
         }
 
         private void addButton_Click(object sender, EventArgs e)
@@ -38,7 +59,8 @@ namespace FootballManager.UserControls.Teams
                 FootballData.GetNextTeamId(),
                 name,
                 coach,
-                country
+                country,
+                selectedImagePath
             );
 
             // saving to Dictionary

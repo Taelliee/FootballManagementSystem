@@ -31,7 +31,7 @@ namespace FootballManager
                 foreach (var p in Players)
                 {
                     // Format: ID|Name|Country|ShirtNum|Team|Image
-                    sw.WriteLine($"{p.Id}|{p.FullName}|{p.Country}|{p.ShirtNumber}|{p.TeamName}|{p.ImagePath}|{p.Position}");
+                    sw.WriteLine($"{p.Id}|{p.FullName}|{p.Country}|{p.ShirtNumber}|{p.TeamName}|{p.Position}");
                 }
             }
 
@@ -48,8 +48,8 @@ namespace FootballManager
             {
                 foreach (var team in Teams.Values)
                 {
-                    // Format: Name|Coach|Country
-                    sw.WriteLine($"{team.Name}|{team.CoachName}|{team.Country}");
+                    // Format: ID|Name|Coach|Country
+                    sw.WriteLine($"{team.Id}|{team.Name}|{team.CoachName}|{team.Country}|{team.ImagePath}");
                 }
             }
 
@@ -81,7 +81,7 @@ namespace FootballManager
                 foreach (var line in lines)
                 {
                     var parts = line.Split('|');
-                    if (parts.Length >= 7)
+                    if (parts.Length >= 6)
                     {
                         Player p = new Player();
                         p.Id = int.Parse(parts[0]);
@@ -90,8 +90,7 @@ namespace FootballManager
                         p.Country = c;
                         p.ShirtNumber = int.Parse(parts[3]);
                         p.TeamName = parts[4];
-                        p.ImagePath = parts[5];
-                        Enum.TryParse(parts[6], out PlayerPosition pos);
+                        Enum.TryParse(parts[5], out PlayerPosition pos);
                         p.Position = pos;
 
                         Players.Add(p);
@@ -133,13 +132,15 @@ namespace FootballManager
                 foreach (var line in lines)
                 {
                     var parts = line.Split('|');
-                    if (parts.Length >= 3)
+                    if (parts.Length >= 5)
                     {
                         Team t = new Team();
-                        t.Name = parts[0];
-                        t.CoachName = parts[1];
-                        Enum.TryParse(parts[2], out Country c);
+                        t.Id = int.Parse(parts[0]);
+                        t.Name = parts[1];
+                        t.CoachName = parts[2];
+                        Enum.TryParse(parts[3], out Country c);
                         t.Country = c;
+                        t.ImagePath = parts[4];
 
                         if (!Teams.ContainsKey(t.Name))
                         {

@@ -29,10 +29,12 @@ namespace FootballManager.UserControls.Teams
 
             foreach (var team in teams)
             {
+                Image badge = team.GetImageSafe();
                 dataGridView1.Rows.Add(
                     team.Name,
                     team.Country,
-                    team.CoachName
+                    team.CoachName,
+                    badge
                 );
             }
         }

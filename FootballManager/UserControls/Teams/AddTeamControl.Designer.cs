@@ -36,6 +36,10 @@
             countryComboBox = new ComboBox();
             nameTextBox = new TextBox();
             addButton = new Button();
+            uploadButton = new Button();
+            badgePictureBox = new PictureBox();
+            label3 = new Label();
+            ((System.ComponentModel.ISupportInitialize)badgePictureBox).BeginInit();
             SuspendLayout();
             // 
             // label2
@@ -109,7 +113,7 @@
             // 
             addButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 204);
             addButton.ForeColor = Color.DarkRed;
-            addButton.Location = new Point(343, 492);
+            addButton.Location = new Point(343, 551);
             addButton.Name = "addButton";
             addButton.Size = new Size(115, 40);
             addButton.TabIndex = 24;
@@ -117,11 +121,46 @@
             addButton.UseVisualStyleBackColor = true;
             addButton.Click += addButton_Click;
             // 
+            // uploadButton
+            // 
+            uploadButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            uploadButton.ForeColor = Color.DarkRed;
+            uploadButton.Location = new Point(491, 451);
+            uploadButton.Name = "uploadButton";
+            uploadButton.Size = new Size(84, 40);
+            uploadButton.TabIndex = 34;
+            uploadButton.Text = "Upload";
+            uploadButton.UseVisualStyleBackColor = true;
+            // 
+            // badgePictureBox
+            // 
+            badgePictureBox.BorderStyle = BorderStyle.FixedSingle;
+            badgePictureBox.Location = new Point(343, 438);
+            badgePictureBox.Name = "badgePictureBox";
+            badgePictureBox.Size = new Size(115, 64);
+            badgePictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+            badgePictureBox.TabIndex = 33;
+            badgePictureBox.TabStop = false;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
+            label3.ForeColor = Color.DarkRed;
+            label3.Location = new Point(213, 461);
+            label3.Name = "label3";
+            label3.Size = new Size(92, 20);
+            label3.TabIndex = 32;
+            label3.Text = "Team Badge";
+            // 
             // AddTeamControl
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Linen;
+            Controls.Add(uploadButton);
+            Controls.Add(badgePictureBox);
+            Controls.Add(label3);
             Controls.Add(label2);
             Controls.Add(coachTextBox);
             Controls.Add(label1);
@@ -132,6 +171,7 @@
             Controls.Add(addButton);
             Name = "AddTeamControl";
             Size = new Size(825, 626);
+            ((System.ComponentModel.ISupportInitialize)badgePictureBox).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -146,5 +186,8 @@
         private ComboBox countryComboBox;
         private TextBox nameTextBox;
         private Button addButton;
+        private Button uploadButton;
+        private PictureBox badgePictureBox;
+        private Label label3;
     }
 }

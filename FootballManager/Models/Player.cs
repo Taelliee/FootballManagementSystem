@@ -12,17 +12,13 @@ namespace FootballManager.Models
     {
         public int ShirtNumber { get; set; }
         public string TeamName { get; set; }
-
-        public string ImagePath { get; set; }  // team badge
-
         public PlayerPosition Position { get; set; }
 
-        public Player(int id, string name, Country country, int shirtNum, string team, string imgPath, PlayerPosition position)
+        public Player(int id, string name, Country country, int shirtNum, string team, PlayerPosition position)
         : base(id, name, country)
         {
             ShirtNumber = shirtNum;
             TeamName = team;
-            ImagePath = imgPath;
             Position = position;
         }
 

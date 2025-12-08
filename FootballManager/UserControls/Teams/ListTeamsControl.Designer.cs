@@ -33,6 +33,7 @@
             FullName = new DataGridViewTextBoxColumn();
             Country = new DataGridViewTextBoxColumn();
             HeadCoach = new DataGridViewTextBoxColumn();
+            Image = new DataGridViewImageColumn();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
@@ -52,7 +53,7 @@
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView1.BackgroundColor = Color.BurlyWood;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { FullName, Country, HeadCoach });
+            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { FullName, Country, HeadCoach, Image });
             dataGridView1.Location = new Point(50, 92);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersWidth = 51;
@@ -77,6 +78,12 @@
             HeadCoach.MinimumWidth = 6;
             HeadCoach.Name = "HeadCoach";
             // 
+            // Image
+            // 
+            Image.HeaderText = "Team Badge";
+            Image.MinimumWidth = 6;
+            Image.Name = "Image";
+            // 
             // ListTeamsControl
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -98,5 +105,6 @@
         private DataGridViewTextBoxColumn FullName;
         private DataGridViewTextBoxColumn Country;
         private DataGridViewTextBoxColumn HeadCoach;
+        private DataGridViewImageColumn Image;
     }
 }

@@ -16,14 +16,9 @@ namespace FootballManager
 {
     public partial class AddPlayerControl : UserControl
     {
-        private string selectedImagePath = "";
-
         public AddPlayerControl()
         {
             InitializeComponent();
-
-            badgePictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-
             LoadFormData();
         }
 
@@ -37,24 +32,6 @@ namespace FootballManager
             if (FootballData.Teams.Count > 0)
             {
                 teamComboBox.Items.AddRange(FootballData.Teams.Keys.ToArray());
-            }
-        }
-
-        // uploading image
-        private void uploadButton_Click(object sender, EventArgs e)
-        {
-            using (OpenFileDialog openFileDialog = new OpenFileDialog())
-            {
-                // filter - only images
-                openFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp";
-                openFileDialog.Title = "Select Team Badge";
-
-                if (openFileDialog.ShowDialog() == DialogResult.OK)
-                {
-                    selectedImagePath = openFileDialog.FileName;
-
-                    badgePictureBox.Image = Image.FromFile(selectedImagePath);
-                }
             }
         }
 
@@ -108,7 +85,7 @@ namespace FootballManager
                 selectedCountry,
                 shirtNumber,
                 teamName,
-                selectedImagePath,
+                //selectedImagePath,
                 selectedPosition
             );
 
@@ -119,8 +96,8 @@ namespace FootballManager
                                   $"Team: {newPlayer.TeamName}\n" +
                                   $"Country: {newPlayer.Country}\n" +
                                   $"Position: {newPlayer.Position}\n" +
-                                  $"Shirt #: {newPlayer.ShirtNumber}\n" +
-                                  $"Image: {(string.IsNullOrEmpty(selectedImagePath) ? "No Image" : "Image Selected")}";
+                                  $"Shirt #: {newPlayer.ShirtNumber}\n";
+                                  //$"Image: {(string.IsNullOrEmpty(selectedImagePath) ? "No Image" : "Image Selected")}";
 
             DialogResult result = MessageBox.Show(debugMessage, "Confirm Player", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
 
@@ -141,8 +118,8 @@ namespace FootballManager
             fullNameTextBox.Clear();
             shirtNumberTextBox.Clear();
             teamComboBox.Text = "";
-            badgePictureBox.Image = null;
-            selectedImagePath = "";
+            //badgePictureBox.Image = null;
+            //selectedImagePath = "";
         }
 
         // only numbers

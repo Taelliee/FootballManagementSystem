@@ -33,9 +33,6 @@
             label4 = new Label();
             newNameTextBox = new TextBox();
             fullNameComboBox = new ComboBox();
-            uploadButton = new Button();
-            badgePictureBox = new PictureBox();
-            label3 = new Label();
             label2 = new Label();
             playerPositionComboBox = new ComboBox();
             shirtNumberLabel = new Label();
@@ -45,7 +42,6 @@
             teamComboBox = new ComboBox();
             countryComboBox = new ComboBox();
             shirtNumberTextBox = new TextBox();
-            ((System.ComponentModel.ISupportInitialize)badgePictureBox).BeginInit();
             SuspendLayout();
             // 
             // label1
@@ -63,11 +59,11 @@
             // 
             editButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 204);
             editButton.ForeColor = Color.DarkRed;
-            editButton.Location = new Point(357, 488);
+            editButton.Location = new Point(365, 481);
             editButton.Name = "editButton";
             editButton.Size = new Size(115, 40);
             editButton.TabIndex = 31;
-            editButton.Text = "Add";
+            editButton.Text = "Edit";
             editButton.UseVisualStyleBackColor = true;
             editButton.Click += editButton_Click;
             // 
@@ -76,7 +72,7 @@
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
             label4.ForeColor = Color.DarkRed;
-            label4.Location = new Point(85, 241);
+            label4.Location = new Point(78, 277);
             label4.Name = "label4";
             label4.Size = new Size(85, 20);
             label4.TabIndex = 54;
@@ -84,7 +80,7 @@
             // 
             // newNameTextBox
             // 
-            newNameTextBox.Location = new Point(209, 238);
+            newNameTextBox.Location = new Point(202, 274);
             newNameTextBox.Name = "newNameTextBox";
             newNameTextBox.Size = new Size(232, 27);
             newNameTextBox.TabIndex = 53;
@@ -93,42 +89,10 @@
             // 
             fullNameComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             fullNameComboBox.FormattingEnabled = true;
-            fullNameComboBox.Location = new Point(209, 186);
+            fullNameComboBox.Location = new Point(202, 222);
             fullNameComboBox.Name = "fullNameComboBox";
             fullNameComboBox.Size = new Size(232, 28);
             fullNameComboBox.TabIndex = 52;
-            // 
-            // uploadButton
-            // 
-            uploadButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 204);
-            uploadButton.ForeColor = Color.DarkRed;
-            uploadButton.Location = new Point(357, 362);
-            uploadButton.Name = "uploadButton";
-            uploadButton.Size = new Size(84, 40);
-            uploadButton.TabIndex = 51;
-            uploadButton.Text = "Upload";
-            uploadButton.UseVisualStyleBackColor = true;
-            // 
-            // badgePictureBox
-            // 
-            badgePictureBox.BorderStyle = BorderStyle.FixedSingle;
-            badgePictureBox.Location = new Point(209, 349);
-            badgePictureBox.Name = "badgePictureBox";
-            badgePictureBox.Size = new Size(115, 64);
-            badgePictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-            badgePictureBox.TabIndex = 50;
-            badgePictureBox.TabStop = false;
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
-            label3.ForeColor = Color.DarkRed;
-            label3.Location = new Point(79, 372);
-            label3.Name = "label3";
-            label3.Size = new Size(92, 20);
-            label3.TabIndex = 49;
-            label3.Text = "Team Badge";
             // 
             // label2
             // 
@@ -177,7 +141,7 @@
             teamLabel.AutoSize = true;
             teamLabel.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
             teamLabel.ForeColor = Color.DarkRed;
-            teamLabel.Location = new Point(123, 299);
+            teamLabel.Location = new Point(116, 335);
             teamLabel.Name = "teamLabel";
             teamLabel.Size = new Size(45, 20);
             teamLabel.TabIndex = 44;
@@ -188,7 +152,7 @@
             fullNameLabel.AutoSize = true;
             fullNameLabel.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
             fullNameLabel.ForeColor = Color.DarkRed;
-            fullNameLabel.Location = new Point(92, 189);
+            fullNameLabel.Location = new Point(85, 225);
             fullNameLabel.Name = "fullNameLabel";
             fullNameLabel.Size = new Size(79, 20);
             fullNameLabel.TabIndex = 43;
@@ -198,7 +162,7 @@
             // 
             teamComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             teamComboBox.FormattingEnabled = true;
-            teamComboBox.Location = new Point(209, 296);
+            teamComboBox.Location = new Point(202, 332);
             teamComboBox.Name = "teamComboBox";
             teamComboBox.Size = new Size(200, 28);
             teamComboBox.TabIndex = 42;
@@ -227,9 +191,6 @@
             Controls.Add(label4);
             Controls.Add(newNameTextBox);
             Controls.Add(fullNameComboBox);
-            Controls.Add(uploadButton);
-            Controls.Add(badgePictureBox);
-            Controls.Add(label3);
             Controls.Add(label2);
             Controls.Add(playerPositionComboBox);
             Controls.Add(shirtNumberLabel);
@@ -243,7 +204,6 @@
             Controls.Add(editButton);
             Name = "EditPlayerControl";
             Size = new Size(830, 598);
-            ((System.ComponentModel.ISupportInitialize)badgePictureBox).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -254,9 +214,6 @@
         private Label label4;
         private TextBox newNameTextBox;
         private ComboBox fullNameComboBox;
-        private Button uploadButton;
-        private PictureBox badgePictureBox;
-        private Label label3;
         private Label label2;
         private ComboBox playerPositionComboBox;
         private Label shirtNumberLabel;
