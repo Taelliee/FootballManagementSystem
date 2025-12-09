@@ -18,7 +18,7 @@ namespace FootballManager
         {
             InitializeComponent();
             FootballData.LoadData();
-            UpdateCenterPanel();
+            //UpdateCenterPanel();
         }
 
         private void UpdateCenterPanel()
