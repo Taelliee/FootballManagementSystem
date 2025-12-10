@@ -154,6 +154,7 @@
             dtpStart.Name = "dtpStart";
             dtpStart.Size = new Size(250, 27);
             dtpStart.TabIndex = 5;
+            dtpStart.Value = new DateTime(2025, 12, 9, 21, 22, 0, 0);
             // 
             // lblCompResult
             // 
