@@ -34,15 +34,10 @@ namespace FootballManager.UserControls.Competitions
             playerComboBox.DisplayMember = "FullName";
             playerComboBox.ValueMember = "Id";
 
-            stadiumComboBox.Items.Clear();
-            if (FootballData.Stadiums.Count > 0)
-            {
-                var stadiumNames = FootballData.Stadiums
-                                    .Select(s => s.Name)
-                                    .ToArray();
-
-                stadiumComboBox.Items.AddRange(stadiumNames);
-            }
+            stadiumComboBox.DataSource = null;
+            stadiumComboBox.DataSource = FootballData.Stadiums;
+            stadiumComboBox.DisplayMember = "Name";
+            stadiumComboBox.ValueMember = "Id";
         }
 
         private void addButton_Click(object sender, EventArgs e)

@@ -12,7 +12,6 @@ namespace FootballManager.UserControls.Players
     public partial class EditPlayerControl : UserControl
     {
         private Player selectedPlayer;
-        private string currentImagePath = "";
 
         public EditPlayerControl()
         {
@@ -59,18 +58,6 @@ namespace FootballManager.UserControls.Players
                 teamComboBox.Text = selectedPlayer.TeamName;
                 countryComboBox.SelectedItem = selectedPlayer.Country;
                 playerPositionComboBox.SelectedItem = selectedPlayer.Position;
-
-                // image
-                //if (!string.IsNullOrEmpty(selectedPlayer.ImagePath) && File.Exists(selectedPlayer.ImagePath))
-                //{
-                //    badgePictureBox.Image = Image.FromFile(selectedPlayer.ImagePath);
-                //    currentImagePath = selectedPlayer.ImagePath;
-                //}
-                //else
-                //{
-                //    badgePictureBox.Image = null;
-                //    currentImagePath = "";
-                //}
             }
         }
 
@@ -130,7 +117,6 @@ namespace FootballManager.UserControls.Players
             shirtNumberTextBox.Clear();
             teamComboBox.Text = "";
             selectedPlayer = null;
-            currentImagePath = "";
         }
     }
 }
