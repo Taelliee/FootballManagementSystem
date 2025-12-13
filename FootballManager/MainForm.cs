@@ -126,7 +126,7 @@ namespace FootballManager
                 control.Dock = DockStyle.Fill;
                 contentPanel.Controls.Add(control);
             }
-            
+
         }
 
         //entity buttons
@@ -195,27 +195,28 @@ namespace FootballManager
             contentPanel.Controls.Add(control);
         }
 
-        //private void mainLogo_Click(object sender, EventArgs e)
-        //{
-        //    gifPictureBox.BringToFront();
-        //    welcomeLabel.BringToFront();
-        //}
+        private void mainLogo_Click(object sender, EventArgs e)
+        {
+            ShowWelcomeScreen();
+        }
 
         private void mainLogoPictureBox_Click(object sender, EventArgs e)
         {
+            ShowWelcomeScreen();
+        }
+
+        private void ShowWelcomeScreen()
+        {
+            contentPanel.Controls.Clear();
+
+            contentPanel.Controls.Add(gifPictureBox);
+            contentPanel.Controls.Add(welcomeLabel);
+
+            gifPictureBox.Visible = true;
+            welcomeLabel.Visible = true;
+
             gifPictureBox.BringToFront();
             welcomeLabel.BringToFront();
         }
-
-        private void mainLogo_Click(object sender, EventArgs e)
-        {
-            gifPictureBox.BringToFront();
-            welcomeLabel.BringToFront();
-        }
-
-        /*private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            FootballData.SaveData();
-        }*/
     }
 }
