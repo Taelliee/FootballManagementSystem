@@ -12,14 +12,29 @@ namespace FootballManager.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Stadiums",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Country = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Capacity = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Stadiums", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "StaffMembers",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Role = table.Column<int>(type: "int", nullable: false),
+                    Role = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     FullName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Country = table.Column<int>(type: "int", nullable: false)
+                    Country = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -33,13 +48,19 @@ namespace FootballManager.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CoachName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Country = table.Column<int>(type: "int", nullable: false),
-                    ImagePath = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Country = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ImagePath = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CoachId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Teams", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Teams_StaffMembers_CoachId",
+                        column: x => x.CoachId,
+                        principalTable: "StaffMembers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateTable(
@@ -49,11 +70,10 @@ namespace FootballManager.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ShirtNumber = table.Column<int>(type: "int", nullable: false),
-                    TeamName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Position = table.Column<int>(type: "int", nullable: false),
-                    TeamId = table.Column<int>(type: "int", nullable: true),
+                    TeamId = table.Column<int>(type: "int", nullable: false),
+                    Position = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     FullName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Country = table.Column<int>(type: "int", nullable: false)
+                    Country = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -62,29 +82,8 @@ namespace FootballManager.Migrations
                         name: "FK_Players_Teams_TeamId",
                         column: x => x.TeamId,
                         principalTable: "Teams",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Stadiums",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TeamName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Country = table.Column<int>(type: "int", nullable: false),
-                    Capacity = table.Column<int>(type: "int", nullable: false),
-                    TeamId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Stadiums", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Stadiums_Teams_TeamId",
-                        column: x => x.TeamId,
-                        principalTable: "Teams",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -97,7 +96,7 @@ namespace FootballManager.Migrations
                     PlayerId = table.Column<int>(type: "int", nullable: false),
                     StadiumId = table.Column<int>(type: "int", nullable: false),
                     MatchDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    HostCountry = table.Column<int>(type: "int", nullable: false),
+                    HostCountry = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     GoalsScored = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -144,9 +143,11 @@ namespace FootballManager.Migrations
                 column: "TeamId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Stadiums_TeamId",
-                table: "Stadiums",
-                column: "TeamId");
+                name: "IX_Teams_CoachId",
+                table: "Teams",
+                column: "CoachId",
+                unique: true,
+                filter: "[CoachId] IS NOT NULL");
         }
 
         /// <inheritdoc />
@@ -162,10 +163,10 @@ namespace FootballManager.Migrations
                 name: "Stadiums");
 
             migrationBuilder.DropTable(
-                name: "StaffMembers");
+                name: "Teams");
 
             migrationBuilder.DropTable(
-                name: "Teams");
+                name: "StaffMembers");
         }
     }
 }

@@ -13,19 +13,34 @@ namespace FootballManager.Models
         {
         }
 
-        public Team(int id, string name, string coachName, Country country, string imagePath)
+        // Constructors should also be updated to accept a nullable int
+        public Team(int id, string name, int? coachId, Country country, string imagePath)
         {
             Id = id;
             Name = name;
-            CoachName = coachName;
+            CoachId = coachId;
             Country = country;
             ImagePath = imagePath;
         }
+
+        public Team(string name, int? coachId, Country country, string imagePath)
+        {
+            Name = name;
+            CoachId = coachId;
+            Country = country;
+            ImagePath = imagePath;
+        }
+
         public int Id { get; set; }
         public string Name { get; set; }
-        public string CoachName { get; set; }
         public Country Country { get; set; }
         public string ImagePath { get; set; }  // team badge
+
+        // Foreign key for the Coach (Staff)
+        public int? CoachId { get; set; }
+
+        // Navigation property to the Coach
+        public Staff Coach { get; set; }
 
         // Navigation property for Players
         public ICollection<Player> Players { get; set; }

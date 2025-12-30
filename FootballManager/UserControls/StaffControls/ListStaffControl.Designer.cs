@@ -29,11 +29,11 @@
         private void InitializeComponent()
         {
             label1 = new Label();
-            dataGridView1 = new DataGridView();
+            staffDataGridView = new DataGridView();
             FullName = new DataGridViewTextBoxColumn();
             Country = new DataGridViewTextBoxColumn();
             Position = new DataGridViewTextBoxColumn();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)staffDataGridView).BeginInit();
             SuspendLayout();
             // 
             // label1
@@ -47,17 +47,17 @@
             label1.TabIndex = 18;
             label1.Text = "List of staff members";
             // 
-            // dataGridView1
+            // staffDataGridView
             // 
-            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridView1.BackgroundColor = Color.BurlyWood;
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { FullName, Country, Position });
-            dataGridView1.Location = new Point(54, 92);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.RowHeadersWidth = 51;
-            dataGridView1.Size = new Size(711, 429);
-            dataGridView1.TabIndex = 17;
+            staffDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            staffDataGridView.BackgroundColor = Color.BurlyWood;
+            staffDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            staffDataGridView.Columns.AddRange(new DataGridViewColumn[] { FullName, Country, Position });
+            staffDataGridView.Location = new Point(54, 92);
+            staffDataGridView.Name = "staffDataGridView";
+            staffDataGridView.RowHeadersWidth = 51;
+            staffDataGridView.Size = new Size(711, 429);
+            staffDataGridView.TabIndex = 17;
             // 
             // FullName
             // 
@@ -83,10 +83,10 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Linen;
             Controls.Add(label1);
-            Controls.Add(dataGridView1);
+            Controls.Add(staffDataGridView);
             Name = "ListStaffControl";
             Size = new Size(820, 563);
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)staffDataGridView).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -94,7 +94,7 @@
         #endregion
 
         private Label label1;
-        private DataGridView dataGridView1;
+        private DataGridView staffDataGridView;
         private DataGridViewTextBoxColumn FullName;
         private DataGridViewTextBoxColumn Country;
         private DataGridViewTextBoxColumn Position;

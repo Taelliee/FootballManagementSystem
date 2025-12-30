@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using FootballManager.Models;
 using FootballManager.Enums;
 using System.IO;
+using FootballManager.Services;
 
 
 namespace FootballManager
@@ -28,9 +29,15 @@ namespace FootballManager
             playerPositionComboBox.DataSource = Enum.GetValues(typeof(PlayerPosition));
 
             teamComboBox.Items.Clear();
-            if (FootballData.Teams.Count > 0)
+            teamComboBox.DisplayMember = "Name";
+            //if (FootballData.Teams.Count > 0)
+            //{
+            //    teamComboBox.Items.AddRange(FootballData.Teams.ToArray());
+            //}
+
+            if (FootballDataService.GetTeams().Count > 0)
             {
-                teamComboBox.Items.AddRange(FootballData.Teams.Select(t => t.Name).ToArray());
+                teamComboBox.Items.AddRange(FootballDataService.GetTeams().ToArray());
             }
         }
 
@@ -65,7 +72,8 @@ namespace FootballManager
                 return;
             }
 
-            Team selectedTeam = FootballData.Teams.FirstOrDefault(t => t.Name == teamName);
+            //Team selectedTeam = FootballData.Teams.FirstOrDefault(t => t.Name == teamName);
+            Team selectedTeam = FootballDataService.GetTeams().FirstOrDefault(t => t.Name == teamName);
             if (selectedTeam == null)
             {
                 MessageBox.Show("Selected team does not exist!");
@@ -75,10 +83,10 @@ namespace FootballManager
             Country selectedCountry = (Country)countryComboBox.SelectedItem;
             PlayerPosition selectedPosition = (PlayerPosition)playerPositionComboBox.SelectedItem;
 
-            int newId = FootballData.GetNextPlayerId();
+            //int newId = FootballData.GetNextPlayerId();
 
             Player newPlayer = new Player(
-                newId,
+                //newId,
                 fullName,
                 selectedCountry,
                 shirtNumber,
@@ -86,20 +94,20 @@ namespace FootballManager
                 selectedPosition
             );
 
-            string debugMessage = $" PLEASE CONFIRM DATA:\n\n" +
-                                  $"ID: {newPlayer.Id}\n" +
+            string confirmMessage = $"Confirm Player Data:\n\n" +
                                   $"Name: {newPlayer.FullName}\n" +
                                   $"Team: {selectedTeam.Name}\n" +
                                   $"Country: {newPlayer.Country}\n" +
                                   $"Position: {newPlayer.Position}\n" +
                                   $"Shirt #: {newPlayer.ShirtNumber}\n";
 
-            DialogResult result = MessageBox.Show(debugMessage, "Confirm Player", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+            DialogResult result = MessageBox.Show(confirmMessage, "Confirm Player", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
 
             if (result == DialogResult.OK)
             {
-                FootballData.AddPlayer(newPlayer);
-                FootballData.SaveData();
+                //FootballData.AddPlayer(newPlayer);
+                //FootballData.SaveData();
+                FootballDataService.AddPlayer(newPlayer);
 
                 MessageBox.Show($"Player {fullName} added successfully to team {selectedTeam.Name}!");
 
@@ -113,8 +121,6 @@ namespace FootballManager
             fullNameTextBox.Clear();
             shirtNumberTextBox.Clear();
             teamComboBox.Text = "";
-            //badgePictureBox.Image = null;
-            //selectedImagePath = "";
         }
 
         // only numbers

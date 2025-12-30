@@ -3,6 +3,7 @@ using System.Data;
 using System.Linq;
 using System.Windows.Forms;
 using FootballManager.Models;
+using FootballManager.Services;
 
 namespace FootballManager.UserControls.Players
 {
@@ -11,9 +12,7 @@ namespace FootballManager.UserControls.Players
         public DeletePlayerControl()
         {
             InitializeComponent();
-
             LoadTeams();
-
             teamComboBox.SelectedIndexChanged += teamComboBox_SelectedIndexChanged;
         }
 
@@ -21,9 +20,10 @@ namespace FootballManager.UserControls.Players
         {
             teamComboBox.Items.Clear();
             teamComboBox.DisplayMember = "Name";
-            if (FootballData.Teams.Count > 0)
+            var teams = FootballDataService.GetTeams();
+            if (teams.Any())
             {
-                teamComboBox.Items.AddRange(FootballData.Teams.ToArray());
+                teamComboBox.Items.AddRange(teams.ToArray());
             }
         }
 
@@ -31,47 +31,27 @@ namespace FootballManager.UserControls.Players
         {
             fullNameComboBox.Items.Clear();
             fullNameComboBox.Text = "";
+            fullNameComboBox.DisplayMember = "FullName";
 
-            if (teamComboBox.SelectedItem == null) return;
+            if (teamComboBox.SelectedItem is not Team selectedTeam) return;
 
-            Team selectedTeam = (Team)teamComboBox.SelectedItem;
-
-            // LINQ
-            var playersInTeam = FootballData.Players
-                .Where(p => p.TeamId == selectedTeam.Id)
-                .Select(p => p.FullName)
-                .ToArray();
-
-            fullNameComboBox.Items.AddRange(playersInTeam);
-
-            if (fullNameComboBox.Items.Count > 0)
+            var playersInTeam = FootballDataService.GetPlayers().Where(p => p.TeamId == selectedTeam.Id).ToArray();
+            if (playersInTeam.Any())
+            {
+                fullNameComboBox.Items.AddRange(playersInTeam);
                 fullNameComboBox.SelectedIndex = 0;
+            }
             else
+            {
                 fullNameComboBox.Text = "No players found";
+            }
         }
 
         private void deleteButton_Click(object sender, EventArgs e)
         {
-            if (teamComboBox.SelectedItem == null)
+            if (fullNameComboBox.SelectedItem is not Player playerToDelete)
             {
-                MessageBox.Show("Select a team first!");
-                return;
-            }
-            if (string.IsNullOrWhiteSpace(fullNameComboBox.Text))
-            {
-                MessageBox.Show("Select a player!");
-                return;
-            }
-
-            Team selectedTeam = (Team)teamComboBox.SelectedItem;
-            string selectedPlayerName = fullNameComboBox.Text;
-
-            var playerToDelete = FootballData.Players
-                .FirstOrDefault(p => p.FullName == selectedPlayerName && p.TeamId == selectedTeam.Id);
-
-            if (playerToDelete == null)
-            {
-                MessageBox.Show("Player not found!");
+                MessageBox.Show("Select a player to delete!");
                 return;
             }
 
@@ -83,11 +63,10 @@ namespace FootballManager.UserControls.Players
 
             if (result == DialogResult.Yes)
             {
-                FootballData.RemovePlayer(playerToDelete);
-                FootballData.SaveData();
-
+                FootballDataService.RemovePlayer(playerToDelete.Id);
                 MessageBox.Show("Player deleted!");
 
+                // Refresh the player list for the selected team
                 teamComboBox_SelectedIndexChanged(sender, e);
             }
         }

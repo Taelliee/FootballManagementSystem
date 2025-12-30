@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FootballManager.Enums;
 
 namespace FootballManager
 {
@@ -21,25 +22,42 @@ namespace FootballManager
             optionsBuilder.UseSqlServer("Server=DESKTOP-VLMAI0N;Database=FootballManager;Trusted_Connection=True;TrustServerCertificate=True;");
         }
 
-        //protected override void OnModelCreating(ModelBuilder modelBuilder)
-        //{
-        //    // Configure relationships explicitly if needed
-        //    modelBuilder.Entity<Competition>()
-        //        .HasOne(c => c.Staff)
-        //        .WithMany(s => s.Competitions)
-        //        .HasForeignKey(c => c.StaffId);
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            // Convert all enums to strings in the database
+            modelBuilder.Entity<Player>()
+                .Property(p => p.Position)
+                .HasConversion<string>();
 
-        //    modelBuilder.Entity<Competition>()
-        //        .HasOne(c => c.Player)
-        //        .WithMany(p => p.Competitions)
-        //        .HasForeignKey(c => c.PlayerId);
+            modelBuilder.Entity<Player>()
+                .Property(p => p.Country)
+                .HasConversion<string>();
 
-        //    modelBuilder.Entity<Competition>()
-        //        .HasOne(c => c.Stadium)
-        //        .WithMany(s => s.Competitions)
-        //        .HasForeignKey(c => c.StadiumId);
+            modelBuilder.Entity<Staff>()
+                .Property(s => s.Role)
+                .HasConversion<string>();
 
-        //    // Add additional configurations if necessary
-        //}
+            modelBuilder.Entity<Staff>()
+                .Property(s => s.Country)
+                .HasConversion<string>();
+
+            modelBuilder.Entity<Team>()
+                .Property(t => t.Country)
+                .HasConversion<string>();
+
+            modelBuilder.Entity<Stadium>()
+                .Property(s => s.Country)
+                .HasConversion<string>();
+
+            modelBuilder.Entity<Competition>()
+                .Property(c => c.HostCountry)
+                .HasConversion<string>();
+
+            modelBuilder.Entity<Team>()
+                .HasOne(t => t.Coach) // A Team has one Coach
+                .WithOne(s => s.CoachedTeam) // A Staff member (Coach) has one Team
+                .HasForeignKey<Team>(t => t.CoachId) // The foreign key is in the Team table
+                .OnDelete(DeleteBehavior.SetNull); // If a coach is deleted, set Team.CoachId to null
+        }
     }
 }

@@ -47,8 +47,8 @@ namespace FootballManager
             {
                 foreach (var team in Teams)
                 {
-                    // Format: ID|Name|Coach|Country|ImagePath
-                    sw.WriteLine($"{team.Id}|{team.Name}|{team.CoachName}|{team.Country}|{team.ImagePath}");
+                    // Format: ID|Name|CoachId|Country|ImagePath
+                    sw.WriteLine($"{team.Id}|{team.Name}|{team.CoachId}|{team.Country}|{team.ImagePath}");
                 }
             }
 
@@ -136,7 +136,7 @@ namespace FootballManager
                         Team t = new Team();
                         t.Id = int.Parse(parts[0]);
                         t.Name = parts[1];
-                        t.CoachName = parts[2];
+                        t.CoachId = int.Parse(parts[2]);
                         Enum.TryParse(parts[3], out Country c);
                         t.Country = c;
                         t.ImagePath = parts[4];

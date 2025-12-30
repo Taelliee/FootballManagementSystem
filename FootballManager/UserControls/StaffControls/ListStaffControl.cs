@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using FootballManager.Services;
 
 namespace FootballManager.UserControls.Staff
 {
@@ -13,14 +14,14 @@ namespace FootballManager.UserControls.Staff
 
         public void LoadGrid()
         {
-            dataGridView1.AllowUserToAddRows = false;
+            staffDataGridView.AllowUserToAddRows = false;
+            staffDataGridView.Rows.Clear();
 
-            dataGridView1.DataSource = null;
-            dataGridView1.Rows.Clear();
+            var staffList = FootballDataService.GetStaff();
 
-            foreach (var s in FootballData.StaffMembers)
+            foreach (var s in staffList)
             {
-                dataGridView1.Rows.Add(s.FullName, s.Country, s.Role);
+                staffDataGridView.Rows.Add(s.FullName, s.Country.ToString(), s.Role.ToString());
             }
         }
     }

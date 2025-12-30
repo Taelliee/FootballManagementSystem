@@ -30,7 +30,7 @@
         {
             countryComboBox = new ComboBox();
             label2 = new Label();
-            nameComboBox = new ComboBox();
+            teamComboBox = new ComboBox();
             label1 = new Label();
             fullNameLabel = new Label();
             deleteButton = new Button();
@@ -56,14 +56,14 @@
             label2.TabIndex = 37;
             label2.Text = "Country";
             // 
-            // nameComboBox
+            // teamComboBox
             // 
-            nameComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-            nameComboBox.FormattingEnabled = true;
-            nameComboBox.Location = new Point(340, 346);
-            nameComboBox.Name = "nameComboBox";
-            nameComboBox.Size = new Size(200, 28);
-            nameComboBox.TabIndex = 36;
+            teamComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            teamComboBox.FormattingEnabled = true;
+            teamComboBox.Location = new Point(340, 346);
+            teamComboBox.Name = "teamComboBox";
+            teamComboBox.Size = new Size(200, 28);
+            teamComboBox.TabIndex = 36;
             // 
             // label1
             // 
@@ -81,11 +81,11 @@
             fullNameLabel.AutoSize = true;
             fullNameLabel.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
             fullNameLabel.ForeColor = Color.DarkRed;
-            fullNameLabel.Location = new Point(254, 349);
+            fullNameLabel.Location = new Point(229, 349);
             fullNameLabel.Name = "fullNameLabel";
-            fullNameLabel.Size = new Size(50, 20);
+            fullNameLabel.Size = new Size(90, 20);
             fullNameLabel.TabIndex = 34;
-            fullNameLabel.Text = "Name";
+            fullNameLabel.Text = "Team Name";
             // 
             // deleteButton
             // 
@@ -106,7 +106,7 @@
             BackColor = Color.Linen;
             Controls.Add(countryComboBox);
             Controls.Add(label2);
-            Controls.Add(nameComboBox);
+            Controls.Add(teamComboBox);
             Controls.Add(label1);
             Controls.Add(fullNameLabel);
             Controls.Add(deleteButton);
@@ -120,7 +120,7 @@
 
         private ComboBox countryComboBox;
         private Label label2;
-        private ComboBox nameComboBox;
+        private ComboBox teamComboBox;
         private Label label1;
         private Label fullNameLabel;
         private Button deleteButton;

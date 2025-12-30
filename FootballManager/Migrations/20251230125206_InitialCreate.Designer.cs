@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FootballManager.Migrations
 {
     [DbContext(typeof(FootballDbContext))]
-    [Migration("20251229194235_InitialCreate")]
+    [Migration("20251230125206_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -36,8 +36,9 @@ namespace FootballManager.Migrations
                     b.Property<int>("GoalsScored")
                         .HasColumnType("int");
 
-                    b.Property<int>("HostCountry")
-                        .HasColumnType("int");
+                    b.Property<string>("HostCountry")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("MatchDate")
                         .HasColumnType("datetime2");
@@ -70,25 +71,23 @@ namespace FootballManager.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Country")
-                        .HasColumnType("int");
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FullName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Position")
-                        .HasColumnType("int");
+                    b.Property<string>("Position")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ShirtNumber")
                         .HasColumnType("int");
 
-                    b.Property<int?>("TeamId")
+                    b.Property<int>("TeamId")
                         .HasColumnType("int");
-
-                    b.Property<string>("TeamName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -108,23 +107,15 @@ namespace FootballManager.Migrations
                     b.Property<int>("Capacity")
                         .HasColumnType("int");
 
-                    b.Property<int>("Country")
-                        .HasColumnType("int");
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("TeamId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("TeamName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("TeamId");
 
                     b.ToTable("Stadiums");
                 });
@@ -137,15 +128,17 @@ namespace FootballManager.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Country")
-                        .HasColumnType("int");
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FullName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Role")
-                        .HasColumnType("int");
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -160,12 +153,12 @@ namespace FootballManager.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("CoachName")
+                    b.Property<int?>("CoachId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Country")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Country")
-                        .HasColumnType("int");
 
                     b.Property<string>("ImagePath")
                         .IsRequired()
@@ -176,6 +169,10 @@ namespace FootballManager.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CoachId")
+                        .IsUnique()
+                        .HasFilter("[CoachId] IS NOT NULL");
 
                     b.ToTable("Teams");
                 });
@@ -209,16 +206,23 @@ namespace FootballManager.Migrations
 
             modelBuilder.Entity("FootballManager.Models.Player", b =>
                 {
-                    b.HasOne("FootballManager.Models.Team", null)
+                    b.HasOne("FootballManager.Models.Team", "Team")
                         .WithMany("Players")
-                        .HasForeignKey("TeamId");
+                        .HasForeignKey("TeamId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Team");
                 });
 
-            modelBuilder.Entity("FootballManager.Models.Stadium", b =>
+            modelBuilder.Entity("FootballManager.Models.Team", b =>
                 {
-                    b.HasOne("FootballManager.Models.Team", null)
-                        .WithMany("Stadiums")
-                        .HasForeignKey("TeamId");
+                    b.HasOne("FootballManager.Models.Staff", "Coach")
+                        .WithOne("CoachedTeam")
+                        .HasForeignKey("FootballManager.Models.Team", "CoachId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Coach");
                 });
 
             modelBuilder.Entity("FootballManager.Models.Player", b =>
@@ -233,14 +237,15 @@ namespace FootballManager.Migrations
 
             modelBuilder.Entity("FootballManager.Models.Staff", b =>
                 {
+                    b.Navigation("CoachedTeam")
+                        .IsRequired();
+
                     b.Navigation("Competitions");
                 });
 
             modelBuilder.Entity("FootballManager.Models.Team", b =>
                 {
                     b.Navigation("Players");
-
-                    b.Navigation("Stadiums");
                 });
 #pragma warning restore 612, 618
         }

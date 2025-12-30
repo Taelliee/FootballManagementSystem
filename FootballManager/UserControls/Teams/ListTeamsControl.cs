@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using FootballManager.Models;
+using FootballManager.Services;
 
 namespace FootballManager.UserControls.Teams
 {
@@ -16,31 +18,33 @@ namespace FootballManager.UserControls.Teams
         {
             InitializeComponent();
 
-            if (dataGridView1.Columns["Image"] is DataGridViewImageColumn imgCol)
+            if (teamsDataGridView.Columns["Image"] is DataGridViewImageColumn imgCol)
             {
                 imgCol.ImageLayout = DataGridViewImageCellLayout.Zoom;
             }
 
-            dataGridView1.RowTemplate.Height = 45;
+            teamsDataGridView.RowTemplate.Height = 45;
 
             LoadTeams();
         }
 
         public void LoadTeams()
         {
-            dataGridView1.AllowUserToAddRows = false;
+            teamsDataGridView.AllowUserToAddRows = false;
+            teamsDataGridView.Rows.Clear();
 
-            dataGridView1.Rows.Clear();
-
-            var teams = FootballData.Teams.ToList();
+            // Get teams and include their coach information
+            var teams = FootballDataService.GetTeams(includeCoach: true);
 
             foreach (var team in teams)
             {
                 Image badge = team.GetImageSafe();
-                dataGridView1.Rows.Add(
+                string coachName = team.Coach?.FullName ?? "No Coach"; // Safely get coach name
+
+                teamsDataGridView.Rows.Add(
                     team.Name,
-                    team.Country,
-                    team.CoachName,
+                    team.Country.ToString(),
+                    coachName,
                     badge
                 );
             }

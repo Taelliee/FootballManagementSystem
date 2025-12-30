@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Windows.Forms;
 using FootballManager.Models;
+using FootballManager.Services;
 
 namespace FootballManager.UserControls.Stadiums
 {
@@ -15,13 +16,15 @@ namespace FootballManager.UserControls.Stadiums
 
         public void LoadGrid()
         {
-            dataGridView1.AllowUserToAddRows = false;
-            dataGridView1.DataSource = null;
-            dataGridView1.Rows.Clear();
+            stadiumsDataGridView.AllowUserToAddRows = false;
+            stadiumsDataGridView.Rows.Clear();
 
-            foreach (var s in FootballData.Stadiums)
+            var stadiums = FootballDataService.GetStadiums();
+            // Note: The Team relationship to Stadium was removed. 
+
+            foreach (var s in stadiums)
             {
-                dataGridView1.Rows.Add(s.Name, s.Country, s.Capacity);
+                stadiumsDataGridView.Rows.Add(s.Name, s.Country.ToString(), s.Capacity);
             }
         }
     }

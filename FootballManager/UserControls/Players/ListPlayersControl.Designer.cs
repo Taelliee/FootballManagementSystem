@@ -30,34 +30,20 @@
         {
             components = new System.ComponentModel.Container();
             teamBindingSource = new BindingSource(components);
-            label2 = new Label();
             label1 = new Label();
-            positionRadioButton = new RadioButton();
-            countryRadioButton = new RadioButton();
-            teamRadioButton = new RadioButton();
-            dataGridView1 = new DataGridView();
+            playersDataGridView = new DataGridView();
             FullName = new DataGridViewTextBoxColumn();
             Team = new DataGridViewTextBoxColumn();
             Country = new DataGridViewTextBoxColumn();
             ShirtNumber = new DataGridViewTextBoxColumn();
             Position = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)teamBindingSource).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)playersDataGridView).BeginInit();
             SuspendLayout();
             // 
             // teamBindingSource
             // 
             teamBindingSource.DataSource = typeof(Models.Team);
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.ForeColor = Color.DarkRed;
-            label2.Location = new Point(128, 89);
-            label2.Name = "label2";
-            label2.Size = new Size(119, 20);
-            label2.TabIndex = 13;
-            label2.Text = "Show players by:";
             // 
             // label1
             // 
@@ -70,55 +56,17 @@
             label1.TabIndex = 12;
             label1.Text = "List of players";
             // 
-            // positionRadioButton
+            // playersDataGridView
             // 
-            positionRadioButton.AutoSize = true;
-            positionRadioButton.ForeColor = Color.DarkRed;
-            positionRadioButton.Location = new Point(569, 87);
-            positionRadioButton.Name = "positionRadioButton";
-            positionRadioButton.Size = new Size(82, 24);
-            positionRadioButton.TabIndex = 11;
-            positionRadioButton.TabStop = true;
-            positionRadioButton.Text = "Position";
-            positionRadioButton.UseVisualStyleBackColor = true;
-            // 
-            // countryRadioButton
-            // 
-            countryRadioButton.AutoSize = true;
-            countryRadioButton.ForeColor = Color.DarkRed;
-            countryRadioButton.Location = new Point(426, 87);
-            countryRadioButton.Name = "countryRadioButton";
-            countryRadioButton.Size = new Size(81, 24);
-            countryRadioButton.TabIndex = 10;
-            countryRadioButton.TabStop = true;
-            countryRadioButton.Text = "Country";
-            countryRadioButton.UseVisualStyleBackColor = true;
-            // 
-            // teamRadioButton
-            // 
-            teamRadioButton.AutoSize = true;
-            teamRadioButton.ForeColor = Color.DarkRed;
-            teamRadioButton.Location = new Point(296, 87);
-            teamRadioButton.Name = "teamRadioButton";
-            teamRadioButton.Size = new Size(66, 24);
-            teamRadioButton.TabIndex = 9;
-            teamRadioButton.TabStop = true;
-            teamRadioButton.Text = "Team";
-            teamRadioButton.UseVisualStyleBackColor = true;
-            // 
-            // dataGridView1
-            // 
-            dataGridView1.AutoGenerateColumns = false;
-            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridView1.BackgroundColor = Color.BurlyWood;
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { FullName, Team, Country, ShirtNumber, Position });
-            dataGridView1.DataSource = teamBindingSource;
-            dataGridView1.Location = new Point(47, 121);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.RowHeadersWidth = 51;
-            dataGridView1.Size = new Size(741, 417);
-            dataGridView1.TabIndex = 8;
+            playersDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            playersDataGridView.BackgroundColor = Color.BurlyWood;
+            playersDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            playersDataGridView.Columns.AddRange(new DataGridViewColumn[] { FullName, Team, Country, ShirtNumber, Position });
+            playersDataGridView.Location = new Point(47, 101);
+            playersDataGridView.Name = "playersDataGridView";
+            playersDataGridView.RowHeadersWidth = 51;
+            playersDataGridView.Size = new Size(741, 437);
+            playersDataGridView.TabIndex = 8;
             // 
             // FullName
             // 
@@ -155,28 +103,20 @@
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Linen;
-            Controls.Add(label2);
             Controls.Add(label1);
-            Controls.Add(positionRadioButton);
-            Controls.Add(countryRadioButton);
-            Controls.Add(teamRadioButton);
-            Controls.Add(dataGridView1);
+            Controls.Add(playersDataGridView);
             Name = "ListPlayersControl";
             Size = new Size(830, 580);
             ((System.ComponentModel.ISupportInitialize)teamBindingSource).EndInit();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)playersDataGridView).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
         private BindingSource teamBindingSource;
-        private Label label2;
         private Label label1;
-        private RadioButton positionRadioButton;
-        private RadioButton countryRadioButton;
-        private RadioButton teamRadioButton;
-        private DataGridView dataGridView1;
+        private DataGridView playersDataGridView;
         private DataGridViewTextBoxColumn FullName;
         private DataGridViewTextBoxColumn Team;
         private DataGridViewTextBoxColumn Country;

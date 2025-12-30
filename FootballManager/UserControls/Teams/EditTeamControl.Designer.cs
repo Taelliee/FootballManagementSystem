@@ -49,7 +49,7 @@
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
             label2.ForeColor = Color.DarkRed;
-            label2.Location = new Point(236, 257);
+            label2.Location = new Point(236, 273);
             label2.Name = "label2";
             label2.Size = new Size(91, 20);
             label2.TabIndex = 41;
@@ -71,7 +71,7 @@
             countryLabel.AutoSize = true;
             countryLabel.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
             countryLabel.ForeColor = Color.DarkRed;
-            countryLabel.Location = new Point(262, 140);
+            countryLabel.Location = new Point(262, 209);
             countryLabel.Name = "countryLabel";
             countryLabel.Size = new Size(65, 20);
             countryLabel.TabIndex = 38;
@@ -82,7 +82,7 @@
             teamLabel.AutoSize = true;
             teamLabel.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
             teamLabel.ForeColor = Color.DarkRed;
-            teamLabel.Location = new Point(277, 200);
+            teamLabel.Location = new Point(277, 143);
             teamLabel.Name = "teamLabel";
             teamLabel.Size = new Size(45, 20);
             teamLabel.TabIndex = 37;
@@ -92,7 +92,7 @@
             // 
             teamComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             teamComboBox.FormattingEnabled = true;
-            teamComboBox.Location = new Point(363, 197);
+            teamComboBox.Location = new Point(363, 140);
             teamComboBox.Name = "teamComboBox";
             teamComboBox.Size = new Size(200, 28);
             teamComboBox.TabIndex = 36;
@@ -101,16 +101,17 @@
             // 
             countryComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             countryComboBox.FormattingEnabled = true;
-            countryComboBox.Location = new Point(363, 137);
+            countryComboBox.Location = new Point(363, 206);
             countryComboBox.Name = "countryComboBox";
             countryComboBox.Size = new Size(200, 28);
             countryComboBox.TabIndex = 35;
+            countryComboBox.SelectedIndexChanged += countryComboBox_SelectedIndexChanged;
             // 
             // editButton
             // 
             editButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 204);
             editButton.ForeColor = Color.DarkRed;
-            editButton.Location = new Point(353, 491);
+            editButton.Location = new Point(353, 514);
             editButton.Name = "editButton";
             editButton.Size = new Size(115, 40);
             editButton.TabIndex = 34;
@@ -122,7 +123,7 @@
             // 
             uploadButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 204);
             uploadButton.ForeColor = Color.DarkRed;
-            uploadButton.Location = new Point(511, 395);
+            uploadButton.Location = new Point(511, 418);
             uploadButton.Name = "uploadButton";
             uploadButton.Size = new Size(84, 40);
             uploadButton.TabIndex = 54;
@@ -133,7 +134,7 @@
             // badgePictureBox
             // 
             badgePictureBox.BorderStyle = BorderStyle.FixedSingle;
-            badgePictureBox.Location = new Point(363, 382);
+            badgePictureBox.Location = new Point(363, 405);
             badgePictureBox.Name = "badgePictureBox";
             badgePictureBox.Size = new Size(115, 64);
             badgePictureBox.SizeMode = PictureBoxSizeMode.Zoom;
@@ -145,7 +146,7 @@
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
             label4.ForeColor = Color.DarkRed;
-            label4.Location = new Point(233, 405);
+            label4.Location = new Point(233, 428);
             label4.Name = "label4";
             label4.Size = new Size(92, 20);
             label4.TabIndex = 52;
@@ -156,7 +157,7 @@
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
             label3.ForeColor = Color.DarkRed;
-            label3.Location = new Point(200, 324);
+            label3.Location = new Point(200, 347);
             label3.Name = "label3";
             label3.Size = new Size(122, 20);
             label3.TabIndex = 43;
@@ -164,7 +165,7 @@
             // 
             // nameTextBox
             // 
-            nameTextBox.Location = new Point(363, 321);
+            nameTextBox.Location = new Point(363, 344);
             nameTextBox.Name = "nameTextBox";
             nameTextBox.Size = new Size(200, 27);
             nameTextBox.TabIndex = 42;
@@ -173,7 +174,7 @@
             // 
             coachComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             coachComboBox.FormattingEnabled = true;
-            coachComboBox.Location = new Point(363, 257);
+            coachComboBox.Location = new Point(363, 273);
             coachComboBox.Name = "coachComboBox";
             coachComboBox.Size = new Size(200, 28);
             coachComboBox.TabIndex = 55;

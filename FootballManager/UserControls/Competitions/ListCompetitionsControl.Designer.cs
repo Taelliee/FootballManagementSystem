@@ -29,14 +29,14 @@
         private void InitializeComponent()
         {
             label1 = new Label();
-            dataGridView1 = new DataGridView();
+            competitionsDataGridView = new DataGridView();
             Player = new DataGridViewTextBoxColumn();
             Staff = new DataGridViewTextBoxColumn();
             Date = new DataGridViewTextBoxColumn();
             Country = new DataGridViewTextBoxColumn();
             Stadium = new DataGridViewTextBoxColumn();
             Goals = new DataGridViewTextBoxColumn();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)competitionsDataGridView).BeginInit();
             SuspendLayout();
             // 
             // label1
@@ -50,17 +50,17 @@
             label1.TabIndex = 16;
             label1.Text = "List of competitions";
             // 
-            // dataGridView1
+            // competitionsDataGridView
             // 
-            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridView1.BackgroundColor = Color.BurlyWood;
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { Player, Staff, Date, Country, Stadium, Goals });
-            dataGridView1.Location = new Point(39, 99);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.RowHeadersWidth = 51;
-            dataGridView1.Size = new Size(744, 427);
-            dataGridView1.TabIndex = 15;
+            competitionsDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            competitionsDataGridView.BackgroundColor = Color.BurlyWood;
+            competitionsDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            competitionsDataGridView.Columns.AddRange(new DataGridViewColumn[] { Player, Staff, Date, Country, Stadium, Goals });
+            competitionsDataGridView.Location = new Point(39, 99);
+            competitionsDataGridView.Name = "competitionsDataGridView";
+            competitionsDataGridView.RowHeadersWidth = 51;
+            competitionsDataGridView.Size = new Size(744, 427);
+            competitionsDataGridView.TabIndex = 15;
             // 
             // Player
             // 
@@ -104,10 +104,10 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Linen;
             Controls.Add(label1);
-            Controls.Add(dataGridView1);
+            Controls.Add(competitionsDataGridView);
             Name = "ListCompetitionsControl";
             Size = new Size(820, 561);
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)competitionsDataGridView).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -115,7 +115,7 @@
         #endregion
 
         private Label label1;
-        private DataGridView dataGridView1;
+        private DataGridView competitionsDataGridView;
         private DataGridViewTextBoxColumn Player;
         private DataGridViewTextBoxColumn Staff;
         private DataGridViewTextBoxColumn Date;

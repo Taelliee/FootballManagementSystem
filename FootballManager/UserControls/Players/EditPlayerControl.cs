@@ -6,6 +6,7 @@ using System.Drawing;
 using System.IO;
 using FootballManager.Models;
 using FootballManager.Enums;
+using FootballManager.Services;
 
 namespace FootballManager.UserControls.Players
 {
@@ -27,45 +28,47 @@ namespace FootballManager.UserControls.Players
             countryComboBox.DataSource = Enum.GetValues(typeof(Country));
             playerPositionComboBox.DataSource = Enum.GetValues(typeof(PlayerPosition));
 
+            // Load Teams
             teamComboBox.Items.Clear();
             teamComboBox.DisplayMember = "Name";
-            if (FootballData.Teams.Count > 0)
-                teamComboBox.Items.AddRange(FootballData.Teams.ToArray());
-
-            fullNameComboBox.Items.Clear();
-            foreach (var p in FootballData.Players)
+            var teams = FootballDataService.GetTeams();
+            if (teams.Any())
             {
-                fullNameComboBox.Items.Add(p.FullName);
+                teamComboBox.Items.AddRange(teams.ToArray());
             }
 
-            newNameTextBox.Clear();
+            // Load Players
+            fullNameComboBox.Items.Clear();
+            fullNameComboBox.DisplayMember = "FullName";
+            var players = FootballDataService.GetPlayers();
+            if (players.Any())
+            {
+                fullNameComboBox.Items.AddRange(players.ToArray());
+            }
+
+            ClearFields();
         }
 
         private void fullNameComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (fullNameComboBox.SelectedItem == null) return;
+            if (fullNameComboBox.SelectedItem is not Player player) return;
 
-            string name = fullNameComboBox.SelectedItem.ToString();
+            selectedPlayer = player;
 
-            selectedPlayer = FootballData.Players.FirstOrDefault(p => p.FullName == name);
+            newNameTextBox.Text = selectedPlayer.FullName;
+            shirtNumberTextBox.Text = selectedPlayer.ShirtNumber.ToString();
+            countryComboBox.SelectedItem = selectedPlayer.Country;
+            playerPositionComboBox.SelectedItem = selectedPlayer.Position;
 
-            if (selectedPlayer != null)
+            // Find and select the player's team
+            var team = teamComboBox.Items.OfType<Team>().FirstOrDefault(t => t.Id == selectedPlayer.TeamId);
+            if (team != null)
             {
-                newNameTextBox.Text = selectedPlayer.FullName;
-                shirtNumberTextBox.Text = selectedPlayer.ShirtNumber.ToString();
-
-                if (selectedPlayer.TeamId != 0)
-                {
-                    var team = FootballData.Teams.FirstOrDefault(t => t.Id == selectedPlayer.TeamId);
-                    teamComboBox.SelectedItem = team;
-                }
-                else
-                {
-                    teamComboBox.SelectedItem = null;
-                }
-
-                countryComboBox.SelectedItem = selectedPlayer.Country;
-                playerPositionComboBox.SelectedItem = selectedPlayer.Position;
+                teamComboBox.SelectedItem = team;
+            }
+            else
+            {
+                teamComboBox.SelectedIndex = -1;
             }
         }
 
@@ -93,28 +96,23 @@ namespace FootballManager.UserControls.Players
                 return;
             }
 
+            // Update the selected player object
             selectedPlayer.FullName = newName;
-            selectedPlayer.Team = newTeam;
+            selectedPlayer.TeamId = newTeam.Id; // Assign the Team's ID
             selectedPlayer.Country = (Country)countryComboBox.SelectedItem;
             selectedPlayer.Position = (PlayerPosition)playerPositionComboBox.SelectedItem;
             selectedPlayer.ShirtNumber = int.Parse(newShirtStr);
 
-            if (!FootballData.Teams.Contains(newTeam))
-            {
-                Team t = new Team { Name = newTeam.Name, Country = selectedPlayer.Country };
-                FootballData.Teams.Add(t);
-            }
-
-            // save
+            // Save changes to the database
             if (MessageBox.Show("Save changes?", "Confirm Edit", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                FootballData.SaveData();
-                FootballData.ActionHistory.Push($"Edited player: {selectedPlayer.FullName}");
+                FootballDataService.UpdatePlayer(selectedPlayer);
                 MessageBox.Show("Player updated successfully!");
 
+                // Refresh the form
+                int selectedIndex = fullNameComboBox.SelectedIndex;
                 LoadData();
-
-                ClearFields();
+                fullNameComboBox.SelectedIndex = selectedIndex;
             }
         }
 

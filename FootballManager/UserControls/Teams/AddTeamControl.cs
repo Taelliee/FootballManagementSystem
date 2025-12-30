@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows.Forms;
 using FootballManager.Models;
 using FootballManager.Enums;
+using FootballManager.Services;
 
 namespace FootballManager.UserControls.Teams
 {
@@ -24,14 +25,16 @@ namespace FootballManager.UserControls.Teams
         public void LoadCoaches()
         {
             coachComboBox.Items.Clear();
+            coachComboBox.DisplayMember = "FullName";
 
-            if (FootballData.StaffMembers != null)
+            //var headCoaches = FootballData.StaffMembers
+            var headCoaches = FootballDataService.GetStaff()
+                                .Where(s => s.Role == StaffPosition.HeadCoach)
+                                .ToArray();
+
+            //if (FootballData.StaffMembers != null)
+            if (headCoaches.Any())
             {
-                var headCoaches = FootballData.StaffMembers
-                                    .Where(s => s.Role == StaffPosition.HeadCoach)
-                                    .Select(s => s.FullName)
-                                    .ToArray();
-
                 coachComboBox.Items.AddRange(headCoaches);
             }
         }
@@ -57,7 +60,7 @@ namespace FootballManager.UserControls.Teams
         private void addButton_Click(object sender, EventArgs e)
         {
             string name = nameTextBox.Text.Trim();
-            string coach = coachComboBox.Text.Trim();
+            Models.Staff selectedCoach = (Models.Staff)coachComboBox.SelectedItem;
 
             if (string.IsNullOrWhiteSpace(name))
             {
@@ -65,7 +68,13 @@ namespace FootballManager.UserControls.Teams
                 return;
             }
 
-            if (FootballData.Teams.Any(t => t.Name == name))
+            if (selectedCoach == null)
+            {
+                MessageBox.Show("Please select a coach!");
+                return;
+            }
+
+            if (FootballDataService.GetTeams().Any(t => t.Name == name))
             {
                 MessageBox.Show("Team already exists!");
                 return;
@@ -75,21 +84,30 @@ namespace FootballManager.UserControls.Teams
 
             Team newTeam = new Team
             (
-                FootballData.GetNextTeamId(),
                 name,
-                coach,
+                selectedCoach.Id, // Use the Coach's ID
                 country,
                 selectedImagePath
             );
 
-            FootballData.Teams.Add(newTeam);
+            string confirmMessage = $"Confirm Team Data:\n\n" +
+                                  $"Name: {newTeam.Name}\n" +
+                                  $"Coach: {selectedCoach.FullName}\n" +
+                                  $"Country: {newTeam.Country}\n";
 
-            MessageBox.Show("Team added successfully!");
-            nameTextBox.Clear();
-            coachComboBox.SelectedIndex = -1;
-            coachComboBox.Text = "";
-            badgePictureBox.Image = null;
-            selectedImagePath = "";
+            var result = MessageBox.Show(confirmMessage, "Confirm Add", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+
+            if (result == DialogResult.OK)
+            {
+                FootballDataService.AddTeam(newTeam);
+
+                MessageBox.Show("Team added successfully!");
+                nameTextBox.Clear();
+                coachComboBox.SelectedIndex = -1;
+                coachComboBox.Text = "";
+                badgePictureBox.Image = null;
+                selectedImagePath = "";
+            }
         }
     }
 }

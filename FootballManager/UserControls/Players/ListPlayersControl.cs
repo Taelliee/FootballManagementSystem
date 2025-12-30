@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using FootballManager.Models;
+using FootballManager.Services;
 
 namespace FootballManager.UserControls.Players
 {
@@ -16,73 +17,42 @@ namespace FootballManager.UserControls.Players
         public ListPlayersControl()
         {
             InitializeComponent();
-
-            teamRadioButton.CheckedChanged += FilterChanged;
-            countryRadioButton.CheckedChanged += FilterChanged;
-            positionRadioButton.CheckedChanged += FilterChanged;
-
-            // default
-            teamRadioButton.Checked = true;
+            LoadGrid();
         }
 
-        private void FilterChanged(object sender, EventArgs e)
+        private void LoadGrid()
         {
-            if (FootballData.Players == null) return;
-
-            List<Player> sortedList = FootballData.Players.ToList();
-
-            if (teamRadioButton.Checked)
-            {
-                // Sort by Team.Name (via navigation property or lookup)
-                sortedList = sortedList
-                    .OrderBy(p => p.Team != null ? p.Team.Name : FootballData.Teams.FirstOrDefault(t => t.Id == p.TeamId)?.Name ?? "No Team")
-                    .ThenBy(p => p.FullName)
-                    .ToList();
-            }
-            else if (countryRadioButton.Checked)
-            {
-                sortedList = sortedList
-                    .OrderBy(p => p.Country)
-                    .ThenBy(p => p.Position)
-                    .ToList();
-            }
-            else if (positionRadioButton.Checked)
-            {
-                sortedList = sortedList
-                    .OrderBy(p => p.Position)
-                    .ThenBy(p => p.FullName)
-                    .ToList();
-            }
-
-            PopulateGrid(sortedList);
+            // Fetch players and their team information from the database
+            var players = FootballDataService.GetPlayers(includeTeam: true);
+            PopulateGrid(players);
         }
 
         private void PopulateGrid(List<Player> players)
         {
-            dataGridView1.AllowUserToAddRows = false;
-            dataGridView1.DataSource = null;
-            dataGridView1.Rows.Clear();
+            playersDataGridView.DataSource = null;
+            playersDataGridView.Rows.Clear();
+            playersDataGridView.AllowUserToAddRows = false;
+
+            if (players == null) return;
 
             foreach (var p in players)
             {
-                // Get team name via navigation property or lookup
-                string teamName = p.Team != null
-                    ? p.Team.Name
-                    : FootballData.Teams.FirstOrDefault(t => t.Id == p.TeamId)?.Name ?? "No Team";
+                // The p.Team navigation property is loaded by GetPlayers(includeTeam: true)
+                string teamName = p.Team?.Name ?? "No Team";
 
-                dataGridView1.Rows.Add(
+                playersDataGridView.Rows.Add(
                     p.FullName,
                     teamName,
-                    p.Country,
+                    p.Country.ToString(),
                     p.ShirtNumber,
-                    p.Position
+                    p.Position.ToString()
                 );
             }
         }
 
         public void Reload()
         {
-            FilterChanged(null, null);
+            LoadGrid();
         }
     }
 }

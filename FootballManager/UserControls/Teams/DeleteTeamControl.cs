@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows.Forms;
 using FootballManager.Enums;
 using FootballManager.Models;
+using FootballManager.Services;
 
 namespace FootballManager.UserControls.Teams
 {
@@ -12,72 +13,62 @@ namespace FootballManager.UserControls.Teams
         public DeleteTeamControl()
         {
             InitializeComponent();
+            
+            countryComboBox.SelectedIndexChanged += countryComboBox_SelectedIndexChanged;
+            
+            LoadCountries();
+        }
 
-            // Populate countryComboBox with "- All Countries -" first, then all countries
+        private void LoadCountries()
+        {
             countryComboBox.Items.Clear();
             countryComboBox.Items.Add("- All Countries -");
             foreach (var country in Enum.GetValues(typeof(Country)))
             {
                 countryComboBox.Items.Add(country);
             }
-
-            countryComboBox.SelectedIndexChanged += countryComboBox_SelectedIndexChanged;
             countryComboBox.SelectedIndex = 0;
         }
 
         private void countryComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            nameComboBox.Items.Clear();
-            nameComboBox.Text = "";
+            teamComboBox.Items.Clear();
+            teamComboBox.Text = "";
+            teamComboBox.DisplayMember = "Name";
 
-            if (countryComboBox.SelectedIndex == 0)
+            var teams = FootballDataService.GetTeams();
+            if (countryComboBox.SelectedIndex > 0 && countryComboBox.SelectedItem is Country selectedCountry)
             {
-                // Show all teams if "- All Countries -" is selected
-                nameComboBox.Items.AddRange(FootballData.Teams.Select(t => t.Name).ToArray());
-                if (nameComboBox.Items.Count > 0)
-                    nameComboBox.SelectedIndex = 0;
-                return;
+                teams = teams.Where(t => t.Country == selectedCountry).ToList();
             }
 
-            if (countryComboBox.SelectedItem == null) return;
-
-            Country selectedCountry = (Country)countryComboBox.SelectedItem;
-
-            var teamsInCountry = FootballData.Teams
-                .Where(t => t.Country == selectedCountry)
-                .Select(t => t.Name)
-                .ToArray();
-
-            nameComboBox.Items.AddRange(teamsInCountry);
-
-            if (nameComboBox.Items.Count > 0)
-                nameComboBox.SelectedIndex = 0;
+            if (teams.Any())
+            {
+                teamComboBox.Items.AddRange(teams.ToArray());
+                teamComboBox.SelectedIndex = 0;
+            }
         }
 
         private void deleteButton_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(nameComboBox.Text))
+            if (teamComboBox.SelectedItem is not Team teamToDelete)
             {
                 MessageBox.Show("Select a team to delete!");
                 return;
             }
 
-            string teamName = nameComboBox.Text;
-
-            // save
             var result = MessageBox.Show(
-                $"Are you sure you want to delete team '{teamName}'?\nThis cannot be undone.",
+                $"Are you sure you want to delete team '{teamToDelete.Name}'?\nThis cannot be undone.",
                 "Confirm Team Delete",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Error);
 
             if (result == DialogResult.Yes)
             {
-                FootballData.RemoveTeam(teamName);
-                FootballData.SaveData();
-
+                FootballDataService.RemoveTeam(teamToDelete.Id);
                 MessageBox.Show("Team deleted successfully!");
 
+                // Refresh the team list
                 countryComboBox_SelectedIndexChanged(sender, e);
             }
         }

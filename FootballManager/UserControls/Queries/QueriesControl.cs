@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using FootballManager.Models;
 using FootballManager.Enums;
+using FootballManager.Services;
 
 namespace FootballManager.UserControls.Queries
 {
@@ -17,7 +18,6 @@ namespace FootballManager.UserControls.Queries
         public QueriesControl()
         {
             InitializeComponent();
-
             LoadInitialData();
         }
 
@@ -49,24 +49,18 @@ namespace FootballManager.UserControls.Queries
             if (cmbCompStadium != null)
             {
                 cmbCompStadium.Items.Clear();
-                var usedStadiumIds = FootballData.Competitions
-                                 .Select(c => c.StadiumId)
-                                 .Distinct()
-                                 .ToList();
-
-                var stadiumObjects = FootballData.Stadiums
-                                                 .Where(s => usedStadiumIds.Contains(s.Id))
-                                                 .ToArray();
+                cmbCompStadium.DisplayMember = "Name";
+                var competitions = FootballDataService.GetCompetitions();
+                var stadiums = FootballDataService.GetStadiums();
+                var usedStadiumIds = competitions.Select(c => c.StadiumId).Distinct();
+                var stadiumObjects = stadiums.Where(s => usedStadiumIds.Contains(s.Id)).ToArray();
                 cmbCompStadium.Items.AddRange(stadiumObjects);
             }
 
             if (cmbCompCountry != null)
             {
-                cmbCompCountry.DataSource = null;
                 cmbCompCountry.Items.Clear();
-
                 cmbCompCountry.Items.Add("- All Countries -");
-
                 foreach (var country in Enum.GetValues(typeof(Country)))
                 {
                     cmbCompCountry.Items.Add(country);
@@ -86,37 +80,36 @@ namespace FootballManager.UserControls.Queries
         private void LoadAllPeopleGrid()
         {
             dgvAllPeople.AllowUserToAddRows = false;
-
             dgvAllPeople.Rows.Clear();
-            dgvAllPeople.Columns.Clear();
-
-            dgvAllPeople.Columns.Add("Type", "Type");
-            dgvAllPeople.Columns.Add("Name", "Name");
-            dgvAllPeople.Columns.Add("Country", "Country");
-            dgvAllPeople.Columns.Add("Team", "Team / Role");
-
-            var allPeople = new List<dynamic>();
-
-            foreach (var p in FootballData.Players)
+            if (dgvAllPeople.Columns.Count == 0)
             {
-                allPeople.Add(new { Type = "Player", Name = p.FullName, Country = p.Country, Team = p.Team?.Name ?? "No Team" });
+                dgvAllPeople.Columns.Add("Type", "Type");
+                dgvAllPeople.Columns.Add("Name", "Name");
+                dgvAllPeople.Columns.Add("Country", "Country");
+                dgvAllPeople.Columns.Add("Team", "Team / Role");
             }
 
-            foreach (var s in FootballData.StaffMembers)
+            var allPeople = new List<dynamic>();
+            var players = FootballDataService.GetPlayers(includeTeam: true);
+            foreach (var p in players)
             {
-                allPeople.Add(new { Type = "Staff", Name = s.FullName, Country = s.Country, Team = s.Role.ToString() });
+                allPeople.Add(new { Type = "Player", Name = p.FullName, Country = p.Country.ToString(), Team = p.Team?.Name ?? "No Team" });
+            }
+
+            var staff = FootballDataService.GetStaff();
+            foreach (var s in staff)
+            {
+                allPeople.Add(new { Type = "Staff", Name = s.FullName, Country = s.Country.ToString(), Team = s.Role.ToString() });
             }
 
             var sortedList = allPeople.OrderBy(x => x.Country).ThenBy(x => x.Team).ToList();
-
             foreach (var item in sortedList)
             {
                 dgvAllPeople.Rows.Add(item.Type, item.Name, item.Country, item.Team);
             }
         }
 
-        // ----- TAB 2: NUMBER OF COMPS -----
-
+        // ----- TAB 2: NUMBER OF COMPETITIONS -----
         private void btnCount_Click(object sender, EventArgs e)
         {
             DateTime start = dtpStart.Value.Date;
@@ -124,19 +117,20 @@ namespace FootballManager.UserControls.Queries
             Stadium stadium = (Stadium)cmbCompStadium.SelectedItem;
 
             bool filterByCountry = cmbCompCountry.SelectedIndex > 0;
-
-            Country selectedCountry = Country.Bulgaria; // default
+            Country selectedCountry = default; // Will only be used if filterByCountry is true
 
             if (filterByCountry)
-            {
+            {   
                 selectedCountry = (Country)cmbCompCountry.SelectedItem;
             }
 
-            int count = FootballData.Competitions.Count(c =>
+            var competitions = FootballDataService.GetCompetitions();
+
+            int count = competitions.Count(c =>
                 c.MatchDate.Date >= start &&
                 c.MatchDate.Date <= end &&
                 (!filterByCountry || c.HostCountry == selectedCountry) &&
-                (stadium == null|| c.StadiumId == stadium.Id)
+                (stadium == null || c.StadiumId == stadium.Id)
             );
 
             lblCompResult.Text = $"Result: {count} competitions found";
@@ -147,31 +141,18 @@ namespace FootballManager.UserControls.Queries
         {
             if (goalsChart == null) return;
 
-            Dictionary<string, int> teamGoals = new Dictionary<string, int>();
-
-            foreach (var comp in FootballData.Competitions)
-            {
-                var player = FootballData.Players.FirstOrDefault(p => p.Id == comp.PlayerId);
-                if (player != null)
-                {
-                    string team = player.Team?.Name ?? "No Team";
-                    if (!teamGoals.ContainsKey(team))
-                        teamGoals[team] = 0;
-
-                    teamGoals[team] += comp.GoalsScored;
-                }
-            }
+            var competitions = FootballDataService.GetCompetitions(includeAll: true);
+            var teamGoals = competitions
+                .Where(c => c.Player?.Team != null)
+                .GroupBy(c => c.Player.Team.Name)
+                .ToDictionary(g => g.Key, g => g.Sum(c => c.GoalsScored));
 
             goalsChart.Series.Clear();
-
-            Series series = new Series("Goals");
-            series.ChartType = SeriesChartType.Column;
-
-            foreach (var kvp in teamGoals)
+            Series series = new Series("Goals") { ChartType = SeriesChartType.Column };
+            foreach (var kvp in teamGoals.OrderByDescending(kvp => kvp.Value))
             {
                 series.Points.AddXY(kvp.Key, kvp.Value);
             }
-
             goalsChart.Series.Add(series);
         }
 
@@ -179,18 +160,18 @@ namespace FootballManager.UserControls.Queries
         private void PrepareFilterGrid()
         {
             dgvFilteredPlayers.AllowUserToAddRows = false;
-
-            dgvFilteredPlayers.Columns.Clear();
-            dgvFilteredPlayers.Columns.Add("Name", "Player Name");
-            dgvFilteredPlayers.Columns.Add("Team", "Team");
-            dgvFilteredPlayers.Columns.Add("Country", "Country");
-            dgvFilteredPlayers.Columns.Add("Info", "Extra Info");
+            if (dgvFilteredPlayers.Columns.Count == 0)
+            {
+                dgvFilteredPlayers.Columns.Add("Name", "Player Name");
+                dgvFilteredPlayers.Columns.Add("Team", "Team");
+                dgvFilteredPlayers.Columns.Add("Country", "Country");
+                dgvFilteredPlayers.Columns.Add("Info", "Extra Info");
+            }
         }
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
             dgvFilteredPlayers.Rows.Clear();
-
             string filterType = cmbFilterType.Text;
             string valueStr = txtFilterValue.Text.Trim();
 
@@ -200,8 +181,7 @@ namespace FootballManager.UserControls.Queries
                 return;
             }
 
-            List<Player> result = new List<Player>();
-            string extraInfoLabel = "";
+            var players = FootballDataService.GetPlayers(includeTeam: true);
 
             if (filterType.Contains("Goals"))
             {
@@ -210,19 +190,18 @@ namespace FootballManager.UserControls.Queries
                     MessageBox.Show("Enter a valid number!");
                     return;
                 }
+                var competitions = FootballDataService.GetCompetitions();
+                var playerGoals = competitions
+                    .GroupBy(c => c.PlayerId)
+                    .ToDictionary(g => g.Key, g => g.Sum(c => c.GoalsScored));
 
-                foreach (var p in FootballData.Players)
+                foreach (var p in players)
                 {
-                    int totalGoals = FootballData.Competitions
-                        .Where(c => c.PlayerId == p.Id)
-                        .Sum(c => c.GoalsScored);
-
-                    if (totalGoals >= minGoals)
+                    if (playerGoals.TryGetValue(p.Id, out int totalGoals) && totalGoals >= minGoals)
                     {
-                        dgvFilteredPlayers.Rows.Add(p.FullName, p.Team?.Name ?? "No Team", p.Country, $"Goals: {totalGoals}");
+                        dgvFilteredPlayers.Rows.Add(p.FullName, p.Team?.Name ?? "No Team", p.Country.ToString(), $"Goals: {totalGoals}");
                     }
                 }
-                return;
             }
             else if (filterType.Contains("Shirt"))
             {
@@ -231,24 +210,25 @@ namespace FootballManager.UserControls.Queries
                     MessageBox.Show("Enter a valid number!");
                     return;
                 }
-
-                result = FootballData.Players.Where(p => p.ShirtNumber == num).ToList();
-                extraInfoLabel = $"Shirt: {num}";
+                var result = players.Where(p => p.ShirtNumber == num).ToList();
+                foreach (var p in result)
+                {
+                    dgvFilteredPlayers.Rows.Add(p.FullName, p.Team?.Name ?? "No Team", p.Country.ToString(), $"Shirt: {num}");
+                }
             }
             else if (filterType.Contains("Coach"))
             {
-                var teamsWithCoach = FootballData.Teams
-                    .Where(t => t.CoachName != null && t.CoachName.ToLower().Contains(valueStr.ToLower()))
-                    .Select(t => t.Name)
+                var teams = FootballDataService.GetTeams(includeCoach: true);
+                var teamsWithCoach = teams
+                    .Where(t => t.Coach != null && t.Coach.FullName.ToLower().Contains(valueStr.ToLower()))
+                    .Select(t => t.Id)
                     .ToList();
 
-                result = FootballData.Players.Where(p => teamsWithCoach.Contains(p.Team?.Name)).ToList();
-                extraInfoLabel = $"Coach: {valueStr}";
-            }
-
-            foreach (var p in result)
-            {
-                dgvFilteredPlayers.Rows.Add(p.FullName, p.Team?.Name ?? "No Team", p.Country, extraInfoLabel);
+                var result = players.Where(p => teamsWithCoach.Contains(p.TeamId)).ToList();
+                foreach (var p in result)
+                {
+                    dgvFilteredPlayers.Rows.Add(p.FullName, p.Team?.Name ?? "No Team", p.Country.ToString(), $"Coach contains: {valueStr}");
+                }
             }
         }
     }

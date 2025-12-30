@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using FootballManager.Models;
 using FootballManager.Enums;
 using System.Linq;
+using FootballManager.Services;
 
 namespace FootballManager.UserControls.Stadiums
 {
@@ -15,7 +16,6 @@ namespace FootballManager.UserControls.Stadiums
             InitializeComponent();
 
             capacityTextBox.KeyPress += (s, e) => { if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar)) e.Handled = true; };
-
             nameComboBox.SelectedIndexChanged += nameComboBox_SelectedIndexChanged;
 
             LoadData();
@@ -26,9 +26,11 @@ namespace FootballManager.UserControls.Stadiums
             countryComboBox.DataSource = Enum.GetValues(typeof(Country));
 
             nameComboBox.Items.Clear();
-            foreach (var s in FootballData.Stadiums)
+            nameComboBox.DisplayMember = "Name"; // Use DisplayMember
+            var stadiums = FootballDataService.GetStadiums();
+            if (stadiums.Any())
             {
-                nameComboBox.Items.Add(s.Name);
+                nameComboBox.Items.AddRange(stadiums.ToArray());
             }
 
             newNameTextBox.Clear();
@@ -36,18 +38,13 @@ namespace FootballManager.UserControls.Stadiums
 
         private void nameComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (nameComboBox.SelectedItem == null) return;
-            string name = nameComboBox.SelectedItem.ToString();
+            if (nameComboBox.SelectedItem is not Stadium stadium) return;
 
-            selectedStadium = FootballData.Stadiums.FirstOrDefault(s => s.Name == name);
+            selectedStadium = stadium;
 
-            if (selectedStadium != null)
-            {
-                countryComboBox.SelectedItem = selectedStadium.Country;
-                capacityTextBox.Text = selectedStadium.Capacity.ToString();
-
-                newNameTextBox.Text = selectedStadium.Name;
-            }
+            countryComboBox.SelectedItem = selectedStadium.Country;
+            capacityTextBox.Text = selectedStadium.Capacity.ToString();
+            newNameTextBox.Text = selectedStadium.Name;
         }
 
         private void editButton_Click(object sender, EventArgs e)
@@ -67,24 +64,22 @@ namespace FootballManager.UserControls.Stadiums
                 return;
             }
 
+            // Update the properties of the selected stadium object
             selectedStadium.Name = newName;
             selectedStadium.Country = (Country)countryComboBox.SelectedItem;
             selectedStadium.Capacity = int.Parse(newCapacityStr);
 
-            // Save changes
+            // Save changes to the database
             if (MessageBox.Show("Save changes?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                FootballData.SaveData();
-                FootballData.ActionHistory.Push($"Edited stadium: {selectedStadium.Name}");
+                FootballDataService.UpdateStadium(selectedStadium);
 
                 MessageBox.Show("Updated successfully!");
 
+                // Refresh the form
+                int selectedIndex = nameComboBox.SelectedIndex;
                 LoadData();
-
-                nameComboBox.Text = "";
-                newNameTextBox.Clear();
-                capacityTextBox.Clear();
-                selectedStadium = null;
+                nameComboBox.SelectedIndex = selectedIndex;
             }
         }
     }

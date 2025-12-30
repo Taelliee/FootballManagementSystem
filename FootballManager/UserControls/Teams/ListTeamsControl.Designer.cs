@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             label1 = new Label();
-            dataGridView1 = new DataGridView();
+            teamsDataGridView = new DataGridView();
             FullName = new DataGridViewTextBoxColumn();
             Country = new DataGridViewTextBoxColumn();
             HeadCoach = new DataGridViewTextBoxColumn();
             Image = new DataGridViewImageColumn();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)teamsDataGridView).BeginInit();
             SuspendLayout();
             // 
             // label1
@@ -48,17 +48,17 @@
             label1.TabIndex = 14;
             label1.Text = "List of teams";
             // 
-            // dataGridView1
+            // teamsDataGridView
             // 
-            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridView1.BackgroundColor = Color.BurlyWood;
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { FullName, Country, HeadCoach, Image });
-            dataGridView1.Location = new Point(50, 92);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.RowHeadersWidth = 51;
-            dataGridView1.Size = new Size(708, 447);
-            dataGridView1.TabIndex = 13;
+            teamsDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            teamsDataGridView.BackgroundColor = Color.BurlyWood;
+            teamsDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            teamsDataGridView.Columns.AddRange(new DataGridViewColumn[] { FullName, Country, HeadCoach, Image });
+            teamsDataGridView.Location = new Point(50, 92);
+            teamsDataGridView.Name = "teamsDataGridView";
+            teamsDataGridView.RowHeadersWidth = 51;
+            teamsDataGridView.Size = new Size(708, 447);
+            teamsDataGridView.TabIndex = 13;
             // 
             // FullName
             // 
@@ -90,10 +90,10 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Linen;
             Controls.Add(label1);
-            Controls.Add(dataGridView1);
+            Controls.Add(teamsDataGridView);
             Name = "ListTeamsControl";
             Size = new Size(812, 570);
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)teamsDataGridView).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -101,7 +101,7 @@
         #endregion
 
         private Label label1;
-        private DataGridView dataGridView1;
+        private DataGridView teamsDataGridView;
         private DataGridViewTextBoxColumn FullName;
         private DataGridViewTextBoxColumn Country;
         private DataGridViewTextBoxColumn HeadCoach;

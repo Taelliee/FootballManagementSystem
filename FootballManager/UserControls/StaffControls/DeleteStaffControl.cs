@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Linq;
+using FootballManager.Models;
+using FootballManager.Services;
 
 namespace FootballManager.UserControls.Staff
 {
@@ -15,35 +17,30 @@ namespace FootballManager.UserControls.Staff
         private void LoadStaffList()
         {
             nameComboBox.Items.Clear();
-            foreach (var s in FootballData.StaffMembers)
+            nameComboBox.DisplayMember = "FullName";
+            var staffList = FootballDataService.GetStaff();
+            if (staffList.Any())
             {
-                nameComboBox.Items.Add(s.FullName);
+                nameComboBox.Items.AddRange(staffList.ToArray());
             }
         }
 
         private void deleteButton_Click(object sender, EventArgs e)
         {
-            if (nameComboBox.SelectedItem == null)
+            if (nameComboBox.SelectedItem is not Models.Staff staffToDelete)
             {
                 MessageBox.Show("Select a staff member to delete!");
                 return;
             }
 
-            string name = nameComboBox.SelectedItem.ToString();
-            var staffToDelete = FootballData.StaffMembers.FirstOrDefault(s => s.FullName == name);
-
-            if (staffToDelete != null)
+            if (MessageBox.Show($"Are you sure you want to delete {staffToDelete.FullName}?", "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
             {
-                if (MessageBox.Show($"Are you sure you want to delete {name}?", "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
-                {
-                    FootballData.RemoveStaff(staffToDelete);
-                    FootballData.SaveData();
+                FootballDataService.RemoveStaff(staffToDelete.Id);
+                MessageBox.Show("Deleted successfully!");
 
-                    MessageBox.Show("Deleted successfully!");
-
-                    nameComboBox.Text = "";
-                    LoadStaffList();
-                }
+                // Refresh the list
+                nameComboBox.Text = "";
+                LoadStaffList();
             }
         }
     }

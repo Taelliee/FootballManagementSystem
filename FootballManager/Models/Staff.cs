@@ -14,8 +14,17 @@ namespace FootballManager.Models
         // Navigation property for Competitions
         public ICollection<Competition> Competitions { get; set; }
 
+        // Navigation property back to the Team this staff member coaches
+        public Team CoachedTeam { get; set; }
+
         public Staff(int id, string name, Country country, StaffPosition role)
             : base(id, name, country)
+        {
+            Role = role;
+        }
+
+        public Staff(string name, Country country, StaffPosition role)
+            : base(name, country)
         {
             Role = role;
         }

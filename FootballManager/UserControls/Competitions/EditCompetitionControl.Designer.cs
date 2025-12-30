@@ -29,11 +29,10 @@
         private void InitializeComponent()
         {
             label6 = new Label();
-            matchSelectorComboBox = new ComboBox();
+            competitionComboBox = new ComboBox();
             stadiumComboBox = new ComboBox();
             playerComboBox = new ComboBox();
             staffComboBox = new ComboBox();
-            goalsScoredTextBox = new TextBox();
             countryComboBox = new ComboBox();
             matchDateTimePicker = new DateTimePicker();
             label5 = new Label();
@@ -44,6 +43,8 @@
             countryLabel = new Label();
             teamLabel = new Label();
             editButton = new Button();
+            goalsScoredNumericUpDown = new NumericUpDown();
+            ((System.ComponentModel.ISupportInitialize)goalsScoredNumericUpDown).BeginInit();
             SuspendLayout();
             // 
             // label6
@@ -57,13 +58,13 @@
             label6.TabIndex = 68;
             label6.Text = "Competition";
             // 
-            // matchSelectorComboBox
+            // competitionComboBox
             // 
-            matchSelectorComboBox.FormattingEnabled = true;
-            matchSelectorComboBox.Location = new Point(404, 188);
-            matchSelectorComboBox.Name = "matchSelectorComboBox";
-            matchSelectorComboBox.Size = new Size(359, 28);
-            matchSelectorComboBox.TabIndex = 67;
+            competitionComboBox.FormattingEnabled = true;
+            competitionComboBox.Location = new Point(404, 188);
+            competitionComboBox.Name = "competitionComboBox";
+            competitionComboBox.Size = new Size(359, 28);
+            competitionComboBox.TabIndex = 67;
             // 
             // stadiumComboBox
             // 
@@ -88,13 +89,6 @@
             staffComboBox.Name = "staffComboBox";
             staffComboBox.Size = new Size(181, 28);
             staffComboBox.TabIndex = 64;
-            // 
-            // goalsScoredTextBox
-            // 
-            goalsScoredTextBox.Location = new Point(583, 411);
-            goalsScoredTextBox.Name = "goalsScoredTextBox";
-            goalsScoredTextBox.Size = new Size(180, 27);
-            goalsScoredTextBox.TabIndex = 63;
             // 
             // countryComboBox
             // 
@@ -202,17 +196,24 @@
             editButton.UseVisualStyleBackColor = true;
             editButton.Click += editButton_Click;
             // 
+            // goalsScoredNumericUpDown
+            // 
+            goalsScoredNumericUpDown.Location = new Point(583, 411);
+            goalsScoredNumericUpDown.Name = "goalsScoredNumericUpDown";
+            goalsScoredNumericUpDown.Size = new Size(77, 27);
+            goalsScoredNumericUpDown.TabIndex = 69;
+            // 
             // EditCompetitionControl
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Linen;
+            Controls.Add(goalsScoredNumericUpDown);
             Controls.Add(label6);
-            Controls.Add(matchSelectorComboBox);
+            Controls.Add(competitionComboBox);
             Controls.Add(stadiumComboBox);
             Controls.Add(playerComboBox);
             Controls.Add(staffComboBox);
-            Controls.Add(goalsScoredTextBox);
             Controls.Add(countryComboBox);
             Controls.Add(matchDateTimePicker);
             Controls.Add(label5);
@@ -225,6 +226,7 @@
             Controls.Add(editButton);
             Name = "EditCompetitionControl";
             Size = new Size(855, 605);
+            ((System.ComponentModel.ISupportInitialize)goalsScoredNumericUpDown).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -232,11 +234,10 @@
         #endregion
 
         private Label label6;
-        private ComboBox matchSelectorComboBox;
+        private ComboBox competitionComboBox;
         private ComboBox stadiumComboBox;
         private ComboBox playerComboBox;
         private ComboBox staffComboBox;
-        private TextBox goalsScoredTextBox;
         private ComboBox countryComboBox;
         private DateTimePicker matchDateTimePicker;
         private Label label5;
@@ -247,5 +248,6 @@
         private Label countryLabel;
         private Label teamLabel;
         private Button editButton;
+        private NumericUpDown goalsScoredNumericUpDown;
     }
 }

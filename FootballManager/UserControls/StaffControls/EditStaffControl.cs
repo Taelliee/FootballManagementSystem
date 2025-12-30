@@ -4,6 +4,7 @@ using FootballManager.Models;
 using FootballManager.Enums;
 using System.Linq;
 using System.Data;
+using FootballManager.Services;
 
 namespace FootballManager.UserControls.Staff
 {
@@ -25,29 +26,25 @@ namespace FootballManager.UserControls.Staff
             positionComboBox.DataSource = Enum.GetValues(typeof(StaffPosition));
 
             nameComboBox.Items.Clear();
-            foreach (var s in FootballData.StaffMembers)
+            nameComboBox.DisplayMember = "FullName"; // Use DisplayMember
+            var staffList = FootballManager.Services.FootballDataService.GetStaff();
+            if (staffList.Any())
             {
-                nameComboBox.Items.Add(s.FullName);
+                nameComboBox.Items.AddRange(staffList.ToArray());
             }
 
-            newNameTextBox.Clear();
+            ClearFields();
         }
 
         private void nameComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (nameComboBox.SelectedItem == null) return;
+            if (nameComboBox.SelectedItem is not Models.Staff staff) return;
 
-            string name = nameComboBox.SelectedItem.ToString();
+            selectedStaff = staff;
 
-            selectedStaff = FootballData.StaffMembers.FirstOrDefault(s => s.FullName == name);
-
-            if (selectedStaff != null)
-            {
-                countryComboBox.SelectedItem = selectedStaff.Country;
-                positionComboBox.SelectedItem = selectedStaff.Role;
-
-                newNameTextBox.Text = selectedStaff.FullName;
-            }
+            countryComboBox.SelectedItem = selectedStaff.Country;
+            positionComboBox.SelectedItem = selectedStaff.Role;
+            newNameTextBox.Text = selectedStaff.FullName;
         }
 
         private void editButton_Click(object sender, EventArgs e)
@@ -66,24 +63,22 @@ namespace FootballManager.UserControls.Staff
                 return;
             }
 
-            Country newCountry = (Country)countryComboBox.SelectedItem;
-            StaffPosition newRole = (StaffPosition)positionComboBox.SelectedItem;
-
+            // Update the properties of the selected staff object
             selectedStaff.FullName = newName;
-            selectedStaff.Country = newCountry;
-            selectedStaff.Role = newRole;
+            selectedStaff.Country = (Country)countryComboBox.SelectedItem;
+            selectedStaff.Role = (StaffPosition)positionComboBox.SelectedItem;
 
-            // save
+            // Save changes to the database
             if (MessageBox.Show("Save changes?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                FootballData.SaveData();
-                FootballData.ActionHistory.Push($"Edited staff: {selectedStaff.FullName}");
+                FootballManager.Services.FootballDataService.UpdateStaff(selectedStaff);
 
                 MessageBox.Show("Updated successfully!");
 
+                // Refresh the form
+                int selectedIndex = nameComboBox.SelectedIndex;
                 LoadData();
-
-                ClearFields();
+                nameComboBox.SelectedIndex = selectedIndex;
             }
         }
 

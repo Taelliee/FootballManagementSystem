@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using FootballManager.Models;
 using FootballManager.Enums;
 using System.Linq;
+using FootballManager.Services;
 
 namespace FootballManager.UserControls.Stadiums
 {
@@ -43,14 +44,15 @@ namespace FootballManager.UserControls.Stadiums
 
             Stadium newStadium = new Stadium
             (
-                FootballData.GetNextStadiumId(),
+                //FootballData.GetNextStadiumId(),
                 name,
                 country,
                 capacity
             );
 
-            FootballData.Stadiums.Add(newStadium);
-            FootballData.SaveData();
+            //FootballData.Stadiums.Add(newStadium);
+            //FootballData.SaveData();
+            FootballDataService.AddStadium(newStadium);
 
             MessageBox.Show("Stadium added successfully!");
 

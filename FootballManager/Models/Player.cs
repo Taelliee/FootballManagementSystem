@@ -31,6 +31,14 @@ namespace FootballManager.Models
             Position = position;
         }
 
+        public Player(string name, Country country, int shirtNum, int teamId, PlayerPosition position)
+        : base(name, country)
+        {
+            ShirtNumber = shirtNum;
+            TeamId = teamId;
+            Position = position;
+        }
+
         public Player()
         {
         }

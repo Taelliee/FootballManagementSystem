@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using FootballManager.Models;
 using System.Linq;
+using FootballManager.Services;
 
 namespace FootballManager.UserControls.Competitions
 {
@@ -15,28 +16,22 @@ namespace FootballManager.UserControls.Competitions
 
         public void LoadGrid()
         {
-            dataGridView1.AllowUserToAddRows = false;
+            competitionsDataGridView.AllowUserToAddRows = false;
+            competitionsDataGridView.Rows.Clear();
 
-            dataGridView1.DataSource = null;
-            dataGridView1.Rows.Clear();
+            var competitions = FootballDataService.GetCompetitions(includeAll: true);
 
-
-            foreach (var c in FootballData.Competitions)
+            foreach (var c in competitions)
             {
-                var player = FootballData.Players.FirstOrDefault(p => p.Id == c.PlayerId);
-                string playerName = player != null ? player.FullName : "Unknown";
+                string playerName = c.Player?.FullName ?? "Unknown";
+                string staffName = c.Staff?.FullName ?? "Unknown";
+                string stadiumName = c.Stadium?.Name ?? "Unknown";
 
-                var staff = FootballData.StaffMembers.FirstOrDefault(s => s.Id == c.StaffId);
-                string staffName = staff != null ? staff.FullName : "Unknown";
-
-                var stadium = FootballData.Stadiums.FirstOrDefault(s => s.Id == c.StadiumId);
-                string stadiumName = stadium != null ? stadium.Name : "Unknown";
-
-                dataGridView1.Rows.Add(
+                competitionsDataGridView.Rows.Add(
                     playerName,
                     staffName,
                     c.MatchDate.ToString("dd.MM.yyyy HH:mm"),
-                    c.HostCountry,
+                    c.HostCountry.ToString(),
                     stadiumName,
                     c.GoalsScored
                 );

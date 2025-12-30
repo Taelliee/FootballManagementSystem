@@ -4,6 +4,7 @@ using FootballManager.Models;
 using FootballManager.Enums;
 using System.Collections.Generic;
 using System.Linq;
+using FootballManager.Services;
 
 namespace FootballManager.UserControls.Competitions
 {
@@ -12,8 +13,6 @@ namespace FootballManager.UserControls.Competitions
         public AddCompetitionControl()
         {
             InitializeComponent();
-
-            goalsScoredTextBox.KeyPress += (s, e) => { if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar)) e.Handled = true; };
 
             stadiumComboBox.DropDownStyle = ComboBoxStyle.DropDown;
 
@@ -25,30 +24,25 @@ namespace FootballManager.UserControls.Competitions
             countryComboBox.DataSource = Enum.GetValues(typeof(Country));
 
             staffComboBox.DataSource = null;
-            staffComboBox.DataSource = FootballData.StaffMembers;
+            staffComboBox.DataSource = FootballDataService.GetStaff();
             staffComboBox.DisplayMember = "FullName";
             staffComboBox.ValueMember = "Id";
 
             playerComboBox.DataSource = null;
-            playerComboBox.DataSource = FootballData.Players;
+            playerComboBox.DataSource = FootballDataService.GetPlayers();
             playerComboBox.DisplayMember = "FullName";
             playerComboBox.ValueMember = "Id";
 
             stadiumComboBox.DataSource = null;
-            stadiumComboBox.DataSource = FootballData.Stadiums;
+            stadiumComboBox.DataSource = FootballDataService.GetStadiums();
             stadiumComboBox.DisplayMember = "Name";
             stadiumComboBox.ValueMember = "Id";
         }
 
         private void addButton_Click(object sender, EventArgs e)
         {
-            string goalsStr = goalsScoredTextBox.Text.Trim();
-
-            if (string.IsNullOrWhiteSpace(goalsStr))
-            {
-                MessageBox.Show("Please fill all fields!");
-                return;
-            }
+            // Get the value directly from the NumericUpDown control
+            int goalsScored = (int)goalsScoredNumericUpDown.Value;
 
             if (stadiumComboBox.SelectedItem == null || staffComboBox.SelectedItem == null || playerComboBox.SelectedItem == null)
             {
@@ -69,30 +63,29 @@ namespace FootballManager.UserControls.Competitions
 
             Competition comp = new Competition
             (
-                FootballData.GetNextCompetitionId(),
                 selectedStaffId,
                 selectedPlayerId,
                 date,
                 selectedCountry,
                 selectedStadiumId,
-                int.Parse(goalsStr)
+                goalsScored
             );
 
             string msg = $"Confirm Match:\n\n" +
                          $"Stadium: {stadiumName}\n" +
-                         $"Goals: {goalsStr}\n" +
+                         $"Goals: {goalsScored}\n" +
                          $"Referee: {staffName}\n" +
                          $"Player: {playerName}";
 
             if (MessageBox.Show(msg, "Confirm", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
             {
-                FootballData.AddCompetition(comp);
-                FootballData.SaveData();
+                FootballDataService.AddCompetition(comp);
 
                 MessageBox.Show("Competition added successfully!");
 
+                // Reset the controls
                 stadiumComboBox.Text = "";
-                goalsScoredTextBox.Clear();
+                goalsScoredNumericUpDown.Value = 0;
 
                 LoadData();
             }

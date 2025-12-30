@@ -6,13 +6,13 @@ using System.Windows.Forms;
 using FootballManager.Models;
 using FootballManager.Enums;
 using System.IO;
+using FootballManager.Services;
 
 namespace FootballManager.UserControls.Teams
 {
     public partial class EditTeamControl : UserControl
     {
         private Team selectedTeam;
-        private string originalTeamName;
         private string currentImagePath = "";
 
         public EditTeamControl()
@@ -25,56 +25,65 @@ namespace FootballManager.UserControls.Teams
 
         private void LoadData()
         {
-            //countryComboBox.DataSource = Enum.GetValues(typeof(Country));
+            countryComboBox.DataSource = Enum.GetValues(typeof(Country));
 
+            // Load teams into the teamComboBox
             teamComboBox.Items.Clear();
-            if (FootballData.Teams.Count > 0)
-                teamComboBox.Items.AddRange(FootballData.Teams.Select(t => t.Name).ToArray());
+            teamComboBox.DisplayMember = "Name";
+            var teams = FootballDataService.GetTeams();
+            if (teams.Any())
+            {
+                teamComboBox.Items.AddRange(teams.ToArray());
+            }
 
             LoadCoaches();
         }
 
         private void LoadCoaches()
         {
+            // Load coaches into the coachComboBox
             coachComboBox.Items.Clear();
+            coachComboBox.DisplayMember = "FullName";
+            var headCoaches = FootballDataService.GetStaff()
+                                .Where(s => s.Role == StaffPosition.HeadCoach)
+                                .ToArray();
 
-            if (FootballData.StaffMembers != null)
+            if (headCoaches.Any())
             {
-                var headCoaches = FootballData.StaffMembers
-                                    .Where(s => s.Role == StaffPosition.HeadCoach)
-                                    .Select(s => s.FullName)
-                                    .ToArray();
-
                 coachComboBox.Items.AddRange(headCoaches);
             }
         }
 
         private void teamComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (teamComboBox.SelectedItem == null) return;
+            if (teamComboBox.SelectedItem is not Team team) return;
 
-            string teamName = teamComboBox.SelectedItem.ToString();
+            selectedTeam = team;
 
-            selectedTeam = FootballData.Teams.FirstOrDefault(t => t.Name == teamName);
+            nameTextBox.Text = selectedTeam.Name;
+            countryComboBox.SelectedItem = selectedTeam.Country;
 
-            if (selectedTeam != null)
+            // Select the correct coach in the coachComboBox
+            var coach = coachComboBox.Items.OfType<Models.Staff>().FirstOrDefault(s => s.Id == selectedTeam.CoachId);
+            if (coach != null)
             {
-                originalTeamName = teamName;
+                coachComboBox.SelectedItem = coach;
+            }
+            else
+            {
+                coachComboBox.SelectedIndex = -1;
+            }
 
-                nameTextBox.Text = selectedTeam.Name;
-                coachComboBox.SelectedItem = selectedTeam.CoachName;
-                countryComboBox.SelectedItem = selectedTeam.Country;
-
-                if (!string.IsNullOrEmpty(selectedTeam.ImagePath) && File.Exists(selectedTeam.ImagePath))
-                {
-                    badgePictureBox.Image = Image.FromFile(selectedTeam.ImagePath);
-                    currentImagePath = selectedTeam.ImagePath;
-                }
-                else
-                {
-                    badgePictureBox.Image = null;
-                    currentImagePath = "";
-                }
+            // Handle image display
+            if (!string.IsNullOrEmpty(selectedTeam.ImagePath) && File.Exists(selectedTeam.ImagePath))
+            {
+                badgePictureBox.Image = Image.FromFile(selectedTeam.ImagePath);
+                currentImagePath = selectedTeam.ImagePath;
+            }
+            else
+            {
+                badgePictureBox.Image = null;
+                currentImagePath = "";
             }
         }
 
@@ -93,16 +102,29 @@ namespace FootballManager.UserControls.Teams
                 return;
             }
 
+            // Update the selected team object
             selectedTeam.Name = newName;
-            selectedTeam.CoachName = coachComboBox.Text.Trim();
             selectedTeam.Country = (Country)countryComboBox.SelectedItem;
             selectedTeam.ImagePath = currentImagePath;
 
-            FootballData.SaveData();
-            FootballData.ActionHistory.Push($"Edited team: {selectedTeam.Name}");
+            if (coachComboBox.SelectedItem is Models.Staff selectedCoach)
+            {
+                selectedTeam.CoachId = selectedCoach.Id;
+            }
+            else
+            {
+                selectedTeam.CoachId = null; // A team can exist without a coach
+            }
+
+            // Save changes to the database
+            FootballDataService.UpdateTeam(selectedTeam);
 
             MessageBox.Show("Team updated successfully!");
+
+            // Refresh the data in the form
+            int selectedIndex = teamComboBox.SelectedIndex;
             LoadData();
+            teamComboBox.SelectedIndex = selectedIndex;
         }
 
         // uploading image
@@ -110,17 +132,20 @@ namespace FootballManager.UserControls.Teams
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
-                // filter - only images
                 openFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp";
                 openFileDialog.Title = "Select Team Badge";
 
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     currentImagePath = openFileDialog.FileName;
-
                     badgePictureBox.Image = Image.FromFile(currentImagePath);
                 }
             }
+        }
+
+        private void countryComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

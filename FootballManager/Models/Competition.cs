@@ -24,6 +24,16 @@ namespace FootballManager.Models
             GoalsScored = goalsScored;
         }
 
+        public Competition(int staffId, int playerId, DateTime matchDate, Country hostCountry, int stadiumId, int goalsScored)
+        {
+            StaffId = staffId;
+            PlayerId = playerId;
+            MatchDate = matchDate;
+            HostCountry = hostCountry;
+            StadiumId = stadiumId;
+            GoalsScored = goalsScored;
+        }
+
         public int Id { get; set; }
 
         // Foreign key and navigation property for Staff

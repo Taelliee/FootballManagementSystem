@@ -31,7 +31,6 @@
             stadiumComboBox = new ComboBox();
             playerComboBox = new ComboBox();
             staffComboBox = new ComboBox();
-            goalsScoredTextBox = new TextBox();
             countryComboBox = new ComboBox();
             matchDateTimePicker = new DateTimePicker();
             label5 = new Label();
@@ -42,6 +41,8 @@
             countryLabel = new Label();
             teamLabel = new Label();
             addButton = new Button();
+            goalsScoredNumericUpDown = new NumericUpDown();
+            ((System.ComponentModel.ISupportInitialize)goalsScoredNumericUpDown).BeginInit();
             SuspendLayout();
             // 
             // stadiumComboBox
@@ -67,13 +68,6 @@
             staffComboBox.Name = "staffComboBox";
             staffComboBox.Size = new Size(181, 28);
             staffComboBox.TabIndex = 48;
-            // 
-            // goalsScoredTextBox
-            // 
-            goalsScoredTextBox.Location = new Point(587, 388);
-            goalsScoredTextBox.Name = "goalsScoredTextBox";
-            goalsScoredTextBox.Size = new Size(180, 27);
-            goalsScoredTextBox.TabIndex = 47;
             // 
             // countryComboBox
             // 
@@ -181,15 +175,22 @@
             addButton.UseVisualStyleBackColor = true;
             addButton.Click += addButton_Click;
             // 
+            // goalsScoredNumericUpDown
+            // 
+            goalsScoredNumericUpDown.Location = new Point(587, 388);
+            goalsScoredNumericUpDown.Name = "goalsScoredNumericUpDown";
+            goalsScoredNumericUpDown.Size = new Size(72, 27);
+            goalsScoredNumericUpDown.TabIndex = 51;
+            // 
             // AddCompetitionControl
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Linen;
+            Controls.Add(goalsScoredNumericUpDown);
             Controls.Add(stadiumComboBox);
             Controls.Add(playerComboBox);
             Controls.Add(staffComboBox);
-            Controls.Add(goalsScoredTextBox);
             Controls.Add(countryComboBox);
             Controls.Add(matchDateTimePicker);
             Controls.Add(label5);
@@ -202,6 +203,7 @@
             Controls.Add(addButton);
             Name = "AddCompetitionControl";
             Size = new Size(874, 603);
+            ((System.ComponentModel.ISupportInitialize)goalsScoredNumericUpDown).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -211,7 +213,6 @@
         private ComboBox stadiumComboBox;
         private ComboBox playerComboBox;
         private ComboBox staffComboBox;
-        private TextBox goalsScoredTextBox;
         private ComboBox countryComboBox;
         private DateTimePicker matchDateTimePicker;
         private Label label5;
@@ -222,5 +223,6 @@
         private Label countryLabel;
         private Label teamLabel;
         private Button addButton;
+        private NumericUpDown goalsScoredNumericUpDown;
     }
 }

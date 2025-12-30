@@ -20,6 +20,12 @@ namespace FootballManager.Models
             Country = country;
         }
 
+        public Person(string fullName, Country country)
+        {
+            FullName = fullName;
+            Country = country;
+        }
+
         public int Id { get; set; }
         public string FullName { get; set; }
         public Country Country { get; set; }

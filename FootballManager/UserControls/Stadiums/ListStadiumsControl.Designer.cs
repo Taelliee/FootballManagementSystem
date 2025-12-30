@@ -28,36 +28,25 @@
         /// </summary>
         private void InitializeComponent()
         {
-            dataGridView1 = new DataGridView();
-            label1 = new Label();
+            stadiumsDataGridView = new DataGridView();
             FullName = new DataGridViewTextBoxColumn();
             Country = new DataGridViewTextBoxColumn();
             Capacity = new DataGridViewTextBoxColumn();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            label1 = new Label();
+            ((System.ComponentModel.ISupportInitialize)stadiumsDataGridView).BeginInit();
             SuspendLayout();
             // 
-            // dataGridView1
+            // stadiumsDataGridView
             // 
-            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridView1.BackgroundColor = Color.BurlyWood;
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { FullName, Country, Capacity });
-            dataGridView1.Location = new Point(36, 110);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.RowHeadersWidth = 51;
-            dataGridView1.Size = new Size(744, 427);
-            dataGridView1.TabIndex = 20;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 24F, FontStyle.Bold | FontStyle.Italic);
-            label1.ForeColor = Color.DarkRed;
-            label1.Location = new Point(249, 38);
-            label1.Name = "label1";
-            label1.Size = new Size(321, 54);
-            label1.TabIndex = 19;
-            label1.Text = "List of stadiums";
+            stadiumsDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            stadiumsDataGridView.BackgroundColor = Color.BurlyWood;
+            stadiumsDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            stadiumsDataGridView.Columns.AddRange(new DataGridViewColumn[] { FullName, Country, Capacity });
+            stadiumsDataGridView.Location = new Point(36, 110);
+            stadiumsDataGridView.Name = "stadiumsDataGridView";
+            stadiumsDataGridView.RowHeadersWidth = 51;
+            stadiumsDataGridView.Size = new Size(744, 427);
+            stadiumsDataGridView.TabIndex = 20;
             // 
             // FullName
             // 
@@ -77,23 +66,34 @@
             Capacity.MinimumWidth = 6;
             Capacity.Name = "Capacity";
             // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 24F, FontStyle.Bold | FontStyle.Italic);
+            label1.ForeColor = Color.DarkRed;
+            label1.Location = new Point(249, 38);
+            label1.Name = "label1";
+            label1.Size = new Size(321, 54);
+            label1.TabIndex = 19;
+            label1.Text = "List of stadiums";
+            // 
             // ListStadiumsControl
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Linen;
-            Controls.Add(dataGridView1);
+            Controls.Add(stadiumsDataGridView);
             Controls.Add(label1);
             Name = "ListStadiumsControl";
             Size = new Size(817, 574);
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)stadiumsDataGridView).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
 
-        private DataGridView dataGridView1;
+        private DataGridView stadiumsDataGridView;
         private Label label1;
         private DataGridViewTextBoxColumn FullName;
         private DataGridViewTextBoxColumn Country;
