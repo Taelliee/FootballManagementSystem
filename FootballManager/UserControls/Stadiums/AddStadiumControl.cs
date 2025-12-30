@@ -20,18 +20,12 @@ namespace FootballManager.UserControls.Stadiums
         private void LoadData()
         {
             countryComboBox.DataSource = Enum.GetValues(typeof(Country));
-
-            teamComboBox.Items.Clear();
-            if (FootballData.Teams.Count > 0)
-                teamComboBox.Items.AddRange(FootballData.Teams.Keys.ToArray());
-            teamComboBox.DropDownStyle = ComboBoxStyle.DropDown;
         }
 
         private void addButton_Click(object sender, EventArgs e)
         {
             string name = nameTextBox.Text.Trim();
             string capacityStr = capacityTextBox.Text.Trim();
-            string team = teamComboBox.Text.Trim();
 
             if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(capacityStr))
             {
@@ -39,26 +33,29 @@ namespace FootballManager.UserControls.Stadiums
                 return;
             }
 
+            if (!int.TryParse(capacityStr, out int capacity))
+            {
+                MessageBox.Show("Capacity must be a valid integer!");
+                return;
+            }
+
+            Country country = (Country)countryComboBox.SelectedItem;
+
             Stadium newStadium = new Stadium
             (
                 FootballData.GetNextStadiumId(),
                 name,
-                team,
-                (Country)countryComboBox.SelectedItem,
-                int.Parse(capacityStr)
+                country,
+                capacity
             );
 
-            string msg = $"Confirm Stadium:\nName: {name}\nTeam: {team}\nCapacity: {capacityStr}";
-            if (MessageBox.Show(msg, "Confirm", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
-            {
-                FootballData.AddStadium(newStadium);
-                FootballData.SaveData();
-                MessageBox.Show("Stadium added!");
+            FootballData.Stadiums.Add(newStadium);
+            FootballData.SaveData();
 
-                nameTextBox.Clear();
-                capacityTextBox.Clear();
-                teamComboBox.Text = "";
-            }
+            MessageBox.Show("Stadium added successfully!");
+
+            nameTextBox.Clear();
+            capacityTextBox.Clear();
         }
     }
 }

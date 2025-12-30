@@ -32,8 +32,7 @@ namespace FootballManager.UserControls.Teams
 
             dataGridView1.Rows.Clear();
 
-            // Dictionary -> .Values
-            var teams = FootballData.Teams.Values.ToList();
+            var teams = FootballData.Teams.ToList();
 
             foreach (var team in teams)
             {
@@ -44,7 +43,6 @@ namespace FootballManager.UserControls.Teams
                     team.CoachName,
                     badge
                 );
-
             }
         }
     }

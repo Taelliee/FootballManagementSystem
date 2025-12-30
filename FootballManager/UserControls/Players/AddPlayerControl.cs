@@ -25,13 +25,12 @@ namespace FootballManager
         private void LoadFormData()
         {
             countryComboBox.DataSource = Enum.GetValues(typeof(Country));
-
             playerPositionComboBox.DataSource = Enum.GetValues(typeof(PlayerPosition));
 
             teamComboBox.Items.Clear();
             if (FootballData.Teams.Count > 0)
             {
-                teamComboBox.Items.AddRange(FootballData.Teams.Keys.ToArray());
+                teamComboBox.Items.AddRange(FootballData.Teams.Select(t => t.Name).ToArray());
             }
         }
 
@@ -42,7 +41,6 @@ namespace FootballManager
             string shirtNumText = shirtNumberTextBox.Text.Trim();
 
             if (string.IsNullOrWhiteSpace(fullName) ||
-                string.IsNullOrWhiteSpace(teamName) ||
                 string.IsNullOrWhiteSpace(shirtNumText))
             {
                 MessageBox.Show("Please fill in all required fields (Name, Team, Shirt Number)!");
@@ -51,7 +49,7 @@ namespace FootballManager
 
             if (fullName.Any(char.IsDigit))
             {
-                MessageBox.Show("Name must verify contains only letters!");
+                MessageBox.Show("Name must contain only letters!");
                 return;
             }
 
@@ -67,12 +65,12 @@ namespace FootballManager
                 return;
             }
 
-            /*// validation for image
-            if (string.IsNullOrEmpty(selectedImagePath))
+            Team selectedTeam = FootballData.Teams.FirstOrDefault(t => t.Name == teamName);
+            if (selectedTeam == null)
             {
-                MessageBox.Show("Please upload a team badge!");
+                MessageBox.Show("Selected team does not exist!");
                 return;
-            }*/
+            }
 
             Country selectedCountry = (Country)countryComboBox.SelectedItem;
             PlayerPosition selectedPosition = (PlayerPosition)playerPositionComboBox.SelectedItem;
@@ -84,20 +82,17 @@ namespace FootballManager
                 fullName,
                 selectedCountry,
                 shirtNumber,
-                teamName,
-                //selectedImagePath,
+                selectedTeam.Id,
                 selectedPosition
             );
 
-            // asks to save
             string debugMessage = $" PLEASE CONFIRM DATA:\n\n" +
                                   $"ID: {newPlayer.Id}\n" +
                                   $"Name: {newPlayer.FullName}\n" +
-                                  $"Team: {newPlayer.TeamName}\n" +
+                                  $"Team: {selectedTeam.Name}\n" +
                                   $"Country: {newPlayer.Country}\n" +
                                   $"Position: {newPlayer.Position}\n" +
                                   $"Shirt #: {newPlayer.ShirtNumber}\n";
-                                  //$"Image: {(string.IsNullOrEmpty(selectedImagePath) ? "No Image" : "Image Selected")}";
 
             DialogResult result = MessageBox.Show(debugMessage, "Confirm Player", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
 
@@ -106,7 +101,7 @@ namespace FootballManager
                 FootballData.AddPlayer(newPlayer);
                 FootballData.SaveData();
 
-                MessageBox.Show($"Player {fullName} added successfully to team {teamName}!");
+                MessageBox.Show($"Player {fullName} added successfully to team {selectedTeam.Name}!");
 
                 ClearFields();
                 LoadFormData();

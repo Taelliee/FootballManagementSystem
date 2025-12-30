@@ -29,8 +29,6 @@
         private void InitializeComponent()
         {
             capacityTextBox = new TextBox();
-            label3 = new Label();
-            teamComboBox = new ComboBox();
             label2 = new Label();
             label1 = new Label();
             countryLabel = new Label();
@@ -42,37 +40,17 @@
             // 
             // capacityTextBox
             // 
-            capacityTextBox.Location = new Point(338, 416);
+            capacityTextBox.Location = new Point(338, 346);
             capacityTextBox.Name = "capacityTextBox";
             capacityTextBox.Size = new Size(200, 27);
             capacityTextBox.TabIndex = 53;
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
-            label3.ForeColor = Color.DarkRed;
-            label3.Location = new Point(257, 264);
-            label3.Name = "label3";
-            label3.Size = new Size(45, 20);
-            label3.TabIndex = 52;
-            label3.Text = "Team";
-            // 
-            // teamComboBox
-            // 
-            teamComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-            teamComboBox.FormattingEnabled = true;
-            teamComboBox.Location = new Point(338, 261);
-            teamComboBox.Name = "teamComboBox";
-            teamComboBox.Size = new Size(200, 28);
-            teamComboBox.TabIndex = 51;
             // 
             // label2
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
             label2.ForeColor = Color.DarkRed;
-            label2.Location = new Point(237, 419);
+            label2.Location = new Point(237, 349);
             label2.Name = "label2";
             label2.Size = new Size(67, 20);
             label2.TabIndex = 50;
@@ -94,7 +72,7 @@
             countryLabel.AutoSize = true;
             countryLabel.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
             countryLabel.ForeColor = Color.DarkRed;
-            countryLabel.Location = new Point(237, 340);
+            countryLabel.Location = new Point(237, 270);
             countryLabel.Name = "countryLabel";
             countryLabel.Size = new Size(65, 20);
             countryLabel.TabIndex = 48;
@@ -115,7 +93,7 @@
             // 
             countryComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             countryComboBox.FormattingEnabled = true;
-            countryComboBox.Location = new Point(338, 340);
+            countryComboBox.Location = new Point(338, 270);
             countryComboBox.Name = "countryComboBox";
             countryComboBox.Size = new Size(200, 28);
             countryComboBox.TabIndex = 46;
@@ -131,7 +109,7 @@
             // 
             addButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 204);
             addButton.ForeColor = Color.DarkRed;
-            addButton.Location = new Point(338, 498);
+            addButton.Location = new Point(338, 452);
             addButton.Name = "addButton";
             addButton.Size = new Size(115, 40);
             addButton.TabIndex = 44;
@@ -145,8 +123,6 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Linen;
             Controls.Add(capacityTextBox);
-            Controls.Add(label3);
-            Controls.Add(teamComboBox);
             Controls.Add(label2);
             Controls.Add(label1);
             Controls.Add(countryLabel);
@@ -163,8 +139,6 @@
         #endregion
 
         private TextBox capacityTextBox;
-        private Label label3;
-        private ComboBox teamComboBox;
         private Label label2;
         private Label label1;
         private Label countryLabel;

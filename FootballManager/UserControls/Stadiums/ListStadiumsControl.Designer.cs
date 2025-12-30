@@ -29,11 +29,10 @@
         private void InitializeComponent()
         {
             dataGridView1 = new DataGridView();
+            label1 = new Label();
             FullName = new DataGridViewTextBoxColumn();
-            Team = new DataGridViewTextBoxColumn();
             Country = new DataGridViewTextBoxColumn();
             Capacity = new DataGridViewTextBoxColumn();
-            label1 = new Label();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
@@ -42,24 +41,29 @@
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView1.BackgroundColor = Color.BurlyWood;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { FullName, Team, Country, Capacity });
+            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { FullName, Country, Capacity });
             dataGridView1.Location = new Point(36, 110);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersWidth = 51;
             dataGridView1.Size = new Size(744, 427);
             dataGridView1.TabIndex = 20;
             // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 24F, FontStyle.Bold | FontStyle.Italic);
+            label1.ForeColor = Color.DarkRed;
+            label1.Location = new Point(249, 38);
+            label1.Name = "label1";
+            label1.Size = new Size(321, 54);
+            label1.TabIndex = 19;
+            label1.Text = "List of stadiums";
+            // 
             // FullName
             // 
             FullName.HeaderText = "Name";
             FullName.MinimumWidth = 6;
             FullName.Name = "FullName";
-            // 
-            // Team
-            // 
-            Team.HeaderText = "Team";
-            Team.MinimumWidth = 6;
-            Team.Name = "Team";
             // 
             // Country
             // 
@@ -72,17 +76,6 @@
             Capacity.HeaderText = "Capacity";
             Capacity.MinimumWidth = 6;
             Capacity.Name = "Capacity";
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 24F, FontStyle.Bold | FontStyle.Italic);
-            label1.ForeColor = Color.DarkRed;
-            label1.Location = new Point(249, 38);
-            label1.Name = "label1";
-            label1.Size = new Size(321, 54);
-            label1.TabIndex = 19;
-            label1.Text = "List of stadiums";
             // 
             // ListStadiumsControl
             // 
@@ -101,10 +94,9 @@
         #endregion
 
         private DataGridView dataGridView1;
+        private Label label1;
         private DataGridViewTextBoxColumn FullName;
-        private DataGridViewTextBoxColumn Team;
         private DataGridViewTextBoxColumn Country;
         private DataGridViewTextBoxColumn Capacity;
-        private Label label1;
     }
 }

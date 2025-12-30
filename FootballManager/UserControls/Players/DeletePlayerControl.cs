@@ -20,9 +20,10 @@ namespace FootballManager.UserControls.Players
         private void LoadTeams()
         {
             teamComboBox.Items.Clear();
+            teamComboBox.DisplayMember = "Name";
             if (FootballData.Teams.Count > 0)
             {
-                teamComboBox.Items.AddRange(FootballData.Teams.Keys.ToArray());
+                teamComboBox.Items.AddRange(FootballData.Teams.ToArray());
             }
         }
 
@@ -33,11 +34,11 @@ namespace FootballManager.UserControls.Players
 
             if (teamComboBox.SelectedItem == null) return;
 
-            string selectedTeam = teamComboBox.SelectedItem.ToString();
+            Team selectedTeam = (Team)teamComboBox.SelectedItem;
 
             // LINQ
             var playersInTeam = FootballData.Players
-                .Where(p => p.TeamName == selectedTeam)
+                .Where(p => p.TeamId == selectedTeam.Id)
                 .Select(p => p.FullName)
                 .ToArray();
 
@@ -62,11 +63,11 @@ namespace FootballManager.UserControls.Players
                 return;
             }
 
-            string selectedTeam = teamComboBox.SelectedItem.ToString();
+            Team selectedTeam = (Team)teamComboBox.SelectedItem;
             string selectedPlayerName = fullNameComboBox.Text;
 
             var playerToDelete = FootballData.Players
-                .FirstOrDefault(p => p.FullName == selectedPlayerName && p.TeamName == selectedTeam);
+                .FirstOrDefault(p => p.FullName == selectedPlayerName && p.TeamId == selectedTeam.Id);
 
             if (playerToDelete == null)
             {

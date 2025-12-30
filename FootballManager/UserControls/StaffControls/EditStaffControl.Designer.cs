@@ -60,6 +60,7 @@
             // 
             // nameComboBox
             // 
+            nameComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             nameComboBox.FormattingEnabled = true;
             nameComboBox.Location = new Point(366, 186);
             nameComboBox.Name = "nameComboBox";

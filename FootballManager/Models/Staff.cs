@@ -11,8 +11,11 @@ namespace FootballManager.Models
     {
         public StaffPosition Role { get; set; }
 
+        // Navigation property for Competitions
+        public ICollection<Competition> Competitions { get; set; }
+
         public Staff(int id, string name, Country country, StaffPosition role)
-            :base(id, name, country)
+            : base(id, name, country)
         {
             Role = role;
         }

@@ -25,11 +25,11 @@ namespace FootballManager.UserControls.Teams
 
         private void LoadData()
         {
-            countryComboBox.DataSource = Enum.GetValues(typeof(Country));
+            //countryComboBox.DataSource = Enum.GetValues(typeof(Country));
 
             teamComboBox.Items.Clear();
             if (FootballData.Teams.Count > 0)
-                teamComboBox.Items.AddRange(FootballData.Teams.Keys.ToArray());
+                teamComboBox.Items.AddRange(FootballData.Teams.Select(t => t.Name).ToArray());
 
             LoadCoaches();
         }
@@ -55,14 +55,14 @@ namespace FootballManager.UserControls.Teams
 
             string teamName = teamComboBox.SelectedItem.ToString();
 
-            if (FootballData.Teams.TryGetValue(teamName, out selectedTeam))
+            selectedTeam = FootballData.Teams.FirstOrDefault(t => t.Name == teamName);
+
+            if (selectedTeam != null)
             {
                 originalTeamName = teamName;
 
-                if (this.Controls.ContainsKey("nameTextBox"))
-                    this.Controls["nameTextBox"].Text = selectedTeam.Name;
-
-                coachComboBox.Text = selectedTeam.CoachName;
+                nameTextBox.Text = selectedTeam.Name;
+                coachComboBox.SelectedItem = selectedTeam.CoachName;
                 countryComboBox.SelectedItem = selectedTeam.Country;
 
                 if (!string.IsNullOrEmpty(selectedTeam.ImagePath) && File.Exists(selectedTeam.ImagePath))
@@ -86,55 +86,22 @@ namespace FootballManager.UserControls.Teams
                 return;
             }
 
-            string newName = "";
-            if (this.Controls.ContainsKey("nameTextBox"))
-                newName = this.Controls["nameTextBox"].Text.Trim();
-            else
-                newName = originalTeamName;
-
-            string newCoach = coachComboBox.Text.Trim();
-            Country newCountry = (Country)countryComboBox.SelectedItem;
-
-            if (string.IsNullOrWhiteSpace(newName)) { MessageBox.Show("Team name required!"); return; }
-
-            if (newName != originalTeamName)
+            string newName = nameTextBox.Text.Trim();
+            if (string.IsNullOrWhiteSpace(newName))
             {
-                if (FootballData.Teams.ContainsKey(newName))
-                {
-                    MessageBox.Show("A team with this new name already exists!");
-                    return;
-                }
-
-                FootballData.Teams.Remove(originalTeamName);
-
-                selectedTeam.Name = newName;
-                selectedTeam.CoachName = newCoach;
-                selectedTeam.Country = newCountry;
-
-                FootballData.Teams.Add(newName, selectedTeam);
-
-                // updating players' info
-                foreach (var player in FootballData.Players)
-                {
-                    if (player.TeamName == originalTeamName)
-                    {
-                        player.TeamName = newName;
-                    }
-                }
-            }
-            else
-            {
-                selectedTeam.CoachName = newCoach;
-                selectedTeam.Country = newCountry;
+                MessageBox.Show("Team name required!");
+                return;
             }
 
+            selectedTeam.Name = newName;
+            selectedTeam.CoachName = coachComboBox.Text.Trim();
+            selectedTeam.Country = (Country)countryComboBox.SelectedItem;
             selectedTeam.ImagePath = currentImagePath;
 
             FootballData.SaveData();
-            FootballData.ActionHistory.Push($"Edited team: {newName}");
+            FootballData.ActionHistory.Push($"Edited team: {selectedTeam.Name}");
 
             MessageBox.Show("Team updated successfully!");
-
             LoadData();
         }
 

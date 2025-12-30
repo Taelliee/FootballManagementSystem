@@ -28,9 +28,9 @@ namespace FootballManager.UserControls.Players
             playerPositionComboBox.DataSource = Enum.GetValues(typeof(PlayerPosition));
 
             teamComboBox.Items.Clear();
+            teamComboBox.DisplayMember = "Name";
             if (FootballData.Teams.Count > 0)
-                teamComboBox.Items.AddRange(FootballData.Teams.Keys.ToArray());
-            teamComboBox.DropDownStyle = ComboBoxStyle.DropDown;
+                teamComboBox.Items.AddRange(FootballData.Teams.ToArray());
 
             fullNameComboBox.Items.Clear();
             foreach (var p in FootballData.Players)
@@ -51,11 +51,19 @@ namespace FootballManager.UserControls.Players
 
             if (selectedPlayer != null)
             {
-                // old info
                 newNameTextBox.Text = selectedPlayer.FullName;
-
                 shirtNumberTextBox.Text = selectedPlayer.ShirtNumber.ToString();
-                teamComboBox.Text = selectedPlayer.TeamName;
+
+                if (selectedPlayer.TeamId != 0)
+                {
+                    var team = FootballData.Teams.FirstOrDefault(t => t.Id == selectedPlayer.TeamId);
+                    teamComboBox.SelectedItem = team;
+                }
+                else
+                {
+                    teamComboBox.SelectedItem = null;
+                }
+
                 countryComboBox.SelectedItem = selectedPlayer.Country;
                 playerPositionComboBox.SelectedItem = selectedPlayer.Position;
             }
@@ -70,10 +78,10 @@ namespace FootballManager.UserControls.Players
             }
 
             string newName = newNameTextBox.Text.Trim();
-            string newTeam = teamComboBox.Text.Trim();
+            Team newTeam = (Team)teamComboBox.SelectedItem;
             string newShirtStr = shirtNumberTextBox.Text.Trim();
 
-            if (string.IsNullOrWhiteSpace(newName) || string.IsNullOrWhiteSpace(newTeam) || string.IsNullOrWhiteSpace(newShirtStr))
+            if (string.IsNullOrWhiteSpace(newName) || newTeam == null || string.IsNullOrWhiteSpace(newShirtStr))
             {
                 MessageBox.Show("All fields (Name, Team, Shirt) are required!");
                 return;
@@ -86,15 +94,15 @@ namespace FootballManager.UserControls.Players
             }
 
             selectedPlayer.FullName = newName;
-            selectedPlayer.TeamName = newTeam;
+            selectedPlayer.Team = newTeam;
             selectedPlayer.Country = (Country)countryComboBox.SelectedItem;
             selectedPlayer.Position = (PlayerPosition)playerPositionComboBox.SelectedItem;
             selectedPlayer.ShirtNumber = int.Parse(newShirtStr);
 
-            if (!FootballData.Teams.ContainsKey(newTeam))
+            if (!FootballData.Teams.Contains(newTeam))
             {
-                Team t = new Team { Name = newTeam, Country = selectedPlayer.Country };
-                FootballData.Teams.Add(newTeam, t);
+                Team t = new Team { Name = newTeam.Name, Country = selectedPlayer.Country };
+                FootballData.Teams.Add(t);
             }
 
             // save

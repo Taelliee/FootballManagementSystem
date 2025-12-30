@@ -13,21 +13,22 @@ namespace FootballManager.Models
         {
         }
 
-        public Stadium(int id, string name, string teamName, Country country, int capacity)
+        public Stadium(int id, string name, Country country, int capacity)
         {
             Id = id;
             Name = name;
-            TeamName = teamName;
             Country = country;
             Capacity = capacity;
         }
 
         public int Id { get; set; }
         public string Name { get; set; }
-        public string TeamName { get; set; }
         public Country Country { get; set; }
         public int Capacity { get; set; }
 
+        // Navigation property for Competitions
+        public ICollection<Competition> Competitions { get; set; }
+        
         public override string ToString()
         {
             return $"{Name}";

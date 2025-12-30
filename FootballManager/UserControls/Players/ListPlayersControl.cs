@@ -33,12 +33,12 @@ namespace FootballManager.UserControls.Players
 
             if (teamRadioButton.Checked)
             {
+                // Sort by Team.Name (via navigation property or lookup)
                 sortedList = sortedList
-                    .OrderBy(p => p.TeamName)
+                    .OrderBy(p => p.Team != null ? p.Team.Name : FootballData.Teams.FirstOrDefault(t => t.Id == p.TeamId)?.Name ?? "No Team")
                     .ThenBy(p => p.FullName)
                     .ToList();
             }
-            // GK->Def->Mid->Fwd
             else if (countryRadioButton.Checked)
             {
                 sortedList = sortedList
@@ -60,15 +60,19 @@ namespace FootballManager.UserControls.Players
         private void PopulateGrid(List<Player> players)
         {
             dataGridView1.AllowUserToAddRows = false;
-
             dataGridView1.DataSource = null;
             dataGridView1.Rows.Clear();
 
             foreach (var p in players)
             {
+                // Get team name via navigation property or lookup
+                string teamName = p.Team != null
+                    ? p.Team.Name
+                    : FootballData.Teams.FirstOrDefault(t => t.Id == p.TeamId)?.Name ?? "No Team";
+
                 dataGridView1.Rows.Add(
                     p.FullName,
-                    p.TeamName,
+                    teamName,
                     p.Country,
                     p.ShirtNumber,
                     p.Position

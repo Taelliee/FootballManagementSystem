@@ -13,9 +13,16 @@ namespace FootballManager.UserControls.Teams
         {
             InitializeComponent();
 
-            countryComboBox.DataSource = Enum.GetValues(typeof(Country));
+            // Populate countryComboBox with "- All Countries -" first, then all countries
+            countryComboBox.Items.Clear();
+            countryComboBox.Items.Add("- All Countries -");
+            foreach (var country in Enum.GetValues(typeof(Country)))
+            {
+                countryComboBox.Items.Add(country);
+            }
 
             countryComboBox.SelectedIndexChanged += countryComboBox_SelectedIndexChanged;
+            countryComboBox.SelectedIndex = 0;
         }
 
         private void countryComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -23,12 +30,20 @@ namespace FootballManager.UserControls.Teams
             nameComboBox.Items.Clear();
             nameComboBox.Text = "";
 
+            if (countryComboBox.SelectedIndex == 0)
+            {
+                // Show all teams if "- All Countries -" is selected
+                nameComboBox.Items.AddRange(FootballData.Teams.Select(t => t.Name).ToArray());
+                if (nameComboBox.Items.Count > 0)
+                    nameComboBox.SelectedIndex = 0;
+                return;
+            }
+
             if (countryComboBox.SelectedItem == null) return;
 
             Country selectedCountry = (Country)countryComboBox.SelectedItem;
 
-            // LINQ
-            var teamsInCountry = FootballData.Teams.Values
+            var teamsInCountry = FootballData.Teams
                 .Where(t => t.Country == selectedCountry)
                 .Select(t => t.Name)
                 .ToArray();

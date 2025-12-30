@@ -64,9 +64,8 @@ namespace FootballManager.UserControls.Teams
                 MessageBox.Show("Team name is required!");
                 return;
             }
-            
-            // checking in Dictionary if team exists
-            if (FootballData.Teams.ContainsKey(name))
+
+            if (FootballData.Teams.Any(t => t.Name == name))
             {
                 MessageBox.Show("Team already exists!");
                 return;
@@ -83,8 +82,7 @@ namespace FootballManager.UserControls.Teams
                 selectedImagePath
             );
 
-            // saving to Dictionary
-            FootballData.Teams.Add(name, newTeam);
+            FootballData.Teams.Add(newTeam);
 
             MessageBox.Show("Team added successfully!");
             nameTextBox.Clear();

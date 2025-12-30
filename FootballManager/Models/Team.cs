@@ -27,6 +27,9 @@ namespace FootballManager.Models
         public Country Country { get; set; }
         public string ImagePath { get; set; }  // team badge
 
+        // Navigation property for Players
+        public ICollection<Player> Players { get; set; }
+
         public Image GetImageSafe()
         {
             if (!string.IsNullOrEmpty(ImagePath) && File.Exists(ImagePath))

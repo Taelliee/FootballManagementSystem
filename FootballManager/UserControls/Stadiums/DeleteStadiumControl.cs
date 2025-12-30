@@ -13,49 +13,83 @@ namespace FootballManager.UserControls.Stadiums
         {
             InitializeComponent();
 
-            countryComboBox.DataSource = Enum.GetValues(typeof(Country));
+            // Populate countryComboBox with "- All Countries -" first, then all countries
+            countryComboBox.Items.Clear();
+            countryComboBox.Items.Add("- All Countries -");
+            foreach (var country in Enum.GetValues(typeof(Country)))
+            {
+                countryComboBox.Items.Add(country);
+            }
+
             countryComboBox.SelectedIndexChanged += countryComboBox_SelectedIndexChanged;
+            countryComboBox.SelectedIndex = 0;
         }
 
         private void countryComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            nameComboBox.Items.Clear();
-            nameComboBox.Text = "";
+            stadiumComboBox.Items.Clear();
+            stadiumComboBox.Text = "";
+
+            if (countryComboBox.SelectedIndex == 0)
+            {
+                // Show all stadiums if "- All Countries -" is selected
+                stadiumComboBox.Items.AddRange(FootballData.Stadiums.Select(s => s.Name).ToArray());
+                if (stadiumComboBox.Items.Count > 0)
+                    stadiumComboBox.SelectedIndex = 0;
+                return;
+            }
+
+
 
             if (countryComboBox.SelectedItem == null) return;
 
             Country selectedCountry = (Country)countryComboBox.SelectedItem;
 
             var stadiumsInCountry = FootballData.Stadiums
-                                    .Where(s => s.Country == selectedCountry)
-                                    .Select(s => s.Name)
-                                    .ToArray();
+                                .Where(s => s.Country == selectedCountry)
+                                .Select(s => s.Name)
+                                .ToArray();
 
-            nameComboBox.Items.AddRange(stadiumsInCountry);
+            stadiumComboBox.Items.AddRange(stadiumsInCountry);
+        }
+
+        private void LoadStadiums()
+        {
+            stadiumComboBox.Items.Clear();
+            if (FootballData.Stadiums.Count > 0)
+                stadiumComboBox.Items.AddRange(FootballData.Stadiums.Select(s => s.Name).ToArray());
         }
 
         private void deleteButton_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(nameComboBox.Text))
+            if (stadiumComboBox.SelectedItem == null)
             {
-                MessageBox.Show("Select a stadium!");
+                MessageBox.Show("Select a stadium first!");
                 return;
             }
 
-            string name = nameComboBox.Text;
-            var stadiumToDelete = FootballData.Stadiums.FirstOrDefault(s => s.Name == name);
+            string selectedStadiumName = stadiumComboBox.SelectedItem.ToString();
+            var stadiumToDelete = FootballData.Stadiums.FirstOrDefault(s => s.Name == selectedStadiumName);
 
-            if (stadiumToDelete != null)
+            if (stadiumToDelete == null)
             {
-                if (MessageBox.Show($"Delete {name}?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
-                {
-                    FootballData.RemoveStadium(stadiumToDelete);
-                    FootballData.SaveData();
-                    MessageBox.Show("Deleted!");
+                MessageBox.Show("Stadium not found!");
+                return;
+            }
 
-                    countryComboBox_SelectedIndexChanged(null, null);
-                    nameComboBox.Text = "";
-                }
+            var result = MessageBox.Show(
+                $"Are you sure you want to delete the stadium {stadiumToDelete.Name}?",
+                "Confirm Delete",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning);
+
+            if (result == DialogResult.Yes)
+            {
+                FootballData.Stadiums.Remove(stadiumToDelete);
+                FootballData.SaveData();
+
+                MessageBox.Show("Stadium deleted successfully!");
+                LoadStadiums();
             }
         }
     }

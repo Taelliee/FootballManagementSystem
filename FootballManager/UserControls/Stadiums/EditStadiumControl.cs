@@ -25,12 +25,6 @@ namespace FootballManager.UserControls.Stadiums
         {
             countryComboBox.DataSource = Enum.GetValues(typeof(Country));
 
-            teamComboBox.Items.Clear();
-            if (FootballData.Teams.Count > 0)
-                teamComboBox.Items.AddRange(FootballData.Teams.Keys.ToArray());
-
-            teamComboBox.DropDownStyle = ComboBoxStyle.DropDown;
-
             nameComboBox.Items.Clear();
             foreach (var s in FootballData.Stadiums)
             {
@@ -49,7 +43,6 @@ namespace FootballManager.UserControls.Stadiums
 
             if (selectedStadium != null)
             {
-                teamComboBox.Text = selectedStadium.TeamName;
                 countryComboBox.SelectedItem = selectedStadium.Country;
                 capacityTextBox.Text = selectedStadium.Capacity.ToString();
 
@@ -75,11 +68,10 @@ namespace FootballManager.UserControls.Stadiums
             }
 
             selectedStadium.Name = newName;
-            selectedStadium.TeamName = teamComboBox.Text.Trim();
             selectedStadium.Country = (Country)countryComboBox.SelectedItem;
             selectedStadium.Capacity = int.Parse(newCapacityStr);
 
-            // save
+            // Save changes
             if (MessageBox.Show("Save changes?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 FootballData.SaveData();
@@ -92,7 +84,6 @@ namespace FootballManager.UserControls.Stadiums
                 nameComboBox.Text = "";
                 newNameTextBox.Clear();
                 capacityTextBox.Clear();
-                teamComboBox.Text = "";
                 selectedStadium = null;
             }
         }

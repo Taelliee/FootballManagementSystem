@@ -28,22 +28,22 @@
         /// </summary>
         private void InitializeComponent()
         {
-            nameComboBox = new ComboBox();
+            stadiumComboBox = new ComboBox();
             label1 = new Label();
             countryLabel = new Label();
-            fullNameLabel = new Label();
+            stadiumNameLabel = new Label();
             countryComboBox = new ComboBox();
             deleteButton = new Button();
             SuspendLayout();
             // 
-            // nameComboBox
+            // stadiumComboBox
             // 
-            nameComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-            nameComboBox.FormattingEnabled = true;
-            nameComboBox.Location = new Point(329, 349);
-            nameComboBox.Name = "nameComboBox";
-            nameComboBox.Size = new Size(200, 28);
-            nameComboBox.TabIndex = 76;
+            stadiumComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            stadiumComboBox.FormattingEnabled = true;
+            stadiumComboBox.Location = new Point(329, 349);
+            stadiumComboBox.Name = "stadiumComboBox";
+            stadiumComboBox.Size = new Size(200, 28);
+            stadiumComboBox.TabIndex = 76;
             // 
             // label1
             // 
@@ -61,22 +61,22 @@
             countryLabel.AutoSize = true;
             countryLabel.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
             countryLabel.ForeColor = Color.DarkRed;
-            countryLabel.Location = new Point(228, 251);
+            countryLabel.Location = new Point(243, 251);
             countryLabel.Name = "countryLabel";
             countryLabel.Size = new Size(65, 20);
             countryLabel.TabIndex = 74;
             countryLabel.Text = "Country";
             // 
-            // fullNameLabel
+            // stadiumNameLabel
             // 
-            fullNameLabel.AutoSize = true;
-            fullNameLabel.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
-            fullNameLabel.ForeColor = Color.DarkRed;
-            fullNameLabel.Location = new Point(243, 352);
-            fullNameLabel.Name = "fullNameLabel";
-            fullNameLabel.Size = new Size(50, 20);
-            fullNameLabel.TabIndex = 73;
-            fullNameLabel.Text = "Name";
+            stadiumNameLabel.AutoSize = true;
+            stadiumNameLabel.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
+            stadiumNameLabel.ForeColor = Color.DarkRed;
+            stadiumNameLabel.Location = new Point(243, 352);
+            stadiumNameLabel.Name = "stadiumNameLabel";
+            stadiumNameLabel.Size = new Size(65, 20);
+            stadiumNameLabel.TabIndex = 73;
+            stadiumNameLabel.Text = "Stadium";
             // 
             // countryComboBox
             // 
@@ -104,10 +104,10 @@
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Linen;
-            Controls.Add(nameComboBox);
+            Controls.Add(stadiumComboBox);
             Controls.Add(label1);
             Controls.Add(countryLabel);
-            Controls.Add(fullNameLabel);
+            Controls.Add(stadiumNameLabel);
             Controls.Add(countryComboBox);
             Controls.Add(deleteButton);
             Name = "DeleteStadiumControl";
@@ -118,10 +118,10 @@
 
         #endregion
 
-        private ComboBox nameComboBox;
+        private ComboBox stadiumComboBox;
         private Label label1;
         private Label countryLabel;
-        private Label fullNameLabel;
+        private Label stadiumNameLabel;
         private ComboBox countryComboBox;
         private Button deleteButton;
     }

@@ -99,7 +99,7 @@ namespace FootballManager.UserControls.Queries
 
             foreach (var p in FootballData.Players)
             {
-                allPeople.Add(new { Type = "Player", Name = p.FullName, Country = p.Country, Team = p.TeamName });
+                allPeople.Add(new { Type = "Player", Name = p.FullName, Country = p.Country, Team = p.Team?.Name ?? "No Team" });
             }
 
             foreach (var s in FootballData.StaffMembers)
@@ -154,7 +154,7 @@ namespace FootballManager.UserControls.Queries
                 var player = FootballData.Players.FirstOrDefault(p => p.Id == comp.PlayerId);
                 if (player != null)
                 {
-                    string team = player.TeamName;
+                    string team = player.Team?.Name ?? "No Team";
                     if (!teamGoals.ContainsKey(team))
                         teamGoals[team] = 0;
 
@@ -219,7 +219,7 @@ namespace FootballManager.UserControls.Queries
 
                     if (totalGoals >= minGoals)
                     {
-                        dgvFilteredPlayers.Rows.Add(p.FullName, p.TeamName, p.Country, $"Goals: {totalGoals}");
+                        dgvFilteredPlayers.Rows.Add(p.FullName, p.Team?.Name ?? "No Team", p.Country, $"Goals: {totalGoals}");
                     }
                 }
                 return;
@@ -237,18 +237,18 @@ namespace FootballManager.UserControls.Queries
             }
             else if (filterType.Contains("Coach"))
             {
-                var teamsWithCoach = FootballData.Teams.Values
+                var teamsWithCoach = FootballData.Teams
                     .Where(t => t.CoachName != null && t.CoachName.ToLower().Contains(valueStr.ToLower()))
                     .Select(t => t.Name)
                     .ToList();
 
-                result = FootballData.Players.Where(p => teamsWithCoach.Contains(p.TeamName)).ToList();
+                result = FootballData.Players.Where(p => teamsWithCoach.Contains(p.Team?.Name)).ToList();
                 extraInfoLabel = $"Coach: {valueStr}";
             }
 
             foreach (var p in result)
             {
-                dgvFilteredPlayers.Rows.Add(p.FullName, p.TeamName, p.Country, extraInfoLabel);
+                dgvFilteredPlayers.Rows.Add(p.FullName, p.Team?.Name ?? "No Team", p.Country, extraInfoLabel);
             }
         }
     }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows.Forms;
 using FootballManager.Models;
 
@@ -20,7 +21,7 @@ namespace FootballManager.UserControls.Stadiums
 
             foreach (var s in FootballData.Stadiums)
             {
-                dataGridView1.Rows.Add(s.Name, s.TeamName, s.Country, s.Capacity);
+                dataGridView1.Rows.Add(s.Name, s.Country, s.Capacity);
             }
         }
     }

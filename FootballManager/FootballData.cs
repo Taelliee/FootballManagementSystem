@@ -13,9 +13,8 @@ namespace FootballManager
         public static List<Staff> StaffMembers { get; set; } = new List<Staff>();
         public static List<Competition> Competitions { get; set; } = new List<Competition>();
         public static List<Stadium> Stadiums { get; set; } = new List<Stadium>();
-        public static Dictionary<string, Team> Teams { get; set; } = new Dictionary<string, Team>();
+        public static List<Team> Teams { get; set; } = new List<Team>();
         public static Stack<string> ActionHistory { get; set; } = new Stack<string>();
-
 
         // --- SAVE / LOAD LOGIC ---
         private static string playersFile = "players.txt";
@@ -30,8 +29,8 @@ namespace FootballManager
             {
                 foreach (var p in Players)
                 {
-                    // Format: ID|Name|Country|ShirtNum|Team|Image
-                    sw.WriteLine($"{p.Id}|{p.FullName}|{p.Country}|{p.ShirtNumber}|{p.TeamName}|{p.Position}");
+                    // Format: ID|Name|Country|ShirtNum|TeamId|Position
+                    sw.WriteLine($"{p.Id}|{p.FullName}|{p.Country}|{p.ShirtNumber}|{p.TeamId}|{p.Position}");
                 }
             }
 
@@ -46,9 +45,9 @@ namespace FootballManager
 
             using (StreamWriter sw = new StreamWriter(teamsFile))
             {
-                foreach (var team in Teams.Values)
+                foreach (var team in Teams)
                 {
-                    // Format: ID|Name|Coach|Country
+                    // Format: ID|Name|Coach|Country|ImagePath
                     sw.WriteLine($"{team.Id}|{team.Name}|{team.CoachName}|{team.Country}|{team.ImagePath}");
                 }
             }
@@ -66,8 +65,8 @@ namespace FootballManager
             {
                 foreach (var s in Stadiums)
                 {
-                    // Format: Id|Name|TeamName|Country|Capacity
-                    sw.WriteLine($"{s.Id}|{s.Name}|{s.TeamName}|{s.Country}|{s.Capacity}");
+                    // Format: Id|Name|Country|Capacity
+                    sw.WriteLine($"{s.Id}|{s.Name}|{s.Country}|{s.Capacity}");
                 }
             }
         }
@@ -89,15 +88,15 @@ namespace FootballManager
                         Enum.TryParse(parts[2], out Country c);
                         p.Country = c;
                         p.ShirtNumber = int.Parse(parts[3]);
-                        p.TeamName = parts[4];
+                        p.TeamId = int.Parse(parts[4]);
                         Enum.TryParse(parts[5], out PlayerPosition pos);
                         p.Position = pos;
 
                         Players.Add(p);
 
-                        if (!Teams.ContainsKey(p.TeamName))
+                        if (!Teams.Any(t => t.Name == p.Team?.Name))
                         {
-                            Teams.Add(p.TeamName, new Team { Name = p.TeamName, Country = p.Country });
+                            Teams.Add(new Team { Id = p.TeamId, Name = p.Team?.Name ?? "Unknown", Country = p.Country });
                         }
                     }
                 }
@@ -142,9 +141,9 @@ namespace FootballManager
                         t.Country = c;
                         t.ImagePath = parts[4];
 
-                        if (!Teams.ContainsKey(t.Name))
+                        if (!Teams.Any(team => team.Name == t.Name))
                         {
-                            Teams.Add(t.Name, t);
+                            Teams.Add(t);
                         }
                     }
                 }
@@ -181,33 +180,35 @@ namespace FootballManager
                 foreach (var line in lines)
                 {
                     var parts = line.Split('|');
-                    if (parts.Length >= 5)
+                    if (parts.Length >= 4)
                     {
                         Stadium s = new Stadium();
                         s.Id = int.Parse(parts[0]);
                         s.Name = parts[1];
-                        s.TeamName = parts[2];
-                        Enum.TryParse(parts[3], out Country c);
+                        Enum.TryParse(parts[2], out Country c);
                         s.Country = c;
-                        s.Capacity = int.Parse(parts[4]);
+                        s.Capacity = int.Parse(parts[3]);
 
                         Stadiums.Add(s);
                     }
                 }
             }
 
+            foreach (var player in Players)
+            {
+                player.Team = Teams.FirstOrDefault(t => t.Id == player.TeamId);
+            }
         }
 
         // --- Helpers ---
-        // add
         public static void AddPlayer(Player p)
         {
             Players.Add(p);
             ActionHistory.Push($"Added player: {p.FullName} at {DateTime.Now}");
 
-            if (!Teams.ContainsKey(p.TeamName))
+            if (!Teams.Any(t => t.Name == p.Team?.Name))
             {
-                Teams.Add(p.TeamName, new Team { Name = p.TeamName, Country = p.Country });
+                Teams.Add(new Team { Id = p.TeamId, Name = p.Team?.Name ?? "Unknown", Country = p.Country });
             }
         }
 
@@ -228,6 +229,7 @@ namespace FootballManager
             Stadiums.Add(s);
             ActionHistory.Push($"Added stadium: {s.Name}");
         }
+
         // get id
         public static int GetNextPlayerId()
         {
@@ -251,7 +253,7 @@ namespace FootballManager
 
         public static int GetNextTeamId()
         {
-            return Stadiums.Any() ? Teams.Max(s => s.Value.Id) + 1 : 1;
+            return Stadiums.Any() ? Teams.Max(s => s.Id) + 1 : 1;
         }
 
         // remove
@@ -266,17 +268,18 @@ namespace FootballManager
 
         public static void RemoveTeam(string teamName)
         {
-            if (Teams.ContainsKey(teamName))
+            var team = Teams.FirstOrDefault(t => t.Name == teamName);
+            if (team != null)
             {
                 foreach (var player in Players)
                 {
-                    if (player.TeamName == teamName)
+                    if (player.TeamId == team.Id)
                     {
-                        player.TeamName = "No Team";
+                        player.TeamId = 0; // Set to "No Team" equivalent
                     }
                 }
 
-                Teams.Remove(teamName);
+                Teams.Remove(team);
 
                 ActionHistory.Push($"Deleted team: {teamName}. Players are now free agents.");
             }
