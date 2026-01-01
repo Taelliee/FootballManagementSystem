@@ -21,12 +21,30 @@ namespace FootballManager.UserControls.Stadiums
         private void LoadData()
         {
             countryComboBox.DataSource = Enum.GetValues(typeof(Country));
+
+            // Load teams into the new teamComboBox
+            teamComboBox.DataSource = null;
+            teamComboBox.DisplayMember = "Name";
+            teamComboBox.ValueMember = "Id";
+            teamComboBox.DataSource = FootballDataService.GetTeams();
+            teamComboBox.SelectedIndex = 0;
         }
 
         private void addButton_Click(object sender, EventArgs e)
         {
             string name = nameTextBox.Text.Trim();
             string capacityStr = capacityTextBox.Text.Trim();
+            int teamId; 
+
+            if (teamComboBox.SelectedItem is Team selectedTeam)
+            {
+                teamId = selectedTeam.Id;
+            }
+            else
+            {
+                MessageBox.Show("Home team is required!");
+                return;
+            }
 
             if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(capacityStr))
             {
@@ -47,6 +65,7 @@ namespace FootballManager.UserControls.Stadiums
                 //FootballData.GetNextStadiumId(),
                 name,
                 country,
+                teamId,
                 capacity
             );
 
@@ -58,6 +77,7 @@ namespace FootballManager.UserControls.Stadiums
 
             nameTextBox.Clear();
             capacityTextBox.Clear();
+            teamComboBox.SelectedIndex = 0;
         }
     }
 }

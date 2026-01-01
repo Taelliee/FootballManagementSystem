@@ -44,6 +44,9 @@ namespace FootballManager.Models
         // Navigation property for Players
         public ICollection<Player> Players { get; set; }
 
+        // Navigation property for the team's home stadium
+        public Stadium Stadium { get; set; }
+
         public Image GetImageSafe()
         {
             if (!string.IsNullOrEmpty(ImagePath) && File.Exists(ImagePath))

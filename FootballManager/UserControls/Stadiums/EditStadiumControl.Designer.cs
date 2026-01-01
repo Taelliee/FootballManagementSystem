@@ -38,20 +38,22 @@
             editButton = new Button();
             newNameTextBox = new TextBox();
             label4 = new Label();
+            label3 = new Label();
+            teamComboBox = new ComboBox();
             SuspendLayout();
             // 
             // nameComboBox
             // 
             nameComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             nameComboBox.FormattingEnabled = true;
-            nameComboBox.Location = new Point(364, 152);
+            nameComboBox.Location = new Point(364, 142);
             nameComboBox.Name = "nameComboBox";
             nameComboBox.Size = new Size(200, 28);
             nameComboBox.TabIndex = 64;
             // 
             // capacityTextBox
             // 
-            capacityTextBox.Location = new Point(364, 283);
+            capacityTextBox.Location = new Point(364, 366);
             capacityTextBox.Name = "capacityTextBox";
             capacityTextBox.Size = new Size(200, 27);
             capacityTextBox.TabIndex = 63;
@@ -61,7 +63,7 @@
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
             label2.ForeColor = Color.DarkRed;
-            label2.Location = new Point(263, 286);
+            label2.Location = new Point(263, 369);
             label2.Name = "label2";
             label2.Size = new Size(67, 20);
             label2.TabIndex = 60;
@@ -94,7 +96,7 @@
             fullNameLabel.AutoSize = true;
             fullNameLabel.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
             fullNameLabel.ForeColor = Color.DarkRed;
-            fullNameLabel.Location = new Point(278, 155);
+            fullNameLabel.Location = new Point(278, 145);
             fullNameLabel.Name = "fullNameLabel";
             fullNameLabel.Size = new Size(50, 20);
             fullNameLabel.TabIndex = 57;
@@ -113,7 +115,7 @@
             // 
             editButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 204);
             editButton.ForeColor = Color.DarkRed;
-            editButton.Location = new Point(364, 453);
+            editButton.Location = new Point(364, 509);
             editButton.Name = "editButton";
             editButton.Size = new Size(115, 40);
             editButton.TabIndex = 55;
@@ -123,7 +125,7 @@
             // 
             // newNameTextBox
             // 
-            newNameTextBox.Location = new Point(364, 355);
+            newNameTextBox.Location = new Point(364, 438);
             newNameTextBox.Name = "newNameTextBox";
             newNameTextBox.Size = new Size(200, 27);
             newNameTextBox.TabIndex = 66;
@@ -133,17 +135,39 @@
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
             label4.ForeColor = Color.DarkRed;
-            label4.Location = new Point(243, 358);
+            label4.Location = new Point(243, 441);
             label4.Name = "label4";
             label4.Size = new Size(85, 20);
             label4.TabIndex = 65;
             label4.Text = "New Name";
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
+            label3.ForeColor = Color.DarkRed;
+            label3.Location = new Point(263, 295);
+            label3.Name = "label3";
+            label3.Size = new Size(45, 20);
+            label3.TabIndex = 68;
+            label3.Text = "Team";
+            // 
+            // teamComboBox
+            // 
+            teamComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            teamComboBox.FormattingEnabled = true;
+            teamComboBox.Location = new Point(364, 292);
+            teamComboBox.Name = "teamComboBox";
+            teamComboBox.Size = new Size(200, 28);
+            teamComboBox.TabIndex = 67;
             // 
             // EditStadiumControl
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Linen;
+            Controls.Add(label3);
+            Controls.Add(teamComboBox);
             Controls.Add(newNameTextBox);
             Controls.Add(label4);
             Controls.Add(nameComboBox);
@@ -172,5 +196,7 @@
         private Button editButton;
         private TextBox newNameTextBox;
         private Label label4;
+        private Label label3;
+        private ComboBox teamComboBox;
     }
 }

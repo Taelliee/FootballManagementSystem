@@ -19,12 +19,20 @@ namespace FootballManager.UserControls.Stadiums
             stadiumsDataGridView.AllowUserToAddRows = false;
             stadiumsDataGridView.Rows.Clear();
 
-            var stadiums = FootballDataService.GetStadiums();
-            // Note: The Team relationship to Stadium was removed. 
+            // Call the service and include the related Team data
+            var stadiums = FootballDataService.GetStadiums(includeTeam: true);
 
             foreach (var s in stadiums)
             {
-                stadiumsDataGridView.Rows.Add(s.Name, s.Country.ToString(), s.Capacity);
+                // Safely get the team name. If s.Team is null, display "No Team".
+                string teamName = s.Team?.Name ?? "No Team";
+
+                stadiumsDataGridView.Rows.Add(
+                    s.Name, 
+                    s.Country.ToString(), 
+                    teamName, 
+                    s.Capacity
+                );
             }
         }
     }

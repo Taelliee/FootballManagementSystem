@@ -13,18 +13,20 @@ namespace FootballManager.Models
         {
         }
 
-        public Stadium(int id, string name, Country country, int capacity)
+        public Stadium(int id, string name, Country country, int teamId, int capacity)
         {
             Id = id;
             Name = name;
             Country = country;
+            TeamId = teamId;
             Capacity = capacity;
         }
 
-        public Stadium(string name, Country country, int capacity)
+        public Stadium(string name, Country country, int teamId, int capacity)
         {
             Name = name;
             Country = country;
+            TeamId = teamId;
             Capacity = capacity;
         }
 
@@ -32,6 +34,12 @@ namespace FootballManager.Models
         public string Name { get; set; }
         public Country Country { get; set; }
         public int Capacity { get; set; }
+
+        // Foreign key for the Team
+        public int? TeamId { get; set; }
+
+        // Navigation property to the Team
+        public Team Team { get; set; }
 
         // Navigation property for Competitions
         public ICollection<Competition> Competitions { get; set; }

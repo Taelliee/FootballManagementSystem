@@ -25,15 +25,16 @@ namespace FootballManager.UserControls.Stadiums
         {
             countryComboBox.DataSource = Enum.GetValues(typeof(Country));
 
+            // Load stadiums to select from
             nameComboBox.Items.Clear();
-            nameComboBox.DisplayMember = "Name"; // Use DisplayMember
-            var stadiums = FootballDataService.GetStadiums();
-            if (stadiums.Any())
-            {
-                nameComboBox.Items.AddRange(stadiums.ToArray());
-            }
+            nameComboBox.DisplayMember = "Name";
+            nameComboBox.DataSource = FootballDataService.GetStadiums();
 
-            newNameTextBox.Clear();
+            // Load teams to assign
+            teamComboBox.Items.Clear();
+            teamComboBox.DisplayMember = "Name";
+            teamComboBox.ValueMember = "Id";
+            teamComboBox.DataSource = FootballDataService.GetTeams();
         }
 
         private void nameComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -42,9 +43,10 @@ namespace FootballManager.UserControls.Stadiums
 
             selectedStadium = stadium;
 
+            newNameTextBox.Text = selectedStadium.Name;
             countryComboBox.SelectedItem = selectedStadium.Country;
             capacityTextBox.Text = selectedStadium.Capacity.ToString();
-            newNameTextBox.Text = selectedStadium.Name;
+            teamComboBox.SelectedValue = selectedStadium.TeamId;
         }
 
         private void editButton_Click(object sender, EventArgs e)
@@ -52,6 +54,12 @@ namespace FootballManager.UserControls.Stadiums
             if (selectedStadium == null)
             {
                 MessageBox.Show("Select a stadium first!");
+                return;
+            }
+
+            if (teamComboBox.SelectedItem is not Team selectedTeam)
+            {
+                MessageBox.Show("A team must be selected for the stadium!");
                 return;
             }
 
@@ -64,22 +72,16 @@ namespace FootballManager.UserControls.Stadiums
                 return;
             }
 
-            // Update the properties of the selected stadium object
             selectedStadium.Name = newName;
             selectedStadium.Country = (Country)countryComboBox.SelectedItem;
             selectedStadium.Capacity = int.Parse(newCapacityStr);
+            selectedStadium.TeamId = selectedTeam.Id;
 
-            // Save changes to the database
             if (MessageBox.Show("Save changes?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 FootballDataService.UpdateStadium(selectedStadium);
-
                 MessageBox.Show("Updated successfully!");
-
-                // Refresh the form
-                int selectedIndex = nameComboBox.SelectedIndex;
                 LoadData();
-                nameComboBox.SelectedIndex = selectedIndex;
             }
         }
     }

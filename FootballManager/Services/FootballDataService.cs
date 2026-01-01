@@ -138,16 +138,26 @@ namespace FootballManager.Services
         }
 
         // --- Stadiums ---
-        public static List<Stadium> GetStadiums()
+        public static List<Stadium> GetStadiums(bool includeTeam = false)
         {
             using var db = new FootballDbContext();
-            return db.Stadiums.ToList();
+            var query = db.Stadiums.AsQueryable();
+            if (includeTeam)
+            {
+                query = query.Include(s => s.Team);
+            }
+            return query.ToList();
         }
 
-        public static Stadium GetStadium(int stadiumId)
+        public static Stadium GetStadium(int stadiumId, bool includeTeam = false)
         {
             using var db = new FootballDbContext();
-            return db.Stadiums.Find(stadiumId);
+            var query = db.Stadiums.AsQueryable();
+            if (includeTeam)
+            {
+                query = query.Include(s => s.Team);
+            }
+            return query.FirstOrDefault(s => s.Id == stadiumId);
         }
 
         public static void AddStadium(Stadium stadium)

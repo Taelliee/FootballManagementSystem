@@ -58,6 +58,11 @@ namespace FootballManager
                 .WithOne(s => s.CoachedTeam) // A Staff member (Coach) has one Team
                 .HasForeignKey<Team>(t => t.CoachId) // The foreign key is in the Team table
                 .OnDelete(DeleteBehavior.SetNull); // If a coach is deleted, set Team.CoachId to null
+
+            modelBuilder.Entity<Team>()
+                .HasOne(t => t.Stadium)
+                .WithOne(s => s.Team)
+                .HasForeignKey<Stadium>(s => s.TeamId);
         }
     }
 }
