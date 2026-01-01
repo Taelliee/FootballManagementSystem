@@ -41,8 +41,8 @@ namespace FootballManager.UserControls.Competitions
             playerComboBox.DataSource = FootballDataService.GetPlayers();
             playerComboBox.DisplayMember = "FullName";
 
-            staffComboBox.DataSource = FootballDataService.GetStaff();
-            staffComboBox.DisplayMember = "FullName";
+            refereeComboBox.DataSource = FootballDataService.GetStaff().Where(s => s.Role.Equals(StaffPosition.Referee)).ToList();
+            refereeComboBox.DisplayMember = "FullName";
 
             stadiumComboBox.DataSource = FootballDataService.GetStadiums();
             stadiumComboBox.DisplayMember = "Name";
@@ -65,7 +65,7 @@ namespace FootballManager.UserControls.Competitions
             playerComboBox.SelectedItem = ((playerComboBox.DataSource) as System.Collections.IList)
                 .OfType<Player>().FirstOrDefault(p => p.Id == selectedCompetition.PlayerId);
 
-            staffComboBox.SelectedItem = ((staffComboBox.DataSource) as System.Collections.IList)
+            refereeComboBox.SelectedItem = ((refereeComboBox.DataSource) as System.Collections.IList)
                 .OfType<Models.Staff>().FirstOrDefault(s => s.Id == selectedCompetition.StaffId);
 
             stadiumComboBox.SelectedItem = ((stadiumComboBox.DataSource) as System.Collections.IList)
@@ -86,7 +86,7 @@ namespace FootballManager.UserControls.Competitions
 
             // Update the properties of the selected competition object
             selectedCompetition.PlayerId = (playerComboBox.SelectedItem as Player)?.Id ?? 0;
-            selectedCompetition.StaffId = (staffComboBox.SelectedItem as Models.Staff)?.Id ?? 0;
+            selectedCompetition.StaffId = (refereeComboBox.SelectedItem as Models.Staff)?.Id ?? 0;
             selectedCompetition.StadiumId = (stadiumComboBox.SelectedItem as Stadium)?.Id ?? 0;
             selectedCompetition.HostCountry = (Country)countryComboBox.SelectedItem;
             selectedCompetition.MatchDate = matchDateTimePicker.Value;

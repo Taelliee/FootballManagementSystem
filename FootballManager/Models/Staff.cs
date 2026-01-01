@@ -30,5 +30,10 @@ namespace FootballManager.Models
         }
 
         public Staff() { }
+
+        public override string ToString()
+        {
+            return $"{FullName} ({Role})";
+        }
     }
 }

@@ -30,7 +30,7 @@ namespace FootballManager.UserControls.Competitions
                 competitionsDataGridView.Rows.Add(
                     playerName,
                     staffName,
-                    c.MatchDate.ToString("dd.MM.yyyy HH:mm"),
+                    c.MatchDate.ToString("dd.MM.yyyy"),
                     c.HostCountry.ToString(),
                     stadiumName,
                     c.GoalsScored

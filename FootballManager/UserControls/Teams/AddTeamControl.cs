@@ -74,6 +74,14 @@ namespace FootballManager.UserControls.Teams
                 return;
             }
 
+            // Checks if the selected coach is already assigned to any team
+            if (FootballDataService.GetTeams().Any(t => t.CoachId == selectedCoach.Id))
+            {
+                MessageBox.Show($"Coach '{selectedCoach.FullName}' is already assigned to another team. Please select a different coach.", "Coach Unavailable", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                coachComboBox.SelectedIndex = -1;
+                return;
+            }
+
             if (FootballDataService.GetTeams().Any(t => t.Name == name))
             {
                 MessageBox.Show("Team already exists!");
@@ -85,7 +93,7 @@ namespace FootballManager.UserControls.Teams
             Team newTeam = new Team
             (
                 name,
-                selectedCoach.Id, // Use the Coach's ID
+                selectedCoach.Id,
                 country,
                 selectedImagePath
             );
@@ -103,8 +111,8 @@ namespace FootballManager.UserControls.Teams
 
                 MessageBox.Show("Team added successfully!");
                 nameTextBox.Clear();
+                countryComboBox.SelectedIndex = -1;
                 coachComboBox.SelectedIndex = -1;
-                coachComboBox.Text = "";
                 badgePictureBox.Image = null;
                 selectedImagePath = "";
             }

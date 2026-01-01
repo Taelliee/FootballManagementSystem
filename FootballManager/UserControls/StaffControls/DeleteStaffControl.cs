@@ -17,7 +17,7 @@ namespace FootballManager.UserControls.Staff
         private void LoadStaffList()
         {
             nameComboBox.Items.Clear();
-            nameComboBox.DisplayMember = "FullName";
+            //nameComboBox.DisplayMember = "FullName";
             var staffList = FootballDataService.GetStaff();
             if (staffList.Any())
             {

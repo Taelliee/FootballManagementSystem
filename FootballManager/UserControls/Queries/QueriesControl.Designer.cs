@@ -127,6 +127,7 @@
             // 
             // cmbCompStadium
             // 
+            cmbCompStadium.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbCompStadium.FormattingEnabled = true;
             cmbCompStadium.Location = new Point(502, 194);
             cmbCompStadium.Name = "cmbCompStadium";
@@ -135,6 +136,7 @@
             // 
             // cmbCompCountry
             // 
+            cmbCompCountry.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbCompCountry.FormattingEnabled = true;
             cmbCompCountry.Location = new Point(502, 78);
             cmbCompCountry.Name = "cmbCompCountry";

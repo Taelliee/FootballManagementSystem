@@ -31,7 +31,7 @@
             label1 = new Label();
             competitionsDataGridView = new DataGridView();
             Player = new DataGridViewTextBoxColumn();
-            Staff = new DataGridViewTextBoxColumn();
+            Referee = new DataGridViewTextBoxColumn();
             Date = new DataGridViewTextBoxColumn();
             Country = new DataGridViewTextBoxColumn();
             Stadium = new DataGridViewTextBoxColumn();
@@ -55,11 +55,11 @@
             competitionsDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             competitionsDataGridView.BackgroundColor = Color.BurlyWood;
             competitionsDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            competitionsDataGridView.Columns.AddRange(new DataGridViewColumn[] { Player, Staff, Date, Country, Stadium, Goals });
-            competitionsDataGridView.Location = new Point(39, 99);
+            competitionsDataGridView.Columns.AddRange(new DataGridViewColumn[] { Player, Referee, Date, Country, Stadium, Goals });
+            competitionsDataGridView.Location = new Point(20, 99);
             competitionsDataGridView.Name = "competitionsDataGridView";
             competitionsDataGridView.RowHeadersWidth = 51;
-            competitionsDataGridView.Size = new Size(744, 427);
+            competitionsDataGridView.Size = new Size(781, 442);
             competitionsDataGridView.TabIndex = 15;
             // 
             // Player
@@ -68,17 +68,19 @@
             Player.MinimumWidth = 6;
             Player.Name = "Player";
             // 
-            // Staff
+            // Referee
             // 
-            Staff.HeaderText = "Staff";
-            Staff.MinimumWidth = 6;
-            Staff.Name = "Staff";
+            Referee.HeaderText = "Referee";
+            Referee.MinimumWidth = 6;
+            Referee.Name = "Referee";
             // 
             // Date
             // 
-            Date.HeaderText = "Date of match";
+            Date.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            Date.HeaderText = "Date";
             Date.MinimumWidth = 6;
             Date.Name = "Date";
+            Date.Width = 125;
             // 
             // Country
             // 
@@ -94,9 +96,11 @@
             // 
             // Goals
             // 
-            Goals.HeaderText = "Goals scored";
+            Goals.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            Goals.HeaderText = "Goals";
             Goals.MinimumWidth = 6;
             Goals.Name = "Goals";
+            Goals.Width = 60;
             // 
             // ListCompetitionsControl
             // 
@@ -116,8 +120,9 @@
 
         private Label label1;
         private DataGridView competitionsDataGridView;
-        private DataGridViewTextBoxColumn Player;
         private DataGridViewTextBoxColumn Staff;
+        private DataGridViewTextBoxColumn Player;
+        private DataGridViewTextBoxColumn Referee;
         private DataGridViewTextBoxColumn Date;
         private DataGridViewTextBoxColumn Country;
         private DataGridViewTextBoxColumn Stadium;

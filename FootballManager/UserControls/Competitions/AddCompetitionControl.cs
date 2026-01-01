@@ -23,10 +23,10 @@ namespace FootballManager.UserControls.Competitions
         {
             countryComboBox.DataSource = Enum.GetValues(typeof(Country));
 
-            staffComboBox.DataSource = null;
-            staffComboBox.DataSource = FootballDataService.GetStaff();
-            staffComboBox.DisplayMember = "FullName";
-            staffComboBox.ValueMember = "Id";
+            refereeComboBox.DataSource = null;
+            refereeComboBox.DataSource = FootballDataService.GetStaff().Where(s => s.Role.Equals(StaffPosition.Referee)).ToList();
+            refereeComboBox.DisplayMember = "FullName";
+            refereeComboBox.ValueMember = "Id";
 
             playerComboBox.DataSource = null;
             playerComboBox.DataSource = FootballDataService.GetPlayers();
@@ -44,17 +44,17 @@ namespace FootballManager.UserControls.Competitions
             // Get the value directly from the NumericUpDown control
             int goalsScored = (int)goalsScoredNumericUpDown.Value;
 
-            if (stadiumComboBox.SelectedItem == null || staffComboBox.SelectedItem == null || playerComboBox.SelectedItem == null)
+            if (stadiumComboBox.SelectedItem == null || refereeComboBox.SelectedItem == null || playerComboBox.SelectedItem == null)
             {
                 MessageBox.Show("Please select Stadium, Staff and Player!");
                 return;
             }
 
-            int selectedStaffId = (int)staffComboBox.SelectedValue;
+            int selectedStaffId = (int)refereeComboBox.SelectedValue;
             int selectedPlayerId = (int)playerComboBox.SelectedValue;
             int selectedStadiumId = (int)stadiumComboBox.SelectedValue;
 
-            string staffName = ((Models.Staff)staffComboBox.SelectedItem).FullName;
+            string staffName = ((Models.Staff)refereeComboBox.SelectedItem).FullName;
             string playerName = ((Player)playerComboBox.SelectedItem).FullName;
             string stadiumName = ((Stadium)stadiumComboBox.SelectedItem).Name;
 

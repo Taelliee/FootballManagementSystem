@@ -216,7 +216,7 @@ namespace FootballManager.Services
         public static void UpdateCompetition(Competition competition)
         {
             using var db = new FootballDbContext();
-            db.Competitions.Update(competition);
+            db.Entry(competition).State = EntityState.Modified;
             db.SaveChanges();
         }
 

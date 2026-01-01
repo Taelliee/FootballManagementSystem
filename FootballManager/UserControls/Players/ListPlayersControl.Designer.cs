@@ -88,15 +88,19 @@
             // 
             // ShirtNumber
             // 
-            ShirtNumber.HeaderText = "Shirt Number";
+            ShirtNumber.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            ShirtNumber.HeaderText = "Shirt №";
             ShirtNumber.MinimumWidth = 6;
             ShirtNumber.Name = "ShirtNumber";
+            ShirtNumber.Width = 60;
             // 
             // Position
             // 
+            Position.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
             Position.HeaderText = "Position";
             Position.MinimumWidth = 6;
             Position.Name = "Position";
+            Position.Width = 120;
             // 
             // ListPlayersControl
             // 

@@ -38,9 +38,9 @@
             // 
             nameComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             nameComboBox.FormattingEnabled = true;
-            nameComboBox.Location = new Point(364, 293);
+            nameComboBox.Location = new Point(344, 293);
             nameComboBox.Name = "nameComboBox";
-            nameComboBox.Size = new Size(200, 28);
+            nameComboBox.Size = new Size(275, 28);
             nameComboBox.TabIndex = 53;
             // 
             // label1
@@ -59,7 +59,7 @@
             fullNameLabel.AutoSize = true;
             fullNameLabel.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
             fullNameLabel.ForeColor = Color.DarkRed;
-            fullNameLabel.Location = new Point(278, 296);
+            fullNameLabel.Location = new Point(258, 296);
             fullNameLabel.Name = "fullNameLabel";
             fullNameLabel.Size = new Size(50, 20);
             fullNameLabel.TabIndex = 51;

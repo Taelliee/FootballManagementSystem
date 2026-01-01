@@ -13,7 +13,6 @@ namespace FootballManager.Models
         {
         }
 
-        // Constructors should also be updated to accept a nullable int
         public Team(int id, string name, int? coachId, Country country, string imagePath)
         {
             Id = id;
@@ -51,7 +50,7 @@ namespace FootballManager.Models
             {
                 return Image.FromFile(ImagePath);
             }
-            return null; // Or return Properties.Resources.DefaultBadge
+            return null; // Or return Properties.Resources.DefaultBadge?
         }
     }
 }

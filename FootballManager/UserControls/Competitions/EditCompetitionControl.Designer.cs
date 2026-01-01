@@ -32,7 +32,7 @@
             competitionComboBox = new ComboBox();
             stadiumComboBox = new ComboBox();
             playerComboBox = new ComboBox();
-            staffComboBox = new ComboBox();
+            refereeComboBox = new ComboBox();
             countryComboBox = new ComboBox();
             matchDateTimePicker = new DateTimePicker();
             label5 = new Label();
@@ -60,6 +60,7 @@
             // 
             // competitionComboBox
             // 
+            competitionComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             competitionComboBox.FormattingEnabled = true;
             competitionComboBox.Location = new Point(404, 188);
             competitionComboBox.Name = "competitionComboBox";
@@ -68,6 +69,7 @@
             // 
             // stadiumComboBox
             // 
+            stadiumComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             stadiumComboBox.FormattingEnabled = true;
             stadiumComboBox.Location = new Point(583, 336);
             stadiumComboBox.Name = "stadiumComboBox";
@@ -76,22 +78,25 @@
             // 
             // playerComboBox
             // 
+            playerComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             playerComboBox.FormattingEnabled = true;
             playerComboBox.Location = new Point(223, 339);
             playerComboBox.Name = "playerComboBox";
             playerComboBox.Size = new Size(182, 28);
             playerComboBox.TabIndex = 65;
             // 
-            // staffComboBox
+            // refereeComboBox
             // 
-            staffComboBox.FormattingEnabled = true;
-            staffComboBox.Location = new Point(224, 266);
-            staffComboBox.Name = "staffComboBox";
-            staffComboBox.Size = new Size(181, 28);
-            staffComboBox.TabIndex = 64;
+            refereeComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            refereeComboBox.FormattingEnabled = true;
+            refereeComboBox.Location = new Point(224, 266);
+            refereeComboBox.Name = "refereeComboBox";
+            refereeComboBox.Size = new Size(181, 28);
+            refereeComboBox.TabIndex = 64;
             // 
             // countryComboBox
             // 
+            countryComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             countryComboBox.FormattingEnabled = true;
             countryComboBox.Location = new Point(583, 263);
             countryComboBox.Name = "countryComboBox";
@@ -167,11 +172,11 @@
             countryLabel.AutoSize = true;
             countryLabel.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
             countryLabel.ForeColor = Color.DarkRed;
-            countryLabel.Location = new Point(150, 269);
+            countryLabel.Location = new Point(129, 271);
             countryLabel.Name = "countryLabel";
-            countryLabel.Size = new Size(40, 20);
+            countryLabel.Size = new Size(61, 20);
             countryLabel.TabIndex = 55;
-            countryLabel.Text = "Staff";
+            countryLabel.Text = "Referee";
             // 
             // teamLabel
             // 
@@ -213,7 +218,7 @@
             Controls.Add(competitionComboBox);
             Controls.Add(stadiumComboBox);
             Controls.Add(playerComboBox);
-            Controls.Add(staffComboBox);
+            Controls.Add(refereeComboBox);
             Controls.Add(countryComboBox);
             Controls.Add(matchDateTimePicker);
             Controls.Add(label5);
@@ -237,7 +242,7 @@
         private ComboBox competitionComboBox;
         private ComboBox stadiumComboBox;
         private ComboBox playerComboBox;
-        private ComboBox staffComboBox;
+        private ComboBox refereeComboBox;
         private ComboBox countryComboBox;
         private DateTimePicker matchDateTimePicker;
         private Label label5;
